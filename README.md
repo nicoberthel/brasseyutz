@@ -61,6 +61,8 @@ Dans le `docker-compose.yml` global :
   brasseyutz:
     build: ./brasseyutz
     env_file: ./brasseyutz/.env
+    ports:
+      - "3007:3000"
     volumes:
       - brasseyutz-data:/data
     restart: unless-stopped
@@ -74,9 +76,11 @@ Dans le `docker-compose.yml` global :
   brasseyutz-data:
 ```
 
-Pas de `ports:` : NPM partage le réseau du compose et joint le conteneur
-par son nom de service. Si le compose global définit des `networks:`
-nommés, mettre brasseyutz sur le même réseau que NPM.
+Le port hôte **3007** permet l'accès direct en LAN (`http://<ip-du-pi>:3007`,
+santé, débogage — le backoffice, lui, exige HTTPS). NPM, sur le même réseau
+Docker, joint le conteneur par son nom de service sans passer par ce port.
+Si le compose global définit des `networks:` nommés, mettre brasseyutz sur
+le même réseau que NPM.
 
 ```bash
 docker compose up -d --build brasseyutz   # premier build long sur un Pi
