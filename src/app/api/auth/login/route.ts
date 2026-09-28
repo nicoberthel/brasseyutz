@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import { verifyPassword } from '@/lib/password';
 import { allowLogin } from '@/lib/ratelimit';
 import { sessionCookieHeader } from '@/lib/session';
 
@@ -9,7 +9,7 @@ export async function POST(req: Request): Promise<Response> {
   if (!hash) return Response.json({ error: 'ADMIN_PASSWORD_HASH non configuré.' }, { status: 500 });
   const body = await req.json().catch(() => ({}));
   const password = typeof body?.password === 'string' ? body.password : '';
-  if (!password || !(await bcrypt.compare(password, hash)))
+  if (!password || !(await verifyPassword(password, hash)))
     return Response.json({ error: 'Mot de passe incorrect.' }, { status: 401 });
   return Response.json({ ok: true }, { headers: { 'Set-Cookie': sessionCookieHeader() } });
 }
