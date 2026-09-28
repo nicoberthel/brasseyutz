@@ -1,0 +1,60 @@
+/* ============ Tokens — Brasse-Yutz design system (copie de design/_ds/.../tokens/) ============ */
+
+/* colors.css */
+:root{
+/* Base — impression maison : fond sans encre, une encre quasi noire */
+--papier:#FFFFFF;--papier-ecran:#F5F3EE;--papier-2:#ECE9E2;
+--encre:#161616;--encre-2:#4A4A48;--encre-3:#86857F;
+--filet:#D9D6CF;--filet-fort:#161616;
+/* Couleurs de cuvée — une seule par bière, en petite surface (icône, mot en italique). Toutes ≥ 3:1 sur blanc. */
+--cuvee-orange:#D9480F;--cuvee-houblon:#4F8A2B;--cuvee-ocre:#A87B00;--cuvee-framboise:#C2255C;--cuvee-bleu:#1F63B0;--cuvee-violet:#6A4BC4;--cuvee-bordeaux:#8A1F2E;--cuvee-malt:#5E3A22;
+/* Teintes douces — écran uniquement (site, flyers numériques), jamais sur l'étiquette imprimée */
+--cuvee-orange-soft:#FBE7DE;--cuvee-houblon-soft:#E6F0DF;--cuvee-ocre-soft:#F5EDD5;--cuvee-framboise-soft:#F8E0E8;--cuvee-bleu-soft:#DEE8F4;--cuvee-violet-soft:#E9E4F7;--cuvee-bordeaux-soft:#F1DEE1;--cuvee-malt-soft:#EDE3DA;
+/* Échelle EBC (couleur de la bière) — écran uniquement */
+--ebc-4:#F8E08E;--ebc-8:#F2C14E;--ebc-12:#E39A2B;--ebc-20:#C66A1E;--ebc-30:#9A4516;--ebc-45:#6B2B10;--ebc-70:#3A1608;--ebc-100:#1A0A04;
+/* Sémantique */
+--text-strong:var(--encre);--text-body:var(--encre-2);--text-muted:var(--encre-3);--text-on-ink:var(--papier);
+--surface-page:var(--papier-ecran);--surface-label:var(--papier);--surface-card:var(--papier);--surface-ink:var(--encre);--surface-sunken:var(--papier-2);
+--border-hairline:var(--filet);--border-strong:var(--filet-fort);
+--accent:var(--cuvee-orange);--accent-soft:var(--cuvee-orange-soft);
+--success:var(--cuvee-houblon);--warning:var(--cuvee-ocre);--danger:var(--cuvee-bordeaux);
+}
+
+/* typography.css — familles servies par next/font (variables --nf-*) */
+:root{
+--font-display:var(--nf-serif),Georgia,serif;
+--font-text:var(--nf-sans),'Helvetica Neue',Arial,sans-serif;
+--font-mono:var(--nf-mono),ui-monospace,Menlo,monospace;
+--fs-hero:clamp(64px,10vw,144px);--fs-h1:72px;--fs-h2:44px;--fs-h3:28px;--fs-lead:19px;--fs-body:16px;--fs-small:13px;--fs-micro:11px;
+--lh-display:0.92;--lh-snug:1.2;--lh-body:1.5;
+--tracking-display:-0.02em;--tracking-caps:0.18em;
+--fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;
+/* Étiquette — minimums physiques (hauteur d'x ≥ 1,2 mm ⇒ corps ≥ 2,4 mm en Instrument Sans) */
+--label-fs-legal-min:2.4mm;--label-fs-volume:6.5mm;
+}
+
+/* spacing.css */
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;
+--radius-0:0;--radius-1:2px;--radius-pill:999px;
+--stroke-hair:1px;--stroke-rule:2px;
+--label-hair:0.25mm;--label-hair-light:0.15mm;
+--shadow-none:none;--shadow-lift:0 1px 0 var(--filet),0 10px 28px -16px rgba(22,22,22,.28);--shadow-print:0 24px 50px -28px rgba(22,22,22,.40);
+--ease-out:cubic-bezier(.16,1,.3,1);--dur-fast:120ms;--dur-med:220ms;
+/* Format d'étiquette unique 75 cl & 33 cl long neck (mm) */
+--label-w:140mm;--label-h:75mm;--label-back-w:60mm;--label-front-w:80mm;--label-legal-field:50mm;--bleed:2mm;
+}
+
+/* ============ Règles app (base.css + styles du prototype) ============ */
+*,*::before,*::after{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;background:var(--papier-ecran)}
+body{min-height:100vh;font-family:var(--font-text);color:var(--text-body)}
+a{color:var(--encre);text-decoration:none}
+a:hover{color:var(--encre-2)}
+input,textarea,select,button{font-family:inherit}
+.hov-border{transition:border-color 120ms}
+.hov-border:hover{border-color:var(--encre)!important}
+.hov-ink:hover{color:var(--encre)!important}
+.hov-under:hover{text-decoration:underline}
+.hov-bottom:hover{border-bottom-color:var(--encre)!important}
+@media print{@page{size:A4 landscape;margin:0}html,body{background:#fff!important}header,footer,[data-noprint]{display:none!important}[data-sheet-wrap]{padding:0!important;max-width:none!important}[data-sheet]{zoom:1!important;box-shadow:none!important}}
