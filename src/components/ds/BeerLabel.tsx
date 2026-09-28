@@ -55,9 +55,12 @@ export function BeerLabel({ bottle = '75cl', name, edition, styleName, denominat
   const light = 'var(--label-hair-light) solid var(--filet)';
   const cap: CSSProperties = { font: '600 1.9mm var(--font-text)', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)' };
   const num: CSSProperties = { font: '400 4.8mm/1 var(--font-display)', color: 'var(--text-strong)', whiteSpace: 'nowrap' };
-  const unitS: CSSProperties = { font: '500 1.8mm var(--font-mono)', color: 'var(--text-muted)', marginLeft: '0.6mm' };
-  const desc: CSSProperties = { font: 'italic 400 2.7mm/1 var(--font-display)', color: ac, whiteSpace: 'nowrap' };
-  const numRow: CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1mm', margin: '0.7mm 0 1mm' };
+  const unitS: CSSProperties = { font: '500 1.8mm var(--font-mono)', color: 'var(--text-muted)', marginLeft: '0.4mm' };
+  const desc: CSSProperties = { font: 'italic 400 2.5mm/1 var(--font-display)', color: ac, whiteSpace: 'nowrap' };
+  const numRow: CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '0.5mm', margin: '0.7mm 0 1mm' };
+  /* minmax(0,1fr) + overflow hidden : la cellule ne peut ni élargir la grille
+     au-delà des 62 mm du dos ni peindre par-dessus le filet dos/face. */
+  const statCell: CSSProperties = { padding: '1.4mm 1.8mm', borderLeft: light, overflow: 'hidden', minWidth: 0 };
   const zone = bottle === '33cl' ? 50 : 64;
   return <div style={{ zoom: scale, width: '140mm', height: '75mm', display: 'flex', background: 'var(--papier)', color: 'var(--text-body)', overflow: 'hidden', flex: 'none', position: 'relative', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact', ...style }}>
     <div style={{ width: '62mm', flex: 'none', borderRight: hair, display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
@@ -65,10 +68,10 @@ export function BeerLabel({ bottle = '75cl', name, edition, styleName, denominat
         <span style={{ font: '600 2.2mm var(--font-text)', letterSpacing: '0.16em', textTransform: 'uppercase', color: ac, whiteSpace: 'nowrap' }}>{styleName}</span>
         <span style={{ font: '500 2.2mm var(--font-mono)', color: 'var(--text-strong)', whiteSpace: 'nowrap' }}>N° {brew} · {bottledOn}</span>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '14mm 1fr 1fr', borderBottom: hair }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '14mm minmax(0,1fr) minmax(0,1fr)', borderBottom: hair }}>
         <div style={{ padding: '1.4mm 3mm' }}><div style={cap}>Alc.</div><div style={{ ...num, marginTop: '0.7mm' }}>{abvTxt}<span style={unitS}>%</span></div></div>
-        {ebc != null && <div style={{ padding: '1.4mm 2.4mm', borderLeft: light }}><div style={cap}>Couleur</div><div style={numRow}><span style={num}>{ebc}<span style={unitS}>EBC</span></span><span style={desc}>{describe('ebc', ebc)}</span></div><Gauge kind="ebc" value={ebc} unit="mm" variant={ebcDisplay} showLabel={false} /></div>}
-        {ibu != null && <div style={{ padding: '1.4mm 2.4mm', borderLeft: light }}><div style={cap}>Amertume</div><div style={numRow}><span style={num}>{ibu}<span style={unitS}>IBU</span></span><span style={desc}>{describe('ibu', ibu)}</span></div><Gauge kind="ibu" value={ibu} unit="mm" accent={ac} showLabel={false} /></div>}
+        {ebc != null && <div style={statCell}><div style={cap}>Couleur</div><div style={numRow}><span style={num}>{ebc}<span style={unitS}>EBC</span></span><span style={desc}>{describe('ebc', ebc)}</span></div><Gauge kind="ebc" value={ebc} unit="mm" variant={ebcDisplay} showLabel={false} /></div>}
+        {ibu != null && <div style={statCell}><div style={cap}>Amertume</div><div style={numRow}><span style={num}>{ibu}<span style={unitS}>IBU</span></span><span style={desc}>{describe('ibu', ibu)}</span></div><Gauge kind="ibu" value={ibu} unit="mm" accent={ac} showLabel={false} /></div>}
       </div>
       <div style={{ padding: '0.2mm 0 0', flex: 1, minHeight: 0 }}><IngredientGrid unit="mm" inset={3} rowPadding={ingredientSpacing} accent={ac} malts={malts} hops={hops} yeast={yeast} other={other} /></div>
       <div style={{ padding: '1.2mm 3mm 2mm', borderTop: light }}><LegalMentions unit="mm" quiet lot={lot} bestBefore={bestBefore} brewer={brewer} address={address} pregnancySrc={pregnancySrc} trimanSrc={trimanSrc} /></div>

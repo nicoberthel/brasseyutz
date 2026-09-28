@@ -59,3 +59,14 @@ describe('BeerLabel', () => {
     expect(container.innerHTML).not.toContain('var(--cuvee-bleu)');
   });
 });
+
+describe('BeerLabel — jauges dans la case (débordement du dos)', () => {
+  it('colonnes stats en minmax(0,1fr) et cellules overflow hidden', () => {
+    const { container } = render(<BeerLabel {...labelProps({ name: 'Hop Overflow', styleName: 'NEIPA', brew: 33, abv: '5', ebc: '11', ibu: '40' })} />);
+    const grid = [...container.querySelectorAll('div')].find(d => d.style.gridTemplateColumns.startsWith('14mm'))!;
+    expect(grid.style.gridTemplateColumns).toBe('14mm minmax(0,1fr) minmax(0,1fr)');
+    const cells = [...grid.children] as HTMLElement[];
+    expect(cells).toHaveLength(3);
+    cells.slice(1).forEach(c => expect(c.style.overflow).toBe('hidden'));
+  });
+});
