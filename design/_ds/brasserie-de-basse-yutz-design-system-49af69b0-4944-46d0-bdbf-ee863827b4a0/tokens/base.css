@@ -1,0 +1,4 @@
+a{color:var(--encre);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--accent)}
+/* Impression : garder fonds et jauges (sinon le navigateur supprime les couleurs de fond) */
+*,*::before,*::after{-webkit-print-color-adjust:exact;print-color-adjust:exact}

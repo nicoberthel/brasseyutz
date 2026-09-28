@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/tokens/colors.css">
+<link rel="stylesheet" href="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/tokens/typography.css">
+<link rel="stylesheet" href="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/tokens/base.css">
+<link rel="stylesheet" href="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/styles.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/qrcode-generator@1.4.4/qrcode.js"></script>
+<script src="_ds/brasserie-de-basse-yutz-design-system-49af69b0-4944-46d0-bdbf-ee863827b4a0/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;background:var(--papier-ecran);}
+a{color:var(--encre);text-decoration:none;}
+a:hover{color:var(--encre-2);}
+*{box-sizing:border-box;}
+@media print{@page{size:A4 landscape;margin:0}html,body{background:#fff!important}header,footer,[data-noprint]{display:none!important}[data-sheet-wrap]{padding:0!important;max-width:none!important}[data-sheet]{zoom:1!important;box-shadow:none!important}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:var(--papier-ecran);font-family:var(--font-text);color:var(--text-body)">
+
+<header style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px clamp(16px,4vw,48px);background:var(--papier);border-bottom:1px solid var(--filet)">
+  <a href="#/" style="display:flex;align-items:center;gap:12px;color:var(--encre)">
+    <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Signature" size="{{ 40 }}" hint-size="80px,40px"></x-import>
+  </a>
+  <nav style="display:flex;gap:24px;font:600 12px var(--font-text);letter-spacing:0.18em;text-transform:uppercase">
+    <a href="#/" style="color:var(--encre);padding:6px 0;border-bottom:1px solid {{ navListBorder }}">Bières</a>
+    <a href="#/admin" style="color:var(--encre);padding:6px 0;border-bottom:1px solid {{ navAdminBorder }}">Backoffice</a>
+  </nav>
+</header>
+
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+<main data-screen-label="Catalogue" style="max-width:1240px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(16px,4vw,48px) 96px">
+  <div style="font:600 12px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--accent)">Bières maison · Yutz</div>
+  <h1 style="margin:12px 0 0;font:400 clamp(52px,8vw,104px)/0.92 var(--font-display);letter-spacing:-0.02em;color:var(--encre)">Toutes les <i style="color:var(--accent)">bières</i></h1>
+  <p style="margin:20px 0 0;max-width:560px;font-size:var(--fs-lead);line-height:1.5;color:var(--encre-2);text-wrap:pretty">Chaque étiquette porte un QR code qui mène ici : la recette, les chiffres et les mentions de la cuvée.</p>
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:40px 0 24px;padding-top:24px;border-top:1px solid var(--encre)">
+    <label style="flex:1 1 320px;display:flex;align-items:center;gap:10px;padding:0 14px;height:48px;background:var(--papier);border:1px solid var(--filet)">
+      <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.CuveeIcon" name="Search" size="{{ 18 }}" color="var(--encre-3)" hint-size="18px,18px"></x-import>
+      <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Nom, style, houblon, malt, n° de brassin…" style="flex:1;min-width:0;border:0;outline:0;background:transparent;font:400 16px var(--font-text);color:var(--encre)">
+    </label>
+    <span style="font:500 13px var(--font-mono);color:var(--encre-3)">{{ countTxt }}</span>
+  </div>
+  <sc-if value="{{ noResult }}" hint-placeholder-val="{{ false }}">
+    <p style="padding:48px 0;font:italic 400 28px var(--font-display);color:var(--encre-2)">Aucune bière ne correspond à « {{ query }} ».</p>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,{{ cardMin }}),1fr));gap:20px">
+    <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+      <a href="{{ c.href }}" style="display:flex;flex-direction:column;background:var(--papier);border:1px solid var(--filet);color:var(--encre);transition:border-color 120ms" style-hover="border-color:var(--encre)">
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--filet)">
+          <span style="font:600 11px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:{{ c.accent }}">{{ c.styleName }}</span>
+          <span style="font:500 12px var(--font-mono);color:var(--encre)">N° {{ c.brew }}</span>
+        </div>
+        <div style="display:flex;justify-content:center;padding:22px 12px;background:var(--papier-2);overflow:hidden">
+          <sc-if value="{{ c.hasImage }}" hint-placeholder-val="{{ false }}">
+            <img src="{{ c.labelImage }}" alt="Étiquette {{ c.name }}" style="display:block;max-width:100%;height:{{ c.imgH }};object-fit:contain;box-shadow:var(--shadow-print)">
+          </sc-if>
+          <sc-if value="{{ c.noImage }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.BeerLabel" dc-props="{{ c.label }}" hint-size="310px,166px"></x-import>
+          </sc-if>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px;border-top:1px solid var(--filet)">
+          <span style="font:400 26px/1 var(--font-display);color:var(--encre)">{{ c.first }} <i style="color:{{ c.accent }}">{{ c.second }}</i></span>
+          <span style="font:500 12px var(--font-mono);color:var(--encre-2);white-space:nowrap">{{ c.abvTxt }} % · {{ c.vol }}</span>
+        </div>
+      </a>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isBeer }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Fiche recette" style="max-width:860px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(16px,4vw,32px) 96px">
+  <a href="#/" style="display:inline-flex;align-items:center;gap:8px;font:600 12px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--encre-2)">
+    <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.CuveeIcon" name="ArrowLeft" size="{{ 16 }}" hint-size="16px,16px"></x-import>Toutes les bières
+  </a>
+  <sc-if value="{{ notFound }}" hint-placeholder-val="{{ false }}">
+    <h1 style="margin:48px 0 0;font:400 56px/1 var(--font-display);color:var(--encre)">Bière <i style="color:var(--accent)">introuvable</i></h1>
+    <p style="font-size:var(--fs-lead);color:var(--encre-2)">Ce brassin n'est pas (ou plus) en ligne.</p>
+  </sc-if>
+  <sc-if value="{{ hasCur }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:32px;padding-bottom:10px;border-bottom:1px solid var(--encre)">
+      <span style="font:600 12px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:{{ cur.accent }}">{{ cur.styleName }}</span>
+      <span style="font:500 13px var(--font-mono);color:var(--encre)">N° {{ cur.brew }} · {{ cur.bottledOn }}</span>
+    </div>
+    <h1 style="margin:28px 0 0;font:400 clamp(44px,9vw,96px)/0.95 var(--font-display);letter-spacing:-0.02em;color:var(--encre);text-wrap:balance">{{ cur.first }} <i style="color:{{ cur.accent }}">{{ cur.second }}</i></h1>
+    <div style="margin-top:32px;display:flex;justify-content:center;padding:clamp(16px,4vw,40px) 8px;background:var(--papier-2);overflow:hidden">
+      <sc-if value="{{ cur.hasImage }}" hint-placeholder-val="{{ false }}">
+        <img src="{{ cur.labelImage }}" alt="Étiquette {{ cur.name }}" style="display:block;max-width:100%;max-height:420px;height:auto;box-shadow:var(--shadow-print)">
+      </sc-if>
+      <sc-if value="{{ cur.noImage }}" hint-placeholder-val="{{ true }}">
+        <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.BeerLabel" dc-props="{{ cur.label }}" hint-size="100%,260px"></x-import>
+      </sc-if>
+    </div>
+
+    <div style="margin-top:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));border-top:1px solid var(--encre);border-left:1px solid var(--filet)">
+      <sc-for list="{{ cur.stats }}" as="s" hint-placeholder-count="6">
+        <div style="padding:14px 16px 16px;background:var(--papier);border-right:1px solid var(--filet);border-bottom:1px solid var(--filet)">
+          <div style="font:600 11px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--encre-3)">{{ s.label }}</div>
+          <div style="margin-top:6px;display:flex;align-items:baseline;gap:6px"><span style="font:400 40px/1 var(--font-display);color:var(--encre)">{{ s.value }}</span><span style="font:500 12px var(--font-mono);color:var(--encre-3)">{{ s.unit }}</span></div>
+          <sc-if value="{{ s.gauge }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px"><x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Gauge" dc-props="{{ s.gauge }}" hint-size="100%,24px"></x-import></div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ cur.description }}" hint-placeholder-val="{{ false }}">
+      <section style="margin-top:64px;display:flex;flex-direction:column;gap:14px">
+        <div style="font:600 11px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--encre-3);padding-bottom:10px;border-bottom:1px solid var(--encre)">L'histoire du brassin</div>
+        <sc-for list="{{ cur.descParas }}" as="p" hint-placeholder-count="2">
+          <p style="margin:0;max-width:680px;font-size:var(--fs-lead);line-height:1.6;color:var(--encre-2);text-wrap:pretty">{{ p }}</p>
+        </sc-for>
+      </section>
+    </sc-if>
+
+    <section style="margin-top:64px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <h2 style="margin:0;font:400 var(--fs-h2)/1 var(--font-display);color:var(--encre)">La <i style="color:{{ cur.accent }}">recette</i></h2>
+        <span style="font:500 13px var(--font-mono);color:var(--encre-2)">{{ cur.volumeTxt }}</span>
+      </div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:20px">
+        <sc-for list="{{ cur.blocks }}" as="bl" hint-placeholder-count="4">
+          <div style="background:var(--papier);border:1px solid var(--filet)">
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--encre)">
+              <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.CuveeIcon" name="{{ bl.icon }}" size="{{ 20 }}" color="{{ cur.accent }}" hint-size="20px,20px"></x-import>
+              <span style="font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre)">{{ bl.title }}</span>
+            </div>
+            <sc-for list="{{ bl.rows }}" as="r" hint-placeholder-count="3">
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,auto);gap:4px 16px;align-items:baseline;padding:10px 16px;border-top:1px solid var(--filet)">
+                <span style="font-size:16px;color:var(--encre);text-wrap:pretty">{{ r.a }}</span>
+                <span style="font:500 14px var(--font-mono);color:var(--encre);text-align:right;white-space:nowrap">{{ r.b }}</span>
+                <span style="font:400 13px var(--font-mono);color:var(--encre-3);text-align:right">{{ r.c }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <sc-if value="{{ cur.notes }}" hint-placeholder-val="{{ false }}">
+      <section style="margin-top:56px;padding:28px 0;border-top:1px solid var(--encre);border-bottom:1px solid var(--filet)">
+        <div style="font:600 11px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--encre-3)">Le mot du brasseur</div>
+        <p style="margin:12px 0 0;font:italic 400 clamp(24px,4vw,32px)/1.25 var(--font-display);color:var(--encre);text-wrap:pretty">{{ cur.notes }}</p>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ cur.hasTasting }}" hint-placeholder-val="{{ false }}">
+      <section style="margin-top:64px">
+        <h2 style="margin:0;font:400 var(--fs-h2)/1 var(--font-display);color:var(--encre)">La <i style="color:{{ cur.accent }}">dégustation</i></h2>
+        <div style="margin-top:20px;border-top:1px solid var(--encre)">
+          <sc-for list="{{ cur.tasting }}" as="t" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:minmax(88px,160px) minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--filet)">
+              <span style="font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:{{ cur.accent }}">{{ t.label }}</span>
+              <span style="font:400 clamp(20px,3vw,24px)/1.35 var(--font-display);color:var(--encre);text-wrap:pretty">{{ t.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <section style="margin-top:64px">
+      <div style="font:600 11px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--encre-3);padding-bottom:10px;border-bottom:1px solid var(--encre)">Autres bières</div>
+      <sc-for list="{{ others }}" as="o" hint-placeholder-count="3">
+        <a href="{{ o.href }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 0;border-bottom:1px solid var(--filet);color:var(--encre)" style-hover="border-bottom-color:var(--encre)">
+          <span style="font:400 26px/1 var(--font-display)">{{ o.first }} <i style="color:{{ o.accent }}">{{ o.second }}</i></span>
+          <span style="font:500 12px var(--font-mono);color:var(--encre-2)">{{ o.styleName }} · N° {{ o.brew }}</span>
+        </a>
+      </sc-for>
+    </section>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Backoffice" style="max-width:1320px;margin:0 auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,48px) 96px">
+  <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--encre)">
+    <div>
+      <div style="font:600 12px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--accent)">Backoffice</div>
+      <h1 style="margin:8px 0 0;font:400 clamp(44px,6vw,72px)/0.95 var(--font-display);letter-spacing:-0.02em;color:var(--encre)">Les <i style="color:var(--accent)">brassins</i></h1>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="outline" onClick="{{ onSheet }}" hint-size="190px,44px">Planche A4</x-import>
+      <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="primary" onClick="{{ onNew }}" hint-size="180px,44px">Nouvelle bière</x-import>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;background:var(--papier);border:1px solid var(--filet);overflow-x:auto">
+    <div style="min-width:640px">
+      <div style="display:grid;grid-template-columns:70px minmax(0,1.4fr) minmax(0,1fr) 110px 200px;gap:12px;padding:10px 16px;border-bottom:1px solid var(--encre);font:500 11px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre-3)">
+        <span>N°</span><span>Nom</span><span>Style</span><span>Embout.</span><span style="text-align:right">Actions</span>
+      </div>
+      <sc-for list="{{ adminRows }}" as="r" hint-placeholder-count="6">
+        <div style="display:grid;grid-template-columns:70px minmax(0,1.4fr) minmax(0,1fr) 110px 200px;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--filet);background:{{ r.bg }}">
+          <span style="font:500 14px var(--font-mono);color:var(--encre)">{{ r.brew }}</span>
+          <span style="font:400 22px/1 var(--font-display);color:var(--encre)">{{ r.first }} <i style="color:{{ r.accent }}">{{ r.second }}</i></span>
+          <span style="font-size:14px;color:var(--encre-2)">{{ r.styleName }}</span>
+          <span style="font:400 13px var(--font-mono);color:var(--encre-2)">{{ r.bottledOn }}</span>
+          <div style="display:flex;justify-content:flex-end;gap:14px;font:600 11px var(--font-text);letter-spacing:0.16em;text-transform:uppercase">
+            <a href="{{ r.href }}" style="color:var(--encre-2)" style-hover="color:var(--encre)">Voir</a>
+            <span onClick="{{ r.onEdit }}" style="cursor:pointer;color:var(--encre)" style-hover="text-decoration:underline">Modifier</span>
+            <span onClick="{{ r.onDelete }}" style="cursor:pointer;color:var(--danger)" style-hover="text-decoration:underline">Suppr.</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,540px),1fr));gap:32px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+        <h2 style="margin:0;font:400 var(--fs-h3)/1.1 var(--font-display);color:var(--encre)">{{ formTitle }}</h2>
+        <span style="font:500 12px var(--font-mono);color:var(--success)">{{ savedMsg }}</span>
+      </div>
+
+      <fieldset style="margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:14px">
+        <legend style="padding:0 0 10px;font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre)">Étiquette</legend>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
+          <sc-for list="{{ labelInputs }}" as="f" hint-placeholder-count="11">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">{{ f.label }}</span>
+              <input value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" style="height:42px;padding:0 12px;border:1px solid var(--filet);background:var(--papier);font:400 15px var(--font-text);color:var(--encre);outline:0;border-radius:0" style-focus="border-color:var(--encre)">
+            </label>
+          </sc-for>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">Bouteille</span>
+            <select value="{{ form.bottle }}" onChange="{{ set.bottle }}" style="height:42px;padding:0 10px;border:1px solid var(--filet);background:var(--papier);font:400 15px var(--font-text);color:var(--encre);border-radius:0">
+              <option value="75cl">75 cl</option><option value="33cl">33 cl long neck</option>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">Couleur de cuvée</span>
+            <select value="{{ form.accent }}" onChange="{{ set.accent }}" style="height:42px;padding:0 10px;border:1px solid var(--filet);background:var(--papier);font:400 15px var(--font-text);color:var(--encre);border-radius:0">
+              <sc-for list="{{ accentOptions }}" as="o" hint-placeholder-count="8"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">Icône</span>
+            <select value="{{ form.icon }}" onChange="{{ set.icon }}" style="height:42px;padding:0 10px;border:1px solid var(--filet);background:var(--papier);font:400 15px var(--font-text);color:var(--encre);border-radius:0">
+              <sc-for list="{{ iconOptions }}" as="o" hint-placeholder-count="9"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+            </select>
+          </label>
+        </div>
+        <sc-for list="{{ labelTexts }}" as="f" hint-placeholder-count="4">
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">{{ f.label }}</span>
+            <textarea value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" rows="2" style="padding:10px 12px;border:1px solid var(--filet);background:var(--papier);font:400 15px/1.4 var(--font-text);color:var(--encre);outline:0;resize:vertical;border-radius:0" style-focus="border-color:var(--encre)"></textarea>
+          </label>
+        </sc-for>
+      </fieldset>
+
+      <fieldset style="margin:0;padding:24px 0 0;border:0;border-top:1px solid var(--encre);display:flex;flex-direction:column;gap:14px">
+        <legend style="padding:0 0 10px;font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre)">Ancienne étiquette (image)</legend>
+        <p style="margin:0;font:400 13px/1.5 var(--font-text);color:var(--encre-3)">Si une image est chargée, elle remplace l'étiquette générée sur le site. Les planches A4 utilisent toujours l'étiquette générée.</p>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <sc-if value="{{ form.labelImage }}" hint-placeholder-val="{{ false }}">
+            <img src="{{ form.labelImage }}" alt="Ancienne étiquette" style="display:block;height:96px;width:auto;border:1px solid var(--filet)">
+          </sc-if>
+          <label style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:1px solid var(--encre);background:var(--papier);cursor:pointer;font:600 12px var(--font-text);letter-spacing:0.16em;text-transform:uppercase;color:var(--encre)" style-hover="background:var(--encre);color:var(--papier)">
+            <input type="file" accept="image/*" onChange="{{ onUpload }}" style="display:none">{{ uploadLabel }}
+          </label>
+          <sc-if value="{{ form.labelImage }}" hint-placeholder-val="{{ false }}">
+            <span onClick="{{ onRemoveImage }}" style="cursor:pointer;font:600 11px var(--font-text);letter-spacing:0.16em;text-transform:uppercase;color:var(--danger)" style-hover="text-decoration:underline">Retirer</span>
+          </sc-if>
+        </div>
+      </fieldset>
+
+      <fieldset style="margin:0;padding:24px 0 0;border:0;border-top:1px solid var(--encre);display:flex;flex-direction:column;gap:14px">
+        <legend style="padding:0 0 10px;font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre)">Dégustation &amp; histoire</legend>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+          <sc-for list="{{ tasteTexts }}" as="f" hint-placeholder-count="5">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">{{ f.label }}</span>
+              <textarea value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" rows="2" style="padding:10px 12px;border:1px solid var(--filet);background:var(--papier);font:400 15px/1.4 var(--font-text);color:var(--encre);outline:0;resize:vertical;border-radius:0" style-focus="border-color:var(--encre)"></textarea>
+            </label>
+          </sc-for>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">Histoire du brassin (option, avant la recette)</span>
+          <textarea value="{{ form.description }}" onChange="{{ set.description }}" placeholder="D'où vient l'idée, la démarche, l'événement pour lequel elle a été brassée…" rows="5" style="padding:10px 12px;border:1px solid var(--filet);background:var(--papier);font:400 15px/1.5 var(--font-text);color:var(--encre);outline:0;resize:vertical;border-radius:0" style-focus="border-color:var(--encre)"></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset style="margin:0;padding:24px 0 0;border:0;border-top:1px solid var(--encre);display:flex;flex-direction:column;gap:14px">
+        <legend style="padding:0 0 10px;font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre)">Recette</legend>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px">
+          <sc-for list="{{ recipeInputs }}" as="f" hint-placeholder-count="3">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">{{ f.label }}</span>
+              <input value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" style="height:42px;padding:0 12px;border:1px solid var(--filet);background:var(--papier);font:400 15px var(--font-mono);color:var(--encre);outline:0;border-radius:0" style-focus="border-color:var(--encre)">
+            </label>
+          </sc-for>
+        </div>
+        <p style="margin:0;font:400 13px/1.5 var(--font-text);color:var(--encre-3)">Une ligne par élément, colonnes séparées par « | ». Exemple : <span style="font-family:var(--font-mono);color:var(--encre-2)">Citra | 50 g | dry hop J3</span></p>
+        <sc-for list="{{ recipeTexts }}" as="f" hint-placeholder-count="5">
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">{{ f.label }}</span>
+            <textarea value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" rows="4" style="padding:10px 12px;border:1px solid var(--filet);background:var(--papier);font:400 14px/1.5 var(--font-mono);color:var(--encre);outline:0;resize:vertical;border-radius:0" style-focus="border-color:var(--encre)"></textarea>
+          </label>
+        </sc-for>
+      </fieldset>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--encre)">
+        <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="primary" onClick="{{ onSave }}" hint-size="160px,44px">Enregistrer</x-import>
+        <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="outline" onClick="{{ onNew }}" hint-size="140px,44px">Annuler</x-import>
+      </div>
+      <sc-if value="{{ formError }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0;font:500 14px var(--font-text);color:var(--danger)">{{ formError }}</p>
+      </sc-if>
+    </div>
+
+    <aside style="position:sticky;top:24px;display:flex;flex-direction:column;gap:20px">
+      <div style="background:var(--papier-2);padding:24px 12px;display:flex;justify-content:center;overflow:hidden">
+        <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.BeerLabel" dc-props="{{ previewLabel }}" hint-size="100%,280px"></x-import>
+      </div>
+      <div style="background:var(--papier);border:1px solid var(--filet);display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;padding:20px;align-items:center">
+        <div style="width:148px;height:148px;background:var(--papier)">{{ qrEl }}</div>
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+          <div style="font:500 12px var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;color:var(--encre)">QR code de l'étiquette</div>
+          <div style="font:400 13px/1.4 var(--font-mono);color:var(--encre-2);word-break:break-all">{{ previewUrl }}</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="outline" size="sm" onClick="{{ onDownloadQr }}" hint-size="150px,36px">Télécharger SVG</x-import>
+            <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="outline" size="sm" onClick="{{ onSheet }}" hint-size="130px,36px">Planche A4</x-import>
+            <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="ghost" size="sm" onClick="{{ onOpenPage }}" hint-size="120px,36px">Voir la page</x-import>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isSheet }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Planche A4" data-sheet-wrap="1" style="max-width:1320px;margin:0 auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,48px) 96px">
+  <div data-noprint="1" style="display:flex;flex-direction:column;gap:20px;padding-bottom:24px;margin-bottom:28px;border-bottom:1px solid var(--encre)">
+    <a href="#/admin" style="display:inline-flex;align-items:center;gap:8px;font:600 12px var(--font-text);letter-spacing:0.18em;text-transform:uppercase;color:var(--encre-2)">
+      <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.CuveeIcon" name="ArrowLeft" size="{{ 16 }}" hint-size="16px,16px"></x-import>Backoffice
+    </a>
+    <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap">
+      <h1 style="margin:0;font:400 clamp(44px,6vw,72px)/0.95 var(--font-display);letter-spacing:-0.02em;color:var(--encre)">Planche <i style="color:var(--accent)">A4</i></h1>
+      <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.Button" variant="primary" onClick="{{ onPrint }}" hint-size="160px,44px">Imprimer</x-import>
+    </div>
+    <p style="margin:0;font:400 14px/1.5 var(--font-text);color:var(--encre-2)">A4 paysage, 4 étiquettes 140 × 75 mm. Imprimez à 100 % (taille réelle), sans marges.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px">
+      <sc-for list="{{ slotRows }}" as="s" hint-placeholder-count="4">
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font:600 11px var(--font-text);letter-spacing:0.14em;text-transform:uppercase;color:var(--encre-2)">Emplacement {{ s.n }}</span>
+          <select value="{{ s.value }}" onChange="{{ s.onChange }}" style="height:42px;padding:0 10px;border:1px solid var(--filet);background:var(--papier);font:400 15px var(--font-text);color:var(--encre);border-radius:0">
+            <option value="">Vide</option>
+            <sc-for list="{{ beerOptions }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+          </select>
+        </label>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--encre);cursor:pointer">
+        <input type="checkbox" checked="{{ sheet.cut }}" onChange="{{ onToggleCut }}" style="accent-color:var(--encre);width:16px;height:16px">Repères de coupe
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--encre);cursor:pointer">
+        <input type="checkbox" checked="{{ sheet.qr }}" onChange="{{ onToggleQr }}" style="accent-color:var(--encre);width:16px;height:16px">QR code (à la place de « Alc. »)
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--encre);cursor:pointer">
+        <input type="checkbox" checked="{{ sheet.mono }}" onChange="{{ onToggleMono }}" style="accent-color:var(--encre);width:16px;height:16px">100 % noir
+      </label>
+    </div>
+  </div>
+  <div style="overflow:auto">
+    <div data-sheet="1" style="zoom:{{ sheetZoom }};position:relative;width:297mm;height:210mm;background:var(--papier);box-shadow:var(--shadow-print);display:grid;grid-template-columns:140mm 140mm;grid-template-rows:75mm 75mm;justify-content:center;align-content:center;margin:0 auto">
+      <sc-for list="{{ sheetSlots }}" as="sl" hint-placeholder-count="4">
+        <div data-slot="1" style="position:relative;width:140mm;height:75mm;overflow:hidden">
+          <sc-if value="{{ sl.label }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="BrasserieDeBasseYutzDesignSystem_49af69.BeerLabel" dc-props="{{ sl.label }}" hint-size="140mm,75mm"></x-import>
+          </sc-if>
+          <sc-if value="{{ sl.qr }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;left:{{ qrBox.l }};top:{{ qrBox.t }};width:{{ qrBox.w }};height:{{ qrBox.h }};background:var(--papier);display:flex;align-items:center;justify-content:center;padding:0.1mm">{{ sl.qr }}</div>
+          </sc-if>
+        </div>
+      </sc-for>
+      <sc-if value="{{ sheet.cut }}" hint-placeholder-val="{{ true }}">
+        <svg viewBox="0 0 297 210" style="position:absolute;left:0;top:0;width:297mm;height:210mm;pointer-events:none" fill="none" stroke="#161616" stroke-width="0.15">
+          <path d="M8.5 22V28M148.5 22V28M288.5 22V28M8.5 182V188M148.5 182V188M288.5 182V188M2 30H6.5M2 105H6.5M2 180H6.5M290.5 30H295M290.5 105H295M290.5 180H295"></path>
+        </svg>
+      </sc-if>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<footer style="padding:28px clamp(16px,4vw,48px);border-top:1px solid var(--filet);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:400 13px var(--font-text);color:var(--encre-3)">
+  <span>Bière maison · Brasse-Yutz, Yutz</span>
+  <span>L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</span>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cardSize&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;compact&quot;,&quot;large&quot;],&quot;default&quot;:&quot;compact&quot;,&quot;tsType&quot;:&quot;'compact'|'large'&quot;,&quot;section&quot;:&quot;Catalogue&quot;},&quot;monochrome&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Étiquettes&quot;}}">
+class Component extends DCLogic {
+  KEY = 'brasse-yutz-bieres-v1';
+  seed() {
+    const T = {
+      'dark-mode': { look: 'Brune acajou, reflets rubis, mousse beige fine.', nose: 'Pain grillé, cacao léger, une pointe de noisette.', mouth: 'Ronde et souple, malt toasté, corps léger pour une brune.', finish: 'Sèche, amertume douce qui revient sur le café.', serving: '8–10 °C, verre à pied.' },
+      'hop-overflow': { look: 'Jaune paille trouble, mousse blanche dense.', nose: 'Mangue, fruit de la passion, agrumes, un fond résineux.', mouth: 'Texture soyeuse (avoine et blé), jus de fruits tropicaux, peu d’amertume perçue.', finish: 'Douce, légèrement résineuse.', serving: '6–8 °C, à boire dans les 3 mois.' },
+      'xmas-2025': { look: 'Ambrée foncée, reflets cuivrés.', nose: 'Écorce d’orange, cannelle, pain d’épices.', mouth: 'Caramel, épices chaudes en retrait, corps moyen.', finish: 'Gingembre discret, légère chaleur.', serving: '8–10 °C.', },
+      'paul': { look: 'Dorée, limpide, mousse blanche généreuse.', nose: 'Fruits blancs, poivre, levure belge.', mouth: 'Ample et sèche malgré les 8,2 %, notes de poire et d’épices.', finish: 'Longue, alcool bien intégré.', serving: '8–12 °C, verre tulipe.' },
+      'pils-electrique': { look: 'Or pâle, très limpide.', nose: 'Céréales, fleurs, touche herbacée.', mouth: 'Nette et vive, malt pils, houblon floral.', finish: 'Sèche, amertume franche et courte.', serving: '4–6 °C.' },
+      'citra-xtra': { look: 'Blonde dorée, légèrement voilée.', nose: 'Pamplemousse, citron vert, litchi.', mouth: 'Agrumes, base maltée légère.', finish: 'Amertume nette, agrumes persistants.', serving: '6–8 °C.' }
+    };
+    T['hop-overflow'].description = 'Le brassin 33 est né d’une envie simple : voir jusqu’où on peut pousser le houblonnage à froid sans que la bière devienne amère. Cinq houblons, deux dry hop, et une fermentation surveillée de près pour garder la texture ronde d’une NEIPA.';
+    return [
+      {id:'dark-mode',name:'Dark Mode',styleName:'Munich Dunkel',denomination:'Bière brune',brew:34,abv:'4',ebc:'35',ibu:'25',bottle:'75cl',accent:'var(--cuvee-malt)',icon:'SunMoon',
+       malts:'*Orge* : Munich Light, Pale Ale, CaraMunich II, Chocolat',hops:'Brewers Gold, Fuggle, Magnum',yeast:'S-33',other:'Eau, sucre',bottledOn:'27/09/2026',bestBefore:'09/2027',lot:'L2609-34',
+       volume:'20',og:'1,041',fg:'1,010',grains:'Munich Light | 3,2 kg\nPale Ale | 0,8 kg\nCaraMunich II | 0,3 kg\nChocolat | 0,1 kg',hopSchedule:'Magnum | 12 g | 60 min\nBrewers Gold | 15 g | 20 min\nFuggle | 20 g | 5 min',mash:'Empâtage | 66 °C | 60 min\nMash-out | 78 °C | 10 min',ferment:'S-33 | 18 °C | 12 jours\nGarde | 4 °C | 3 semaines',notes:'Une brune qui se boit sans y penser. Le thème sombre, version liquide.'},
+      {id:'hop-overflow',name:'Hop Overflow',styleName:'NEIPA',brew:33,abv:'5',ebc:'11',ibu:'40',bottle:'75cl',accent:'var(--cuvee-orange)',icon:'Hop',
+       malts:'*Orge* : Pale Ale, CaraPils, Munich, Vienna · flocons de *blé*',hops:'Chinook, Citra, Nelson Sauvin, Mosaïc, Centennial',yeast:'Verdant IPA',other:'Eau, sucre',bottledOn:'07/05/2026',bestBefore:'05/2027',lot:'L2605-33',
+       volume:'20',og:'1,050',fg:'1,012',grains:'Pale Ale | 4,0 kg\nFlocons de blé | 0,8 kg\nMunich | 0,4 kg\nVienna | 0,4 kg\nCaraPils | 0,3 kg',hopSchedule:'Chinook | 10 g | 60 min\nCitra | 40 g | whirlpool 80 °C\nMosaïc | 40 g | whirlpool 80 °C\nNelson Sauvin | 50 g | dry hop J3\nCentennial | 50 g | dry hop J3\nCitra | 50 g | dry hop J6',mash:'Empâtage | 67 °C | 60 min\nMash-out | 78 °C | 10 min',ferment:'Verdant IPA | 19 °C | 10 jours\nCold crash | 2 °C | 2 jours',notes:'Trouble assumée. À boire jeune, avant que les arômes ne débordent de la pile.'},
+      {id:'xmas-2025',name:'Xmas',edition:'2025',styleName:'Bière de Noël',denomination:'Bière épicée',brew:32,abv:'5,5',ebc:'53',ibu:'27',bottle:'33cl',accent:'var(--cuvee-bordeaux)',icon:'Snowflake',
+       malts:'*Orge* : Pale Ale, Munich, CaraMunich, Chocolat, CaraBelge',hops:'Mosaïc, Centennial',yeast:'S-33',other:'Eau, sucre, orange, clou de girofle, gingembre, cannelle',bottledOn:'15/11/2025',bestBefore:'11/2026',lot:'L2511-32',
+       volume:'20',og:'1,054',fg:'1,012',grains:'Pale Ale | 3,6 kg\nMunich | 0,8 kg\nCaraMunich | 0,4 kg\nCaraBelge | 0,2 kg\nChocolat | 0,15 kg',hopSchedule:'Centennial | 15 g | 60 min\nMosaïc | 20 g | 10 min',mash:'Empâtage | 67 °C | 60 min\nMash-out | 78 °C | 10 min',ferment:'S-33 | 19 °C | 14 jours\nÉpices | zeste, girofle, gingembre, cannelle | 5 min',notes:'Les épices restent discrètes. Servez-la à 8–10 °C, pas plus froide.'},
+      {id:'paul',name:'Paul',edition:'Eph 5:18',styleName:'Triple',brew:31,abv:'8,2',ebc:'12',ibu:'24',bottle:'75cl',accent:'var(--cuvee-houblon)',icon:'Leaf',
+       malts:'*Orge* : Pilsner, Munich, Cara Belge',hops:'Chinook, Fuggle',yeast:'Abbaye Belgian',other:'Eau, sucre',bottledOn:'15/05/2025',bestBefore:'05/2026',lot:'L2505-31',
+       volume:'20',og:'1,070',fg:'1,008',grains:'Pilsner | 5,5 kg\nMunich | 0,5 kg\nCara Belge | 0,2 kg\nSucre candi | 0,8 kg',hopSchedule:'Chinook | 12 g | 60 min\nFuggle | 25 g | 15 min',mash:'Empâtage | 64 °C | 75 min\nMash-out | 78 °C | 10 min',ferment:'Abbaye Belgian | 20 → 24 °C | 14 jours\nGarde | 12 °C | 4 semaines',notes:'Forte, à partager. Le verset sur l’étiquette n’est pas là par hasard.'},
+      {id:'pils-electrique',name:'Pils Électrique',styleName:'Pils',denomination:'Bière lager',brew:30,abv:'5,5',ebc:'8',ibu:'20',bottle:'75cl',accent:'var(--cuvee-ocre)',icon:'Zap',
+       malts:'*Orge* : Pilsner, Munich, CaraPils, Vienna',hops:'Styrian Goldings, Mosaïc',yeast:'Diamond Lager',other:'Eau, sucre',bottledOn:'24/04/2025',bestBefore:'04/2026',lot:'L2504-30',
+       volume:'20',og:'1,052',fg:'1,010',grains:'Pilsner | 4,4 kg\nVienna | 0,4 kg\nMunich | 0,2 kg\nCaraPils | 0,2 kg',hopSchedule:'Styrian Goldings | 25 g | 60 min\nMosaïc | 20 g | 10 min\nStyrian Goldings | 20 g | 0 min',mash:'Protéines | 52 °C | 10 min\nEmpâtage | 65 °C | 60 min\nMash-out | 78 °C | 10 min',ferment:'Diamond Lager | 11 °C | 14 jours\nGarde | 2 °C | 5 semaines',notes:'Une lager nette, qui demande surtout de la patience au froid.'},
+      {id:'citra-xtra',name:'Citra Xtra',styleName:'American Pale Ale',denomination:'Bière APA',brew:26,abv:'5',ebc:'11',ibu:'38',bottle:'75cl',accent:'var(--cuvee-houblon)',icon:'Citrus',
+       malts:'*Orge* : Pale Ale, Pilsen · flocons de *froment*, malt de *blé*',hops:'Citra',yeast:'S-04',other:'Eau, sucre',bottledOn:'18/07/2024',bestBefore:'07/2025',lot:'L2407-26',
+       volume:'20',og:'1,049',fg:'1,011',grains:'Pale Ale | 3,6 kg\nPilsen | 0,6 kg\nMalt de blé | 0,4 kg\nFlocons de froment | 0,3 kg',hopSchedule:'Citra | 10 g | 60 min\nCitra | 30 g | 10 min\nCitra | 40 g | whirlpool\nCitra | 60 g | dry hop J4',mash:'Empâtage | 66 °C | 60 min\nMash-out | 78 °C | 10 min',ferment:'S-04 | 19 °C | 10 jours',notes:'Un seul houblon, en quantité. Le nom dit tout.'}
+    ].map(b => ({ ...b, ...(T[b.id] || {}) }));
+  }
+  accents = [['Orange','var(--cuvee-orange)'],['Houblon','var(--cuvee-houblon)'],['Ocre','var(--cuvee-ocre)'],['Framboise','var(--cuvee-framboise)'],['Bleu','var(--cuvee-bleu)'],['Violet','var(--cuvee-violet)'],['Bordeaux','var(--cuvee-bordeaux)'],['Malt','var(--cuvee-malt)']];
+  icons = [['Hop','Houblon'],['Citrus','Agrume'],['Zap','Éclair'],['Cherry','Cerise'],['Orbit','Orbite'],['Leaf','Feuille'],['Snowflake','Flocon'],['SunMoon','Mode sombre'],['Wheat','Épi'],['Terminal','Terminal'],['Bug','Bug'],['Crown','Couronne']];
+
+  constructor(p) {
+    super(p);
+    let beers = null;
+    try { beers = JSON.parse(localStorage.getItem(this.KEY)); } catch (e) {}
+    const seed = this.seed();
+    if (!Array.isArray(beers) || !beers.length) beers = seed;
+    else beers = beers.map(b => { const s = seed.find(x => x.id === b.id); return s ? { ...s, ...b, ...Object.fromEntries(['look','nose','mouth','finish','serving','description'].filter(k => !b[k] && s[k]).map(k => [k, s[k]])) } : b; });
+    const first = [...beers].sort((a, b) => (Number(b.brew) || 0) - (Number(a.brew) || 0))[0];
+    this.state = { beers, route: this.parse(), query: '', vw: typeof window !== 'undefined' ? window.innerWidth : 1200, form: this.blank(beers), editingId: null, savedMsg: '', formError: '',
+      sheet: { slots: Array(4).fill(first ? first.id : ''), cut: true, mono: false, qr: true }, qrBox: null };
+  }
+  blank(beers) {
+    const n = Math.max(0, ...(beers || this.state.beers).map(b => Number(b.brew) || 0)) + 1;
+    return { name:'', edition:'', styleName:'', denomination:'', brew:String(n), abv:'', ebc:'', ibu:'', bottle:'75cl', accent:'var(--cuvee-orange)', icon:'Hop', malts:'', hops:'', yeast:'', other:'Eau, sucre', bottledOn:'', bestBefore:'', lot:'', volume:'20', og:'', fg:'', grains:'', hopSchedule:'', mash:'', ferment:'', notes:'', look:'', nose:'', mouth:'', finish:'', serving:'', description:'', labelImage:'' };
+  }
+  parse() {
+    const h = (typeof location !== 'undefined' ? location.hash : '').replace(/^#\/?/, '');
+    if (h.startsWith('biere/')) return { view: 'beer', id: decodeURIComponent(h.slice(6)) };
+    if (h.startsWith('brassin/')) return { view: 'beer', brew: decodeURIComponent(h.slice(8)) };
+    if (h.startsWith('admin')) return { view: 'admin' };
+    if (h.startsWith('planche')) return { view: 'sheet' };
+    return { view: 'list' };
+  }
+  componentDidMount() {
+    this.onHash = () => { this.setState({ route: this.parse() }); window.scrollTo(0, 0); };
+    this.onResize = () => this.setState({ vw: window.innerWidth });
+    window.addEventListener('hashchange', this.onHash);
+    window.addEventListener('resize', this.onResize);
+    this.poll = setInterval(() => { if (window.lucide && window.qrcode) { clearInterval(this.poll); this.forceUpdate(); } }, 150);
+  }
+  componentDidUpdate() { this.measure(); }
+  measure() {
+    if (this.state.route.view !== 'sheet') return;
+    const slot = document.querySelector('[data-slot]'); if (!slot) return;
+    const cap = [...slot.querySelectorAll('div')].find(d => d.textContent === 'Alc.'); if (!cap) return;
+    const s = slot.getBoundingClientRect(), c = cap.parentElement.getBoundingClientRect(); if (!s.width) return;
+    const k = 140 / s.width, r = v => Math.round(v * k * 20) / 20;
+    const box = { l: r(c.left - s.left), t: r(c.top - s.top), w: r(c.width), h: r(c.height) };
+    const o = this.state.qrBox;
+    if (!o || ['l', 't', 'w', 'h'].some(p => Math.abs(o[p] - box[p]) > 0.06)) this.setState({ qrBox: box });
+  }
+  qrDesign(url, accent) {
+    if (!window.qrcode) return null;
+    const q = window.qrcode(0, 'H'); q.addData(url); q.make();
+    const n = q.getModuleCount(), m = 0.6, S = n + 2 * m;
+    const inFinder = (r, c) => (r < 7 && c < 7) || (r < 7 && c >= n - 7) || (r >= n - 7 && c < 7);
+    const hole = Math.round(n * 0.26) | 1, h0 = (n - hole) / 2;
+    const inHole = (r, c) => r >= h0 - 0.5 && r < h0 + hole && c >= h0 - 0.5 && c < h0 + hole;
+    let d = '';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c) && !inFinder(r, c) && !inHole(r, c)) d += `M${c + m} ${r + m}h1v1h-1z`;
+    const eye = (x, y, k) => [
+      React.createElement('rect', { key: k + 'o', x: x + 0.5, y: y + 0.5, width: 6, height: 6, fill: 'none', stroke: accent, strokeWidth: 1 }),
+      React.createElement('rect', { key: k + 'i', x: x + 2, y: y + 2, width: 3, height: 3, fill: 'var(--encre)' })];
+    const hop = window.lucide && window.lucide.icons && window.lucide.icons.Hop;
+    const hs = hole - 1, hx = m + h0 + 0.5, sc = hs / 24;
+    return React.createElement('svg', { viewBox: `0 0 ${S} ${S}`, shapeRendering: 'crispEdges', style: { display: 'block', height: '100%', width: 'auto', aspectRatio: '1' } },
+      React.createElement('path', { d, fill: 'var(--encre)' }),
+      ...eye(m, m, 'a'), ...eye(m + n - 7, m, 'b'), ...eye(m, m + n - 7, 'c'),
+      hop && React.createElement('g', { transform: `translate(${hx} ${hx}) scale(${sc})`, fill: 'none', stroke: accent, strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round', shapeRendering: 'geometricPrecision' },
+        (hop[2] || []).map(([t, a], i) => React.createElement(t, { key: i, ...a }))));
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.onHash);
+    window.removeEventListener('resize', this.onResize);
+    clearInterval(this.poll);
+  }
+  persist(beers) { try { localStorage.setItem(this.KEY, JSON.stringify(beers)); } catch (e) {} }
+  num(v) { const n = parseFloat(String(v ?? '').replace(',', '.')); return isNaN(n) ? undefined : n; }
+  norm(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+  slug(s) { return this.norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'biere'; }
+  split(b) {
+    if (b.edition) return [b.name, b.edition];
+    const w = String(b.name || '').split(' '); const k = Math.ceil(w.length / 2);
+    return [w.slice(0, k).join(' '), w.slice(k).join(' ')];
+  }
+  rows(t) { return String(t || '').split('\n').map(l => l.trim()).filter(Boolean).map(l => { const p = l.split('|').map(s => s.trim()); return { a: p[0] || '', b: p[1] || '', c: p.slice(2).join(' · ') }; }); }
+  base() { return location.href.split('#')[0]; }
+  SITE = 'http://www.brasse-yutz.fr/brassin/';
+  urlFor(id) { const b = this.state.beers.find(x => x.id === id); return this.SITE + (b ? b.brew : (this.state.form.brew || '')); }
+  label(b, zoom, print) {
+    const l = this.labelBase(b, zoom);
+    if (print) { l.style = {}; l.monochrome = !!this.state.sheet.mono; }
+    return l;
+  }
+  readImage(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onerror = rej;
+      r.onload = () => { const img = new Image(); img.onerror = rej; img.onload = () => {
+        const k = Math.min(1, 1600 / Math.max(img.width, img.height)); const c = document.createElement('canvas');
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/jpeg', 0.85)); }; img.src = r.result; };
+      r.readAsDataURL(file);
+    });
+  }
+  labelBase(b, zoom) {
+    return { bottle: b.bottle, name: b.name || 'Nom de la bière', edition: b.edition || undefined, styleName: b.styleName || 'Style', denomination: b.denomination || undefined,
+      brew: b.brew, abv: this.num(b.abv) ?? 0, ebc: this.num(b.ebc), ibu: this.num(b.ibu), malts: b.malts, hops: b.hops, yeast: b.yeast, other: b.other,
+      bottledOn: b.bottledOn || 'JJ/MM/AAAA', bestBefore: b.bestBefore || 'MM/AAAA', lot: b.lot || this.lotFor(b), accent: b.accent, icon: b.icon,
+      monochrome: !!this.props.monochrome, scale: zoom, logoSrc: 'assets/logo-brasse-yutz.svg',
+      pregnancySrc: 'assets/legal/zero-alcool-grossesse-gris.svg', trimanSrc: 'assets/legal/triman-gris.png', style: { boxShadow: 'var(--shadow-print)' } };
+  }
+  lotFor(b) { const m = String(b.bottledOn || '').match(/(\d{2})\/(\d{2})\/\d{2}(\d{2})/); return m ? 'L' + m[3] + m[2] + '-' + b.brew : 'L—'; }
+  view(b) {
+    const [first, second] = this.split(b);
+    return { ...b, first, second, href: '#/biere/' + b.id, hasImage: !!b.labelImage, noImage: !b.labelImage, labelImage: b.labelImage || '', abvTxt: String(b.abv).replace('.', ','), vol: b.bottle === '33cl' ? '33 cl' : '75 cl', denom: b.denomination || ('Bière ' + b.styleName) };
+  }
+  qrMatrix(url) {
+    if (!window.qrcode) return null;
+    const q = window.qrcode(0, 'M'); q.addData(url); q.make(); return q;
+  }
+  qrSvgString(url) {
+    const q = this.qrMatrix(url); if (!q) return '';
+    const n = q.getModuleCount(), m = 2; let d = '';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c + m} ${r + m}h1v1h-1z`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#161616"/></svg>`;
+  }
+  qrElement(url) {
+    const q = this.qrMatrix(url);
+    if (!q) return React.createElement('div', { style: { width: '100%', height: '100%', border: '1px dashed var(--encre-3)' } });
+    const n = q.getModuleCount(), m = 2; let d = '';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += `M${c + m} ${r + m}h1v1h-1z`;
+    return React.createElement('svg', { viewBox: `0 0 ${n + 2 * m} ${n + 2 * m}`, width: '100%', height: '100%', shapeRendering: 'crispEdges', style: { display: 'block' } },
+      React.createElement('path', { d, fill: 'var(--encre)' }));
+  }
+  save() {
+    const f = this.state.form;
+    if (!f.name.trim() || !f.styleName.trim() || !String(f.brew).trim() || !String(f.abv).trim()) { this.setState({ formError: 'Nom, style, n° de brassin et alcool sont obligatoires.' }); return; }
+    const id = this.state.editingId || this.slug(f.name + (f.edition ? ' ' + f.edition : ''));
+    const rec = { ...f, id, brew: Number(f.brew) || f.brew, lot: f.lot || this.lotFor(f) };
+    const beers = this.state.beers.filter(b => b.id !== id).concat(rec);
+    this.persist(beers);
+    this.setState({ beers, editingId: id, form: rec, formError: '', savedMsg: 'Enregistré · ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) });
+  }
+  renderVals() {
+    const { beers, route, query, vw, form, editingId } = this.state;
+    const sorted = [...beers].sort((a, b) => (Number(b.brew) || 0) - (Number(a.brew) || 0));
+    const q = this.norm(query).trim();
+    const hit = b => !q || q.split(/\s+/).every(t => this.norm([b.name, b.edition, b.styleName, b.denomination, b.malts, b.hops, b.yeast, b.other, 'n° ' + b.brew, b.brew, b.lot].join(' ')).includes(t));
+    const large = this.props.cardSize === 'large';
+    const cardZoom = large ? 0.78 : 0.58;
+    const filtered = sorted.filter(hit);
+    const cards = filtered.map(b => ({ ...this.view(b), label: this.label(b, cardZoom), imgH: Math.round(283 * cardZoom) + 'px' }));
+
+    const raw = route.view === 'beer' ? beers.find(b => route.brew != null ? String(b.brew) === route.brew : b.id === route.id) : null;
+    let cur = null;
+    if (raw) {
+      const v = this.view(raw);
+      const zoom = Math.min(1.25, (Math.min(vw, 860) - 64) / 529);
+      const acc = this.props.monochrome ? 'var(--encre)' : raw.accent;
+      const stats = [
+        { label: 'Alcool', value: v.abvTxt, unit: '% vol.' },
+        raw.ebc && { label: 'Couleur', value: raw.ebc, unit: 'EBC', gauge: { kind: 'ebc', value: this.num(raw.ebc), unit: 'px', showLabel: false } },
+        raw.ibu && { label: 'Amertume', value: raw.ibu, unit: 'IBU', gauge: { kind: 'ibu', value: this.num(raw.ibu), unit: 'px', accent: acc, showLabel: false } },
+        raw.og && { label: 'Densité initiale', value: raw.og, unit: 'DI' },
+        raw.fg && { label: 'Densité finale', value: raw.fg, unit: 'DF' }
+      ].filter(Boolean);
+      const tasting = [['Aspect', raw.look], ['Nez', raw.nose], ['Bouche', raw.mouth], ['Finale', raw.finish], ['Service', raw.serving]].filter(t => t[1] && String(t[1]).trim()).map(([label, text]) => ({ label, text }));
+      const blocks = [
+        { title: 'Malts & grains', icon: 'Wheat', rows: this.rows(raw.grains) },
+        { title: 'Houblonnage', icon: 'Hop', rows: this.rows(raw.hopSchedule) },
+        { title: 'Empâtage', icon: 'Thermometer', rows: this.rows(raw.mash) },
+        { title: 'Fermentation · ' + (raw.yeast || 'levure'), icon: 'FlaskConical', rows: this.rows(raw.ferment) }
+      ].filter(b => b.rows.length);
+      cur = { ...v, accent: acc, label: this.label(raw, zoom), stats, blocks, notes: raw.notes || '', tasting, hasTasting: tasting.length > 0,
+        description: raw.description || '', descParas: String(raw.description || '').split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean),
+        volumeTxt: raw.volume ? 'Pour ' + raw.volume + ' litres' : '',
+        ingr: { malts: raw.malts, hops: raw.hops, yeast: raw.yeast, other: raw.other, unit: 'px', accent: acc, inset: 16, rowPadding: 8 },
+        legal: { unit: 'px', lot: raw.lot, bestBefore: raw.bestBefore, bottledOn: raw.bottledOn, pregnancySrc: 'assets/legal/zero-alcool-grossesse-gris.svg', trimanSrc: 'assets/legal/triman-gris.png' } };
+    }
+    const others = raw ? sorted.filter(b => b.id !== raw.id).slice(0, 3).map(b => this.view(b)) : [];
+
+    const setF = k => e => { const val = e.target.value; this.setState(s => ({ form: { ...s.form, [k]: val }, savedMsg: '' })); };
+    const set = {}; Object.keys(this.blank()).forEach(k => set[k] = setF(k));
+    const mk = (k, label, placeholder) => ({ key: k, label, placeholder: placeholder || '', value: form[k] ?? '', onChange: set[k] });
+    const adminZoom = Math.min(1.05, ((vw >= 1180 ? Math.min(vw, 1320) / 2 : vw) - 96) / 529);
+    const previewId = editingId || this.slug((form.name || 'nouvelle-biere') + (form.edition ? ' ' + form.edition : ''));
+    const previewUrl = this.urlFor(previewId);
+
+    const sheet = this.state.sheet;
+    const setSheet = patch => this.setState(s => ({ sheet: { ...s.sheet, ...patch } }));
+    return {
+      isList: route.view === 'list', isBeer: route.view === 'beer', isAdmin: route.view === 'admin', isSheet: route.view === 'sheet',
+      sheet, sheetZoom: Math.min(1, (Math.min(vw, 1320) - 64) / 1123), sheetOutline: sheet.cut ? '0.1mm solid #86857F' : 'none',
+      slotRows: sheet.slots.map((id, i) => ({ n: i + 1, value: id, onChange: e => { const v = e.target.value; const slots = [...this.state.sheet.slots]; slots[i] = v; setSheet({ slots }); } })),
+      beerOptions: sorted.map(b => ({ v: b.id, l: 'N° ' + b.brew + ' · ' + b.name + (b.edition ? ' ' + b.edition : '') })),
+      sheetSlots: sheet.slots.map(id => { const b = beers.find(x => x.id === id); return { label: b ? this.label(b, 1, true) : null, qr: b && sheet.qr ? this.qrDesign(this.urlFor(b.id), sheet.mono || this.props.monochrome ? 'var(--encre)' : b.accent) : null }; }),
+      qrBox: Object.fromEntries(Object.entries(this.state.qrBox || { l: 0, t: 7.3, w: 14, h: 11 }).map(([k, v]) => [k, v + 'mm'])),
+      onToggleQr: () => setSheet({ qr: !sheet.qr }),
+      onToggleCut: () => setSheet({ cut: !sheet.cut }), onToggleMono: () => setSheet({ mono: !sheet.mono }),
+      onPrint: () => window.print(),
+      onSheet: () => { const id = editingId || (sorted[0] && sorted[0].id) || ''; setSheet({ slots: Array(4).fill(id) }); location.hash = '#/planche'; },
+      uploadLabel: form.labelImage ? 'Remplacer l’image' : 'Charger une image',
+      onUpload: e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return; this.readImage(f).then(src => this.setState(s => ({ form: { ...s.form, labelImage: src }, savedMsg: '' }))).catch(() => this.setState({ formError: 'Image illisible.' })); },
+      onRemoveImage: () => this.setState(s => ({ form: { ...s.form, labelImage: '' }, savedMsg: '' })),
+      tasteTexts: [mk('look', 'Aspect', 'Robe, limpidité, mousse'), mk('nose', 'Nez', 'Arômes'), mk('mouth', 'Bouche', 'Saveurs, texture, corps'), mk('finish', 'Finale', 'Amertume, longueur'), mk('serving', 'Service', 'Température, verre')],
+      navListBorder: route.view !== 'admin' ? 'var(--encre)' : 'transparent',
+      navAdminBorder: route.view === 'admin' ? 'var(--encre)' : 'transparent',
+      query, onQuery: e => this.setState({ query: e.target.value }),
+      cards, noResult: cards.length === 0, cardMin: large ? '440px' : '340px',
+      countTxt: filtered.length + (filtered.length > 1 ? ' bières' : ' bière'),
+      cur, hasCur: !!cur, notFound: route.view === 'beer' && !cur, others,
+      adminRows: sorted.map(b => ({ ...this.view(b), bg: b.id === editingId ? 'var(--papier-2)' : 'transparent',
+        onEdit: () => { this.setState({ form: { ...this.blank(), ...b, brew: String(b.brew) }, editingId: b.id, savedMsg: '', formError: '' }); },
+        onDelete: () => { if (!confirm('Supprimer « ' + b.name + ' » ?')) return; const nb = this.state.beers.filter(x => x.id !== b.id); this.persist(nb); this.setState({ beers: nb, ...(editingId === b.id ? { editingId: null, form: this.blank(nb) } : {}) }); } })),
+      onNew: () => this.setState({ form: this.blank(), editingId: null, savedMsg: '', formError: '' }),
+      onSave: () => this.save(),
+      formTitle: editingId ? 'Modifier « ' + (form.name || '') + ' »' : 'Nouvelle bière',
+      savedMsg: this.state.savedMsg, formError: this.state.formError,
+      form, set,
+      labelInputs: [mk('name', 'Nom', 'Hop Overflow'), mk('edition', '2e ligne (option)', '2025'), mk('styleName', 'Style', 'NEIPA'), mk('denomination', 'Dénomination (option)', 'Bière blonde'),
+        mk('brew', 'N° de brassin'), mk('abv', 'Alcool % vol.', '5,5'), mk('ebc', 'EBC', '11'), mk('ibu', 'IBU', '40'),
+        mk('bottledOn', 'Embouteillée le', 'JJ/MM/AAAA'), mk('bestBefore', 'DDM', 'MM/AAAA'), mk('lot', 'Lot', this.lotFor(form))],
+      labelTexts: [mk('malts', 'Malts (allergènes entre *astérisques*)', '*Orge* : Pale Ale, Munich'), mk('hops', 'Houblons', 'Citra, Mosaïc'), mk('yeast', 'Levure', 'S-04'), mk('other', 'Autres', 'Eau, sucre')],
+      recipeInputs: [mk('volume', 'Volume (L)', '20'), mk('og', 'Densité initiale', '1,050'), mk('fg', 'Densité finale', '1,012')],
+      recipeTexts: [mk('grains', 'Malts & grains', 'Pale Ale | 4,0 kg'), mk('hopSchedule', 'Houblonnage', 'Citra | 50 g | dry hop J3'), mk('mash', 'Empâtage', 'Empâtage | 67 °C | 60 min'), mk('ferment', 'Fermentation', 'Verdant IPA | 19 °C | 10 jours'), mk('notes', 'Le mot du brasseur', 'Une phrase, sans point d’exclamation.')],
+      accentOptions: this.accents.map(([l, v]) => ({ l, v })),
+      iconOptions: this.icons.map(([v, l]) => ({ l, v })),
+      previewLabel: this.label(form, adminZoom),
+      previewUrl, qrEl: this.qrElement(previewUrl),
+      onDownloadQr: () => { const s = this.qrSvgString(previewUrl); if (!s) return; const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([s], { type: 'image/svg+xml' })); a.download = 'qr-' + previewId + '.svg'; document.body.appendChild(a); a.click(); a.remove(); },
+      onOpenPage: () => { location.hash = '#/biere/' + previewId; }
+    };
+  }
+}
+</script>
+</body>
+</html>

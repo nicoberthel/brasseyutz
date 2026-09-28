@@ -1,0 +1,11 @@
+:root{
+--font-display:'Instrument Serif',Georgia,serif;
+--font-text:'Instrument Sans','Helvetica Neue',Arial,sans-serif;
+--font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+--fs-hero:clamp(64px,10vw,144px);/* @kind font */--fs-h1:72px;/* @kind font */--fs-h2:44px;/* @kind font */--fs-h3:28px;/* @kind font */--fs-lead:19px;/* @kind font */--fs-body:16px;/* @kind font */--fs-small:13px;/* @kind font */--fs-micro:11px;/* @kind font */
+--lh-display:0.92;/* @kind other */--lh-snug:1.2;/* @kind other */--lh-body:1.5;/* @kind other */
+--tracking-display:-0.02em;/* @kind other */--tracking-caps:0.18em;/* @kind other */
+--fw-regular:400;/* @kind other */--fw-medium:500;/* @kind other */--fw-semibold:600;/* @kind other */--fw-bold:700;/* @kind other */
+/* Étiquette — minimums physiques (hauteur d'x ≥ 1,2 mm ⇒ corps ≥ 2,4 mm en Instrument Sans) */
+--label-fs-legal-min:2.4mm;/* @kind font */--label-fs-volume:6.5mm;/* @kind font */
+}
