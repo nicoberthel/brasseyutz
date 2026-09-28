@@ -35,9 +35,14 @@ Architecture retenue : l'app tourne en Docker sur le serveur maison et expose le
 - Box : ports **80** et **443** redirigés vers la machine qui héberge NPM.
 - DNS chez le registrar : `A www.brasseyutz.fr → IP publique` et `A brasseyutz.fr → IP publique` (IP dynamique → enregistrement DynDNS).
 
-### 2. Déployer l'app
+### 2. Déployer l'app — compose global du Raspberry Pi
+
+Le serveur héberge déjà NPM, Pi-hole, etc. : un sous-dossier par application
+et un `docker-compose.yml` global. Brasse-Yutz s'y intègre pareil
+(le `docker-compose.yml` de ce dépôt ne sert qu'à un déploiement autonome).
 
 ```bash
+cd ~/docker                       # dossier racine des applications
 git clone https://github.com/nicoberthel/brasseyutz.git
 cd brasseyutz
 cat > .env <<EOF
@@ -48,16 +53,43 @@ HOST_NAME=Site auto-hébergé par l'éditeur
 HOST_ADDRESS=Yutz (Moselle)
 HOST_PHONE=
 EOF
-docker compose up -d --build
-curl -sf http://localhost:3000/api/health   # {"ok":true}
 ```
 
-Tout l'état (SQLite + uploads) vit dans le volume `brasseyutz-data`.
+Dans le `docker-compose.yml` global :
+
+```yaml
+  brasseyutz:
+    build: ./brasseyutz
+    env_file: ./brasseyutz/.env
+    volumes:
+      - brasseyutz-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+# section volumes du fichier global :
+  brasseyutz-data:
+```
+
+Pas de `ports:` : NPM partage le réseau du compose et joint le conteneur
+par son nom de service. Si le compose global définit des `networks:`
+nommés, mettre brasseyutz sur le même réseau que NPM.
+
+```bash
+docker compose up -d --build brasseyutz   # premier build long sur un Pi
+```
+
+Raspberry Pi : OS **64 bits** requis (binaires arm64 de sharp et
+better-sqlite3 ; le Dockerfile embarque le toolchain de compilation en
+secours). Tout l'état (SQLite + uploads) vit dans le volume `brasseyutz-data`.
 
 ### 3. Proxy host dans Nginx Proxy Manager
 
 - **Domain Names** : `www.brasseyutz.fr`
-- **Scheme/Forward** : `http` → IP du serveur app (ou `host.docker.internal` / IP LAN) port `3000`
+- **Scheme/Forward** : `http` → hostname **`brasseyutz`**, port **`3000`** (même réseau Docker)
 - **SSL** : certificat Let's Encrypt via NPM, **Force SSL** activé
 - **Websockets Support** : inutile (pas de websocket)
 - NPM transmet `X-Forwarded-For` par défaut — requis par le rate-limit de connexion.
@@ -73,7 +105,7 @@ Tout l'état (SQLite + uploads) vit dans le volume `brasseyutz-data`.
 
 - **Mise à jour** :
   ```bash
-  cd brasseyutz && git pull && docker compose up -d --build
+  cd ~/docker/brasseyutz && git pull && cd .. && docker compose up -d --build brasseyutz
   ```
 - **Sauvegarde** (cron conseillé) :
   ```bash
