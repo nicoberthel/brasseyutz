@@ -1,3 +1,11 @@
+import { desc } from 'drizzle-orm';
+import { getDb } from '@/lib/db';
+import { beers } from '@/lib/schema';
+import { Catalogue } from './catalogue';
+
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
-  return <main style={{ padding: 48 }}>Catalogue à venir</main>;
+  const list = getDb().select().from(beers).orderBy(desc(beers.brew)).all();
+  return <Catalogue beers={list} />;
 }
