@@ -33,11 +33,12 @@ describe('fiche', () => {
     expect(screen.queryByText('Le mot du brasseur')).toBeNull();
     expect(screen.queryByText(/L’histoire du brassin/)).toBeNull();
   });
-  it('id inconnu → notFound() ; brassin non numérique → notFound()', async () => {
+  it('id inconnu → notFound() ; brassin non numérique → notFound() (404, jamais 500)', async () => {
+    const is404 = { digest: 'NEXT_HTTP_ERROR_FALLBACK;404' };
     const PageId = (await import('@/app/biere/[id]/page')).default;
-    await expect(PageId({ params: Promise.resolve({ id: 'nexiste-pas' }) })).rejects.toThrowError();
+    await expect(PageId({ params: Promise.resolve({ id: 'nexiste-pas' }) })).rejects.toMatchObject(is404);
     const PageBrew = (await import('@/app/brassin/[brew]/page')).default;
-    await expect(PageBrew({ params: Promise.resolve({ brew: 'abc' }) })).rejects.toThrowError();
-    await expect(PageBrew({ params: Promise.resolve({ brew: '9999' }) })).rejects.toThrowError();
+    await expect(PageBrew({ params: Promise.resolve({ brew: 'abc' }) })).rejects.toMatchObject(is404);
+    await expect(PageBrew({ params: Promise.resolve({ brew: '9999' }) })).rejects.toMatchObject(is404);
   });
 });

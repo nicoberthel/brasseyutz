@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { Beer } from '@/lib/schema';
 import { abvTxt, num, rows, splitName } from '@/lib/domain';
 import { labelProps } from '@/lib/label';
-import { BeerLabel } from '@/components/ds/BeerLabel';
+import { LabelZoom } from '@/app/label-zoom';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { Gauge } from '@/components/ds/Gauge';
 
@@ -59,7 +59,7 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
       <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center', padding: 'clamp(16px,4vw,40px) 8px', background: 'var(--papier-2)', overflow: 'hidden' }}>
         {beer.labelImage
           ? <img src={beer.labelImage} alt={`Étiquette ${beer.name}`} style={{ display: 'block', maxWidth: '100%', maxHeight: 420, height: 'auto', boxShadow: 'var(--shadow-print)' }} />
-          : <BeerLabel {...labelProps(beer, 1)} />}
+          : <LabelZoom {...labelProps(beer, 1)} />}
       </div>
 
       <div style={{ marginTop: 32, display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(130px,1fr))', borderTop: '1px solid var(--encre)', borderLeft: '1px solid var(--filet)' }}>

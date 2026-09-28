@@ -52,6 +52,8 @@ body{min-height:100vh;font-family:var(--font-text);color:var(--text-body)}
 a{color:var(--encre);text-decoration:none}
 a:hover{color:var(--encre-2)}
 input,textarea,select,button{font-family:inherit}
+/* Focus visible (WCAG 2.4.7) — équivalent du style-focus du prototype */
+input:focus,textarea:focus,select:focus{border-color:var(--encre)!important;outline:none}
 .hov-border{transition:border-color 120ms}
 .hov-border:hover{border-color:var(--encre)!important}
 .hov-ink:hover{color:var(--encre)!important}
