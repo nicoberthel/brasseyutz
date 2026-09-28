@@ -10,7 +10,8 @@ const beers = SEED.map(b => ({ createdAt: 0, updatedAt: 0, edition: '', denomina
 describe('Catalogue', () => {
   it('affiche titre, compteur et toutes les cartes', () => {
     render(<Catalogue beers={beers} />);
-    expect(screen.getByText('bières', { selector: 'i' })).toBeTruthy();
+    expect(screen.getByText('Brassins', { selector: 'i' })).toBeTruthy();
+    expect(screen.getByText('Toutes les recettes des bières de Brasse-Yutz')).toBeTruthy();
     expect(screen.getByText('6 bières')).toBeTruthy();
     expect(screen.getAllByText('Overflow').length).toBeGreaterThan(0); // carte + étiquette
   });

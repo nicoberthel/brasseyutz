@@ -9,7 +9,7 @@ import { Gauge } from '@/components/ds/Gauge';
 
 const BACK = (
   <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--encre-2)' }}>
-    <CuveeIcon name="ArrowLeft" size={16} />Toutes les bières
+    <CuveeIcon name="ArrowLeft" size={16} />Tous les brassins
   </Link>
 );
 

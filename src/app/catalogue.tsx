@@ -17,10 +17,10 @@ export function Catalogue({ beers }: { beers: Beer[] }) {
     <main style={{ maxWidth: 1240, margin: '0 auto', padding: 'clamp(32px,6vw,72px) clamp(16px,4vw,48px) 96px' }}>
       <div style={{ font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)' }}>Bières maison · Yutz</div>
       <h1 style={{ margin: '12px 0 0', font: '400 clamp(52px,8vw,104px)/0.92 var(--font-display)', letterSpacing: '-0.02em', color: 'var(--encre)' }}>
-        Toutes les <i style={{ color: 'var(--accent)' }}>bières</i>
+        Tous les <i style={{ color: 'var(--accent)' }}>Brassins</i>
       </h1>
       <p style={{ margin: '20px 0 0', maxWidth: 560, fontSize: 'var(--fs-lead)', lineHeight: 1.5, color: 'var(--encre-2)', textWrap: 'pretty' }}>
-        Chaque étiquette porte un QR code qui mène ici : la recette, les chiffres et les mentions de la cuvée.
+        Toutes les recettes des bières de Brasse-Yutz
       </p>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', margin: '40px 0 24px', paddingTop: 24, borderTop: '1px solid var(--encre)' }}>
         <label style={{ flex: '1 1 320px', display: 'flex', alignItems: 'center', gap: 10, padding: '0 14px', height: 48, background: 'var(--papier)', border: '1px solid var(--filet)' }}>
