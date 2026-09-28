@@ -76,9 +76,11 @@ describe('BeerLabel — cellules stats réorganisées', () => {
     const { container } = render(<BeerLabel {...labelProps({ name: 'Hop Overflow', styleName: 'NEIPA', brew: 33, abv: '5', ebc: '11', ibu: '40' })} />);
     expect(screen.getAllByText('Couleur / EBC').length).toBe(1);
     expect(screen.getAllByText('Amertume / IBU').length).toBe(1);
-    // le qualificatif partage sa ligne avec la jauge
+    // le qualificatif partage sa ligne avec le chiffre ; la jauge, pleine largeur, est en dessous
     const desc = screen.getByText('Marquée');
-    expect(desc.parentElement!.querySelector('[data-gauge]')).toBeTruthy();
-    expect(screen.getByText('Dorée').parentElement!.querySelector('[data-gauge]')).toBeTruthy();
+    const row = desc.parentElement!;
+    expect(row.textContent).toContain('40');
+    expect(row.querySelector('[data-gauge]')).toBeNull();
+    expect(row.parentElement!.querySelector('[data-gauge]')).toBeTruthy();
   });
 });

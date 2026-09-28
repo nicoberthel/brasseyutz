@@ -58,7 +58,7 @@ export function BeerLabel({ bottle = '75cl', name, edition, styleName, denominat
   const num: CSSProperties = { font: '400 4.8mm/1 var(--font-display)', color: 'var(--text-strong)', whiteSpace: 'nowrap' };
   const unitS: CSSProperties = { font: '500 1.8mm var(--font-mono)', color: 'var(--text-muted)', marginLeft: '0.4mm' };
   const desc: CSSProperties = { font: 'italic 400 2.5mm/1 var(--font-display)', color: ac, whiteSpace: 'nowrap', flex: 'none' };
-  const gaugeRow: CSSProperties = { display: 'flex', alignItems: 'center', gap: '1mm' };
+  const numRow: CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '1mm', margin: '0.7mm 0 1mm' };
   /* minmax(0,1fr) + overflow hidden : la cellule ne peut ni élargir la grille
      au-delà des 62 mm du dos ni peindre par-dessus le filet dos/face. */
   const statCell: CSSProperties = { padding: '1.4mm 1.8mm', borderLeft: light, overflow: 'hidden', minWidth: 0 };
@@ -71,8 +71,8 @@ export function BeerLabel({ bottle = '75cl', name, edition, styleName, denominat
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '14mm minmax(0,1fr) minmax(0,1fr)', borderBottom: hair }}>
         <div style={{ padding: '1.4mm 3mm' }}><div style={cap}>Alc.</div><div style={{ ...num, marginTop: '0.7mm' }}>{abvTxt}<span style={unitS}>%</span></div></div>
-        {ebc != null && <div style={statCell}><div style={statCap}>Couleur / EBC</div><div style={{ ...num, margin: '0.7mm 0 1mm' }}>{ebc}</div><div style={gaugeRow}><span style={{ flex: 1, minWidth: 0 }}><Gauge kind="ebc" value={ebc} unit="mm" variant={ebcDisplay} showLabel={false} /></span><span style={desc}>{describe('ebc', ebc)}</span></div></div>}
-        {ibu != null && <div style={statCell}><div style={statCap}>Amertume / IBU</div><div style={{ ...num, margin: '0.7mm 0 1mm' }}>{ibu}</div><div style={gaugeRow}><span style={{ flex: 1, minWidth: 0 }}><Gauge kind="ibu" value={ibu} unit="mm" accent={ac} showLabel={false} /></span><span style={desc}>{describe('ibu', ibu)}</span></div></div>}
+        {ebc != null && <div style={statCell}><div style={statCap}>Couleur / EBC</div><div style={numRow}><span style={num}>{ebc}</span><span style={desc}>{describe('ebc', ebc)}</span></div><Gauge kind="ebc" value={ebc} unit="mm" variant={ebcDisplay} showLabel={false} /></div>}
+        {ibu != null && <div style={statCell}><div style={statCap}>Amertume / IBU</div><div style={numRow}><span style={num}>{ibu}</span><span style={desc}>{describe('ibu', ibu)}</span></div><Gauge kind="ibu" value={ibu} unit="mm" accent={ac} showLabel={false} /></div>}
       </div>
       <div style={{ padding: '0.2mm 0 0', flex: 1, minHeight: 0 }}><IngredientGrid unit="mm" inset={3} rowPadding={ingredientSpacing} accent={ac} malts={malts} hops={hops} yeast={yeast} other={other} /></div>
       <div style={{ padding: '1.2mm 3mm 2mm', borderTop: light }}><LegalMentions unit="mm" quiet lot={lot} bestBefore={bestBefore} brewer={brewer} address={address} pregnancySrc={pregnancySrc} trimanSrc={trimanSrc} /></div>
