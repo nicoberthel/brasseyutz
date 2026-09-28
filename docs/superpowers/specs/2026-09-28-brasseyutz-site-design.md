@@ -119,8 +119,22 @@ Pils Électrique n° 30, Citra Xtra n° 26), avec leurs textes de dégustation.
 - `sitemap.xml`, `robots.txt`, balises meta/OG par page
 - Footer global : « Bière maison · Brasse-Yutz, Yutz » + « L'abus d'alcool est
   dangereux pour la santé, à consommer avec modération. »
-- Page « Mentions légales » minimale (éditeur du site, hébergeur — placeholder
-  à compléter par Nicolas)
+- Page `/mentions-legales` — générique, conforme LCEN (loi 2004-575), liée
+  depuis le footer :
+  - **Éditeur** : site personnel édité à titre non professionnel — Brasse-Yutz,
+    Yutz (Moselle) ; directeur de la publication : l'éditeur ; contact par
+    e-mail (adresse à renseigner via env `CONTACT_EMAIL`).
+  - **Hébergeur** : nom, adresse, téléphone — valeurs via env
+    (`HOST_NAME`, `HOST_ADDRESS`, `HOST_PHONE`), affichées « à venir » tant
+    que non renseignées (hébergeur pas encore choisi).
+  - **Propriété intellectuelle** : contenus, recettes, identité visuelle ©
+    Brasse-Yutz, reproduction soumise à accord.
+  - **Données personnelles (RGPD)** : aucune collecte de données visiteurs,
+    aucun traceur, aucune mesure d'audience ; unique cookie = session
+    d'administration (cookie technique exempté de consentement, CNIL) ; pas
+    de bannière cookies nécessaire.
+  - **Alcool** : rappel santé (loi Évin) — « L'abus d'alcool est dangereux
+    pour la santé » ; site informatif, aucune vente.
 
 ## 6. Auth
 
