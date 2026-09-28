@@ -70,3 +70,11 @@ describe('API beers', () => {
     expect((await (await listBeers()).json()).find((b: { id: string }) => b.id === 'paul')).toBeUndefined();
   });
 });
+
+describe('artwork', () => {
+  it('validateBeer conserve artwork', () => {
+    const r = validateBeer({ ...valid, artwork: '/uploads/abc.svg' });
+    if (!r.ok) throw new Error(r.error);
+    expect(r.beer.artwork).toBe('/uploads/abc.svg');
+  });
+});

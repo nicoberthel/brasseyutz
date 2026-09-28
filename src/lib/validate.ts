@@ -3,7 +3,7 @@ import type { NewBeer } from './schema';
 
 const OPTIONAL_TEXT = ['edition', 'denomination', 'ebc', 'ibu', 'malts', 'hops', 'yeast', 'other',
   'bottledOn', 'bestBefore', 'lot', 'volume', 'og', 'fg', 'grains', 'hopSchedule', 'mash',
-  'ferment', 'notes', 'look', 'nose', 'mouth', 'finish', 'serving', 'description', 'labelImage'] as const;
+  'ferment', 'notes', 'look', 'nose', 'mouth', 'finish', 'serving', 'description', 'labelImage', 'artwork'] as const;
 
 const REQUIRED_MSG = 'Nom, style, n° de brassin et alcool sont obligatoires.';
 

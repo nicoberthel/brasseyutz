@@ -52,7 +52,7 @@ export function Catalogue({ beers }: { beers: Beer[] }) {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, padding: 14, borderTop: '1px solid var(--filet)' }}>
                 <span style={{ font: '400 26px/1 var(--font-display)', color: 'var(--encre)' }}>{first} {second && <i style={{ color: b.accent }}>{second}</i>}</span>
-                <span style={{ font: '500 12px var(--font-mono)', color: 'var(--encre-2)', whiteSpace: 'nowrap' }}>{abvTxt(b.abv)} % · {b.bottle === '33cl' ? '33 cl' : '75 cl'}</span>
+                <span style={{ font: '500 12px var(--font-mono)', color: 'var(--encre-2)', whiteSpace: 'nowrap' }}>{abvTxt(b.abv)} %</span>
               </div>
             </Link>
           );

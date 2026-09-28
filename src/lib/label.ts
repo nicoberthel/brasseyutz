@@ -6,6 +6,7 @@ type BeerFields = {
   denomination?: string; brew?: number | string; abv?: string; ebc?: string;
   ibu?: string; malts?: string; hops?: string; yeast?: string; other?: string;
   bottledOn?: string; bestBefore?: string; lot?: string; accent?: string; icon?: string;
+  artwork?: string;
 };
 
 export function labelProps(b: BeerFields, scale = 1, opts: { print?: boolean; monochrome?: boolean } = {}): LabelProps {
@@ -28,6 +29,7 @@ export function labelProps(b: BeerFields, scale = 1, opts: { print?: boolean; mo
     lot: b.lot || lotFor(b),
     accent: b.accent,
     icon: b.icon,
+    artwork: b.artwork || undefined,
     monochrome: !!opts.monochrome,
     scale,
     logoSrc: '/assets/logo-brasse-yutz.svg',

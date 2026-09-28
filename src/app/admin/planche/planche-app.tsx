@@ -10,10 +10,12 @@ import { brewUrl, QrStyled } from '@/lib/qr';
 
 type Box = { l: number; t: number; w: number; h: number };
 
-export function PlancheApp({ beers, siteUrl }: { beers: Beer[]; siteUrl: string }) {
+export function PlancheApp({ beers, siteUrl, defaultBeerId }: { beers: Beer[]; siteUrl: string; defaultBeerId?: string }) {
   const sorted = [...beers].sort((a, b) => b.brew - a.brew);
-  const first = sorted[0]?.id || '';
+  const first = (defaultBeerId && beers.some(b => b.id === defaultBeerId) ? defaultBeerId : sorted[0]?.id) || '';
+  const firstBottle = beers.find(b => b.id === first)?.bottle || '75cl';
   const [slots, setSlots] = useState<string[]>(Array(4).fill(first));
+  const [bottles, setBottles] = useState<string[]>(Array(4).fill(firstBottle));
   const [cut, setCut] = useState(true);
   const [qr, setQr] = useState(true);
   const [mono, setMono] = useState(false);
@@ -62,11 +64,18 @@ export function PlancheApp({ beers, siteUrl }: { beers: Beer[]; siteUrl: string 
           {slots.map((value, i) => (
             <label key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span style={{ font: '600 11px var(--font-text)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--encre-2)' }}>Emplacement {i + 1}</span>
-              <select value={value} onChange={e => { const v = e.target.value; setSlots(sl => sl.map((x, j) => j === i ? v : x)); }}
-                style={{ height: 42, padding: '0 10px', border: '1px solid var(--filet)', background: 'var(--papier)', font: '400 15px var(--font-text)', color: 'var(--encre)', borderRadius: 0 }}>
-                <option value="">Vide</option>
-                {sorted.map(b => <option key={b.id} value={b.id}>N° {b.brew} · {b.name}{b.edition ? ' ' + b.edition : ''}</option>)}
-              </select>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <select value={value} onChange={e => { const v = e.target.value; setSlots(sl => sl.map((x, j) => j === i ? v : x)); setBottles(bt => bt.map((x, j) => j === i ? (beers.find(b => b.id === v)?.bottle || '75cl') : x)); }}
+                  style={{ flex: 1, minWidth: 0, height: 42, padding: '0 10px', border: '1px solid var(--filet)', background: 'var(--papier)', font: '400 15px var(--font-text)', color: 'var(--encre)', borderRadius: 0 }}>
+                  <option value="">Vide</option>
+                  {sorted.map(b => <option key={b.id} value={b.id}>N° {b.brew} · {b.name}{b.edition ? ' ' + b.edition : ''}</option>)}
+                </select>
+                <select value={bottles[i]} onChange={e => { const v = e.target.value; setBottles(bt => bt.map((x, j) => j === i ? v : x)); }} aria-label={`Contenance emplacement ${i + 1}`}
+                  style={{ width: 86, height: 42, padding: '0 8px', border: '1px solid var(--filet)', background: 'var(--papier)', font: '400 15px var(--font-text)', color: 'var(--encre)', borderRadius: 0 }}>
+                  <option value="75cl">75 cl</option>
+                  <option value="33cl">33 cl</option>
+                </select>
+              </div>
             </label>
           ))}
         </div>
@@ -88,7 +97,7 @@ export function PlancheApp({ beers, siteUrl }: { beers: Beer[]; siteUrl: string 
             const b = beers.find(x => x.id === id);
             return (
               <div key={i} data-slot="1" style={{ position: 'relative', width: '140mm', height: '75mm', overflow: 'hidden' }}>
-                {b && <BeerLabel {...labelProps(b, 1, { print: true, monochrome: mono })} />}
+                {b && <BeerLabel {...labelProps({ ...b, bottle: bottles[i] }, 1, { print: true, monochrome: mono })} />}
                 {b && qr && (
                   <div style={{ position: 'absolute', left: qrBox.l + 'mm', top: qrBox.t + 'mm', width: qrBox.w + 'mm', height: qrBox.h + 'mm', background: 'var(--papier)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.1mm' }}>
                     <QrStyled url={brewUrl(siteUrl, b.brew)} accent={mono ? 'var(--encre)' : b.accent} />

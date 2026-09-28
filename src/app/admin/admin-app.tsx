@@ -8,16 +8,16 @@ import { labelProps } from '@/lib/label';
 import { BeerLabel } from '@/components/ds/BeerLabel';
 import { Button } from '@/components/ds/Button';
 import { brewUrl, QrSvg, qrSvgString } from '@/lib/qr';
+import { ICON_GROUPS } from '@/components/ds/icon-catalog';
 
 const ACCENTS: [string, string][] = [['Orange', 'var(--cuvee-orange)'], ['Houblon', 'var(--cuvee-houblon)'], ['Ocre', 'var(--cuvee-ocre)'], ['Framboise', 'var(--cuvee-framboise)'], ['Bleu', 'var(--cuvee-bleu)'], ['Violet', 'var(--cuvee-violet)'], ['Bordeaux', 'var(--cuvee-bordeaux)'], ['Malt', 'var(--cuvee-malt)']];
-const ICONS: [string, string][] = [['Hop', 'Houblon'], ['Citrus', 'Agrume'], ['Zap', 'Éclair'], ['Cherry', 'Cerise'], ['Orbit', 'Orbite'], ['Leaf', 'Feuille'], ['Snowflake', 'Flocon'], ['SunMoon', 'Mode sombre'], ['Wheat', 'Épi'], ['Terminal', 'Terminal'], ['Bug', 'Bug'], ['Crown', 'Couronne']];
 
-type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
+type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
 type Form = Record<FormKey, string>;
 
 function blank(beers: Beer[]): Form {
   const n = Math.max(0, ...beers.map(b => b.brew)) + 1;
-  return { name: '', edition: '', styleName: '', denomination: '', brew: String(n), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '', grains: '', hopSchedule: '', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
+  return { name: '', edition: '', styleName: '', denomination: '', brew: String(n), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '', grains: '', hopSchedule: '', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
 }
 
 function toForm(b: Beer): Form {
@@ -83,18 +83,20 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
     router.refresh();
   }
 
-  async function onUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
-    e.target.value = '';
-    if (!f) return;
-    const fd = new FormData();
-    fd.set('file', f);
-    const res = await fetch('/api/upload', { method: 'POST', body: fd });
-    if (res.status === 401) { location.href = '/connexion'; return; }
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) { setFormError(data.error || 'Image illisible.'); return; }
-    setForm(fm => ({ ...fm, labelImage: data.path }));
-    setSavedMsg('');
+  function onUpload(field: 'labelImage' | 'artwork') {
+    return async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const f = e.target.files?.[0];
+      e.target.value = '';
+      if (!f) return;
+      const fd = new FormData();
+      fd.set('file', f);
+      const res = await fetch('/api/upload', { method: 'POST', body: fd });
+      if (res.status === 401) { location.href = '/connexion'; return; }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { setFormError(data.error || 'Fichier illisible.'); return; }
+      setForm(fm => ({ ...fm, [field]: data.path }));
+      setSavedMsg('');
+    };
   }
 
   async function onImport(e: React.ChangeEvent<HTMLInputElement>) {
@@ -161,7 +163,7 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
           <label style={{ ...actionStyle, color: 'var(--encre-2)' }} className="hov-ink">
             <input type="file" accept="application/json,.json" onChange={onImport} style={{ display: 'none' }} />Importer
           </label>
-          <Link href="/admin/planche"><Button variant="outline">Planche A4</Button></Link>
+          <Link href={`/admin/planche?biere=${previewId}`}><Button variant="outline">Planche A4</Button></Link>
           <Button variant="primary" onClick={startNew}>Nouvelle bière</Button>
         </div>
       </div>
@@ -222,10 +224,28 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
               </label>
               <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={capLbl}>Icône</span>
-                <select value={form.icon} onChange={set('icon')} style={sel}>
-                  {ICONS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                <select value={form.icon} onChange={set('icon')} style={sel} disabled={!!form.artwork}>
+                  {ICON_GROUPS.map(g => (
+                    <optgroup key={g.group} label={g.group}>
+                      {g.icons.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                    </optgroup>
+                  ))}
                 </select>
               </label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <span style={capLbl}>SVG perso (remplace l’icône)</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, minHeight: 42 }}>
+                  {form.artwork && <img src={form.artwork} alt="Illustration perso" style={{ height: 32, width: 'auto', display: 'block' }} />}
+                  <label style={{ display: 'inline-flex', alignItems: 'center', height: 32, padding: '0 10px', border: '1px solid var(--encre)', background: 'var(--papier)', cursor: 'pointer', font: '600 10px var(--font-text)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--encre)' }}>
+                    <input type="file" accept=".svg,image/svg+xml" onChange={onUpload('artwork')} style={{ display: 'none' }} />
+                    {form.artwork ? 'Remplacer' : 'Charger'}
+                  </label>
+                  {form.artwork && (
+                    <span onClick={() => { setForm(fm => ({ ...fm, artwork: '' })); setSavedMsg(''); }} className="hov-under"
+                      style={{ cursor: 'pointer', font: '600 10px var(--font-text)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--danger)' }}>Retirer</span>
+                  )}
+                </div>
+              </div>
             </div>
             {labelTexts.map(([k, label, placeholder]) => (
               <label key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -243,7 +263,7 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
               {form.labelImage && <img src={form.labelImage} alt="Ancienne étiquette" style={{ display: 'block', height: 96, width: 'auto', border: '1px solid var(--filet)' }} />}
               <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, height: 40, padding: '0 16px', border: '1px solid var(--encre)', background: 'var(--papier)', cursor: 'pointer', font: '600 12px var(--font-text)', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--encre)' }}>
-                <input type="file" accept="image/*" onChange={onUpload} style={{ display: 'none' }} />
+                <input type="file" accept="image/*" onChange={onUpload('labelImage')} style={{ display: 'none' }} />
                 {form.labelImage ? 'Remplacer l’image' : 'Charger une image'}
               </label>
               {form.labelImage && (
@@ -308,7 +328,7 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
               <div style={{ font: '400 13px/1.4 var(--font-mono)', color: 'var(--encre-2)', wordBreak: 'break-all' }}>{previewUrl}</div>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <Button variant="outline" size="sm" onClick={downloadQr}>Télécharger SVG</Button>
-                <Link href="/admin/planche"><Button variant="outline" size="sm">Planche A4</Button></Link>
+                <Link href={`/admin/planche?biere=${previewId}`}><Button variant="outline" size="sm">Planche A4</Button></Link>
                 <Link href={`/biere/${previewId}`}><Button variant="ghost" size="sm">Voir la page</Button></Link>
               </div>
             </div>

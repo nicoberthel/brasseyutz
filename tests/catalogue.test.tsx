@@ -24,6 +24,11 @@ describe('Catalogue', () => {
     fireEvent.change(screen.getByPlaceholderText(/Nom, style, houblon/), { target: { value: 'xyz' } });
     expect(screen.getByText(/Aucune bière ne correspond à « xyz »/)).toBeTruthy();
   });
+  it('les cartes n’affichent plus la contenance à côté du %', () => {
+    render(<Catalogue beers={beers} />);
+    expect(screen.queryByText(/% · 75 cl/)).toBeNull();
+    expect(screen.queryByText(/% · 33 cl/)).toBeNull();
+  });
   it('les cartes pointent vers /biere/<id>', () => {
     render(<Catalogue beers={beers} />);
     const link = screen.getAllByRole('link').find(a => a.getAttribute('href') === '/biere/hop-overflow');
