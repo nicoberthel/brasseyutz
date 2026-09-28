@@ -1,0 +1,43 @@
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+
+export const beers = sqliteTable('beers', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  edition: text('edition').notNull().default(''),
+  styleName: text('styleName').notNull(),
+  denomination: text('denomination').notNull().default(''),
+  brew: integer('brew').notNull().unique(),
+  abv: text('abv').notNull(),
+  ebc: text('ebc').notNull().default(''),
+  ibu: text('ibu').notNull().default(''),
+  bottle: text('bottle').notNull().default('75cl'),
+  accent: text('accent').notNull().default('var(--cuvee-orange)'),
+  icon: text('icon').notNull().default('Hop'),
+  malts: text('malts').notNull().default(''),
+  hops: text('hops').notNull().default(''),
+  yeast: text('yeast').notNull().default(''),
+  other: text('other').notNull().default(''),
+  bottledOn: text('bottledOn').notNull().default(''),
+  bestBefore: text('bestBefore').notNull().default(''),
+  lot: text('lot').notNull().default(''),
+  volume: text('volume').notNull().default(''),
+  og: text('og').notNull().default(''),
+  fg: text('fg').notNull().default(''),
+  grains: text('grains').notNull().default(''),
+  hopSchedule: text('hopSchedule').notNull().default(''),
+  mash: text('mash').notNull().default(''),
+  ferment: text('ferment').notNull().default(''),
+  notes: text('notes').notNull().default(''),
+  look: text('look').notNull().default(''),
+  nose: text('nose').notNull().default(''),
+  mouth: text('mouth').notNull().default(''),
+  finish: text('finish').notNull().default(''),
+  serving: text('serving').notNull().default(''),
+  description: text('description').notNull().default(''),
+  labelImage: text('labelImage').notNull().default(''),
+  createdAt: integer('createdAt').notNull().default(0),
+  updatedAt: integer('updatedAt').notNull().default(0),
+});
+
+export type Beer = typeof beers.$inferSelect;
+export type NewBeer = typeof beers.$inferInsert;
