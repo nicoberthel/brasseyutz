@@ -70,3 +70,15 @@ describe('BeerLabel — jauges dans la case (débordement du dos)', () => {
     cells.slice(1).forEach(c => expect(c.style.overflow).toBe('hidden'));
   });
 });
+
+describe('BeerLabel — cellules stats réorganisées', () => {
+  it('unités en tête (Couleur / EBC, Amertume / IBU) et qualificatif à droite de la jauge', () => {
+    const { container } = render(<BeerLabel {...labelProps({ name: 'Hop Overflow', styleName: 'NEIPA', brew: 33, abv: '5', ebc: '11', ibu: '40' })} />);
+    expect(screen.getAllByText('Couleur / EBC').length).toBe(1);
+    expect(screen.getAllByText('Amertume / IBU').length).toBe(1);
+    // le qualificatif partage sa ligne avec la jauge
+    const desc = screen.getByText('Marquée');
+    expect(desc.parentElement!.querySelector('[data-gauge]')).toBeTruthy();
+    expect(screen.getByText('Dorée').parentElement!.querySelector('[data-gauge]')).toBeTruthy();
+  });
+});

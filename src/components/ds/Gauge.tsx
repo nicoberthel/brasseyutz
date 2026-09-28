@@ -37,7 +37,7 @@ export function Gauge({ kind = 'ebc', value = 0, max, unit = 'px', accent = 'var
   const bar = kind === 'ebc' && variant === 'gradient'
     ? <span style={{ position: 'relative', display: 'block', height: u(h), background: EBC }}><span style={{ position: 'absolute', left: pct + '%', top: u(-h * 0.45), bottom: u(-h * 0.45), width: u(mm ? 0.45 : 2), marginLeft: u(mm ? -0.22 : -1), background: 'var(--encre)' }}></span></span>
     : <span style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: u(mm ? 0.5 : 3), height: u(h) }}>{[0, 1, 2, 3, 4].map(i => <span key={i} style={{ background: i < n ? (kind === 'ebc' ? EBC_SEG[i] : accent) : 'var(--filet)' }}></span>)}</span>;
-  return <div style={{ display: 'flex', flexDirection: 'column', gap: u(mm ? 0.9 : 5), ...style }}>
+  return <div data-gauge style={{ display: 'flex', flexDirection: 'column', gap: u(mm ? 0.9 : 5), ...style }}>
     {showLabel && <span style={{ display: 'flex', justifyContent: 'space-between', font: `500 ${u(fs)} var(--font-mono)`, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}><span>{kind === 'ebc' ? 'Couleur' : 'Amertume'}</span><span style={{ color: 'var(--text-strong)' }}>{kind.toUpperCase()} {value}</span></span>}
     {bar}
   </div>;
