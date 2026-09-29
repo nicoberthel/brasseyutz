@@ -30,6 +30,11 @@ describe('Catalogue', () => {
     expect(screen.queryByText(/% · 75 cl/)).toBeNull();
     expect(screen.queryByText(/% · 33 cl/)).toBeNull();
   });
+  it('badge coup de cœur affiché sur la carte quand renseigné', () => {
+    const flagged = beers.map(b => b.id === 'paul' ? { ...b, badge: 'Coup de cœur' } : b);
+    render(<Catalogue beers={flagged} />);
+    expect(screen.getByText('Coup de cœur')).toBeTruthy();
+  });
   it('les cartes pointent vers /biere/<id>', () => {
     render(<Catalogue beers={beers} />);
     const link = screen.getAllByRole('link').find(a => a.getAttribute('href') === '/biere/hop-overflow');

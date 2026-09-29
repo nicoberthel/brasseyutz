@@ -50,7 +50,10 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
     <main style={{ maxWidth: 860, margin: '0 auto', padding: 'clamp(20px,4vw,40px) clamp(16px,4vw,32px) 96px' }}>
       {BACK}
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginTop: 32, paddingBottom: 10, borderBottom: '1px solid var(--encre)' }}>
-        <span style={{ font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: ac }}>{beer.styleName}</span>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <span style={{ font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: ac }}>{beer.styleName}</span>
+          {beer.badge && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 8px', border: `1px solid ${ac}`, color: ac, font: '500 11px/1.3 var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}><CuveeIcon name="Heart" size={11} stroke={2} />{beer.badge}</span>}
+        </span>
         <span style={{ font: '500 13px var(--font-mono)', color: 'var(--encre)' }}>N° {beer.brew} · {beer.bottledOn}</span>
       </div>
       <h1 style={{ margin: '28px 0 0', font: '400 clamp(44px,9vw,96px)/0.95 var(--font-display)', letterSpacing: '-0.02em', color: 'var(--encre)', textWrap: 'balance' }}>
@@ -65,7 +68,7 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
       <div style={{ marginTop: 32, display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(130px,1fr))', borderTop: '1px solid var(--encre)', borderLeft: '1px solid var(--filet)' }}>
         {stats.map(s => (
           <div key={s.label} style={{ padding: '14px 16px 16px', background: 'var(--papier)', borderRight: '1px solid var(--filet)', borderBottom: '1px solid var(--filet)' }}>
-            <div style={{ font: '600 11px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--encre-3)' }}>{s.label}</div>
+            <div style={{ font: '600 11px var(--font-text)', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--encre-3)', whiteSpace: 'nowrap' }}>{s.label}</div>
             <div style={{ marginTop: 6, display: 'flex', alignItems: 'baseline', gap: 6 }}>
               <span style={{ font: '400 40px/1 var(--font-display)', color: 'var(--encre)' }}>{s.value}</span>
               <span style={{ font: '500 12px var(--font-mono)', color: 'var(--encre-3)' }}>{s.unit}</span>

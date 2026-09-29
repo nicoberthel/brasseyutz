@@ -1,27 +1,27 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Beer } from '@/lib/schema';
-import { lotFor, slug, splitName } from '@/lib/domain';
+import { lotFor, slug } from '@/lib/domain';
 import { labelProps } from '@/lib/label';
 import { BeerLabel } from '@/components/ds/BeerLabel';
 import { Button } from '@/components/ds/Button';
+import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { brewUrl, QrSvg, qrSvgString } from '@/lib/qr';
 import { ICON_GROUPS } from '@/components/ds/icon-catalog';
 
 const ACCENTS: [string, string][] = [['Orange', 'var(--cuvee-orange)'], ['Houblon', 'var(--cuvee-houblon)'], ['Ocre', 'var(--cuvee-ocre)'], ['Framboise', 'var(--cuvee-framboise)'], ['Bleu', 'var(--cuvee-bleu)'], ['Violet', 'var(--cuvee-violet)'], ['Bordeaux', 'var(--cuvee-bordeaux)'], ['Malt', 'var(--cuvee-malt)']];
 
-type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
+type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'badge' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
 type Form = Record<FormKey, string>;
 
-function blank(beers: Beer[]): Form {
-  const n = Math.max(0, ...beers.map(b => b.brew)) + 1;
-  return { name: '', edition: '', styleName: '', denomination: '', brew: String(n), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '', grains: '', hopSchedule: '', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
+function blank(nextBrew: number): Form {
+  return { name: '', edition: '', styleName: '', denomination: '', brew: String(nextBrew), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', badge: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '', grains: '', hopSchedule: '', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
 }
 
 function toForm(b: Beer): Form {
-  const base = blank([]);
+  const base = blank(b.brew);
   const out = { ...base };
   (Object.keys(base) as FormKey[]).forEach(k => { out[k] = String((b as Record<string, unknown>)[k] ?? ''); });
   return out;
@@ -36,14 +36,12 @@ const legend: React.CSSProperties = { padding: '0 0 10px', font: '500 12px var(-
 const fieldset: React.CSSProperties = { margin: 0, padding: 0, border: 0, display: 'flex', flexDirection: 'column', gap: 14 };
 const fieldsetNext: React.CSSProperties = { ...fieldset, padding: '24px 0 0', borderTop: '1px solid var(--encre)' };
 
-export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: string }) {
+export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextBrew: number; siteUrl: string }) {
   const router = useRouter();
-  const [beers, setBeers] = useState(initial);
-  const [form, setForm] = useState<Form>(() => blank(initial));
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [form, setForm] = useState<Form>(() => (beer ? toForm(beer) : blank(nextBrew)));
+  const [editingId, setEditingId] = useState<string | null>(beer?.id ?? null);
   const [savedMsg, setSavedMsg] = useState('');
   const [formError, setFormError] = useState('');
-  const sorted = useMemo(() => [...beers].sort((a, b) => b.brew - a.brew), [beers]);
   const set = (k: FormKey) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const val = e.target.value;
     setForm(f => ({ ...f, [k]: val }));
@@ -65,21 +63,20 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
     if (res.status === 401) { location.href = '/connexion'; return; }
     const data = await res.json().catch(() => ({ error: 'Erreur inattendue.' }));
     if (!res.ok) { setFormError(data.error || 'Erreur inattendue.'); return; }
-    setBeers(bs => bs.filter(b => b.id !== data.id).concat(data));
     setEditingId(data.id);
     setForm(toForm(data));
     setFormError('');
     setSavedMsg('Enregistré · ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
+    window.history.replaceState(null, '', `/admin/biere/${data.id}`);
     router.refresh();
   }
 
-  async function del(b: Beer) {
-    if (!confirm(`Supprimer « ${b.name} » ?`)) return;
-    const res = await fetch(`/api/beers/${b.id}`, { method: 'DELETE' });
+  async function del() {
+    if (!editingId || !confirm(`Supprimer « ${form.name} » ?`)) return;
+    const res = await fetch(`/api/beers/${editingId}`, { method: 'DELETE' });
     if (res.status === 401) { location.href = '/connexion'; return; }
     if (!res.ok) return;
-    setBeers(bs => bs.filter(x => x.id !== b.id));
-    if (editingId === b.id) startNew();
+    router.push('/admin');
     router.refresh();
   }
 
@@ -99,22 +96,6 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
     };
   }
 
-  async function onImport(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
-    e.target.value = '';
-    if (!f) return;
-    let parsed: unknown;
-    try { parsed = JSON.parse(await f.text()); } catch { setFormError('Fichier JSON illisible.'); return; }
-    const res = await fetch('/api/import', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(parsed) });
-    if (res.status === 401) { location.href = '/connexion'; return; }
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) { setFormError(data.error || 'Import impossible.'); return; }
-    location.reload();
-  }
-
-  function startEdit(b: Beer) { setForm(toForm(b)); setEditingId(b.id); setSavedMsg(''); setFormError(''); }
-  function startNew() { setForm(blank(beers)); setEditingId(null); setSavedMsg(''); setFormError(''); }
-
   function downloadQr() {
     const s = qrSvgString(previewUrl);
     const a = document.createElement('a');
@@ -130,6 +111,7 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
     ['denomination', 'Dénomination (option)', 'Bière blonde'], ['brew', 'N° de brassin', ''], ['abv', 'Alcool % vol.', '5,5'],
     ['ebc', 'EBC', '11'], ['ibu', 'IBU', '40'], ['bottledOn', 'Embouteillée le', 'JJ/MM/AAAA'],
     ['bestBefore', 'DDM', 'MM/AAAA'], ['lot', 'Lot', lotFor({ bottledOn: form.bottledOn, brew: form.brew })],
+    ['badge', 'Badge site (option)', 'Coup de cœur'],
   ];
   const labelTexts: [FormKey, string, string][] = [
     ['malts', 'Malts (allergènes entre *astérisques*)', '*Orge* : Pale Ale, Munich'],
@@ -147,60 +129,21 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
     ['mash', 'Empâtage', 'Empâtage | 67 °C | 60 min'], ['ferment', 'Fermentation', 'Verdant IPA | 19 °C | 10 jours'],
     ['notes', 'Le mot du brasseur', 'Une phrase, sans point d’exclamation.'],
   ];
-  const actionStyle: React.CSSProperties = { cursor: 'pointer', font: '600 11px var(--font-text)', letterSpacing: '0.16em', textTransform: 'uppercase' };
 
   return (
     <main style={{ maxWidth: 1320, margin: '0 auto', padding: 'clamp(28px,5vw,56px) clamp(16px,4vw,48px) 96px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', gap: 16, flexWrap: 'wrap', paddingBottom: 20, borderBottom: '1px solid var(--encre)' }}>
-        <div>
-          <div style={{ font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)' }}>Backoffice</div>
-          <h1 style={{ margin: '8px 0 0', font: '400 clamp(44px,6vw,72px)/0.95 var(--font-display)', letterSpacing: '-0.02em', color: 'var(--encre)' }}>
-            Les <i style={{ color: 'var(--accent)' }}>brassins</i>
-          </h1>
-        </div>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-          <a href="/api/export" download style={{ ...actionStyle, color: 'var(--encre-2)' }} className="hov-ink">Exporter</a>
-          <label style={{ ...actionStyle, color: 'var(--encre-2)' }} className="hov-ink">
-            <input type="file" accept="application/json,.json" onChange={onImport} style={{ display: 'none' }} />Importer
-          </label>
-          <Link href={`/admin/planche?biere=${previewId}`}><Button variant="outline">Planche A4</Button></Link>
-          <Button variant="primary" onClick={startNew}>Nouvelle bière</Button>
-        </div>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--encre-2)' }}>
+        <CuveeIcon name="ArrowLeft" size={16} />Les brassins
+      </Link>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', margin: '20px 0 0', paddingBottom: 20, borderBottom: '1px solid var(--encre)' }}>
+        <h1 style={{ margin: 0, font: '400 clamp(32px,4.5vw,52px)/1 var(--font-display)', letterSpacing: '-0.02em', color: 'var(--encre)' }}>
+          {editingId ? `Modifier « ${form.name} »` : 'Nouvelle bière'}
+        </h1>
+        <span style={{ font: '500 12px var(--font-mono)', color: 'var(--success)' }}>{savedMsg}</span>
       </div>
 
-      <div style={{ marginTop: 24, background: 'var(--papier)', border: '1px solid var(--filet)', overflowX: 'auto' }}>
-        <div style={{ minWidth: 640 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '70px minmax(0,1.4fr) minmax(0,1fr) 110px 200px', gap: 12, padding: '10px 16px', borderBottom: '1px solid var(--encre)', font: '500 11px var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--encre-3)' }}>
-            <span>N°</span><span>Nom</span><span>Style</span><span>Embout.</span><span style={{ textAlign: 'right' }}>Actions</span>
-          </div>
-          {sorted.map(b => {
-            const [f, s] = splitName(b);
-            return (
-              <div key={b.id} style={{ display: 'grid', gridTemplateColumns: '70px minmax(0,1.4fr) minmax(0,1fr) 110px 200px', gap: 12, alignItems: 'center', padding: '10px 16px', borderBottom: '1px solid var(--filet)', background: b.id === editingId ? 'var(--papier-2)' : 'transparent' }}>
-                <span style={{ font: '500 14px var(--font-mono)', color: 'var(--encre)' }}>{b.brew}</span>
-                <span style={{ font: '400 22px/1 var(--font-display)', color: 'var(--encre)' }}>{f} {s && <i style={{ color: b.accent }}>{s}</i>}</span>
-                <span style={{ fontSize: 14, color: 'var(--encre-2)' }}>{b.styleName}</span>
-                <span style={{ font: '400 13px var(--font-mono)', color: 'var(--encre-2)' }}>{b.bottledOn}</span>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 14, font: '600 11px var(--font-text)', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
-                  <Link href={`/biere/${b.id}`} style={{ color: 'var(--encre-2)' }} className="hov-ink">Voir</Link>
-                  <span onClick={() => startEdit(b)} style={{ cursor: 'pointer', color: 'var(--encre)' }} className="hov-under">Modifier</span>
-                  <span onClick={() => del(b)} style={{ cursor: 'pointer', color: 'var(--danger)' }} className="hov-under">Suppr.</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,540px),1fr))', gap: 32, alignItems: 'start' }}>
+      <div style={{ marginTop: 28, display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,540px),1fr))', gap: 32, alignItems: 'start' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
-            <h2 style={{ margin: 0, font: '400 var(--fs-h3)/1.1 var(--font-display)', color: 'var(--encre)' }}>
-              {editingId ? `Modifier « ${form.name} »` : 'Nouvelle bière'}
-            </h2>
-            <span style={{ font: '500 12px var(--font-mono)', color: 'var(--success)' }}>{savedMsg}</span>
-          </div>
-
           <fieldset style={fieldset}>
             <legend style={legend}>Étiquette</legend>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: 14 }}>
@@ -310,9 +253,12 @@ export function AdminApp({ initial, siteUrl }: { initial: Beer[]; siteUrl: strin
             ))}
           </fieldset>
 
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', paddingTop: 20, borderTop: '1px solid var(--encre)' }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', paddingTop: 20, borderTop: '1px solid var(--encre)' }}>
             <Button variant="primary" onClick={save}>Enregistrer</Button>
-            <Button variant="outline" onClick={startNew}>Annuler</Button>
+            <Link href="/admin"><Button variant="outline">Retour</Button></Link>
+            {editingId && (
+              <span onClick={del} className="hov-under" style={{ marginLeft: 'auto', cursor: 'pointer', font: '600 11px var(--font-text)', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--danger)' }}>Supprimer</span>
+            )}
           </div>
           {formError && <p style={{ margin: 0, font: '500 14px var(--font-text)', color: 'var(--danger)' }}>{formError}</p>}
         </div>
