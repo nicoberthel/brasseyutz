@@ -3,7 +3,7 @@ import type { NewBeer } from './schema';
 
 const OPTIONAL_TEXT = ['edition', 'denomination', 'ebc', 'ibu', 'malts', 'hops', 'yeast', 'other',
   'bottledOn', 'bestBefore', 'lot', 'volume', 'og', 'fg', 'grains', 'hopSchedule', 'mash',
-  'ferment', 'notes', 'look', 'nose', 'mouth', 'finish', 'serving', 'description', 'labelImage', 'artwork', 'badge'] as const;
+  'ferment', 'notes', 'look', 'nose', 'mouth', 'finish', 'serving', 'description', 'labelImage', 'artwork'] as const;
 
 const REQUIRED_MSG = 'Nom, style, n° de brassin et alcool sont obligatoires.';
 
@@ -25,6 +25,7 @@ export function validateBeer(input: unknown, opts: { id?: string } = {}):
     icon: s('icon') || 'Hop',
   };
   for (const k of OPTIONAL_TEXT) (beer as Record<string, unknown>)[k] = String(o[k] ?? '').replace(/^\s+|\s+$/g, '');
+  beer.favorite = o.favorite === true || o.favorite === 1 || o.favorite === '1' ? 1 : 0;
   if (!beer.lot) beer.lot = lotFor({ bottledOn: beer.bottledOn, brew });
   return { ok: true, beer };
 }

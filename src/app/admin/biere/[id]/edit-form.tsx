@@ -11,19 +11,22 @@ import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { brewUrl, QrSvg, qrSvgString } from '@/lib/qr';
 import { ICON_GROUPS } from '@/components/ds/icon-catalog';
 
-const ACCENTS: [string, string][] = [['Orange', 'var(--cuvee-orange)'], ['Houblon', 'var(--cuvee-houblon)'], ['Ocre', 'var(--cuvee-ocre)'], ['Framboise', 'var(--cuvee-framboise)'], ['Bleu', 'var(--cuvee-bleu)'], ['Violet', 'var(--cuvee-violet)'], ['Bordeaux', 'var(--cuvee-bordeaux)'], ['Malt', 'var(--cuvee-malt)']];
+const ACCENTS: [string, string][] = [['Orange', 'var(--cuvee-orange)'], ['Houblon', 'var(--cuvee-houblon)'], ['Ocre', 'var(--cuvee-ocre)'], ['Framboise', 'var(--cuvee-framboise)'], ['Bleu', 'var(--cuvee-bleu)'], ['Violet', 'var(--cuvee-violet)'], ['Bordeaux', 'var(--cuvee-bordeaux)'], ['Malt', 'var(--cuvee-malt)'], ['Rouge', 'var(--cuvee-rouge)'], ['Bleu ciel', 'var(--cuvee-ciel)'], ['Vert acidulé', 'var(--cuvee-acide)'], ['Jaune', 'var(--cuvee-jaune)']];
 
-type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'badge' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
+type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'favorite' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
 type Form = Record<FormKey, string>;
 
 function blank(nextBrew: number): Form {
-  return { name: '', edition: '', styleName: '', denomination: '', brew: String(nextBrew), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', badge: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '', grains: '', hopSchedule: '', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
+  return { name: '', edition: '', styleName: '', denomination: '', brew: String(nextBrew), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', favorite: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '',
+    grains: 'Pale Ale | 3,6 kg\nPilsen | 0,6 kg\nMalt de blé | 0,4 kg\nFlocons de froment | 0,3 kg',
+    hopSchedule: 'Citra | 10 g | 60 min\nCitra | 30 g | 10 min\nCitra | 40 g | whirlpool\nCitra | 60 g | dry hop J4', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
 }
 
 function toForm(b: Beer): Form {
   const base = blank(b.brew);
   const out = { ...base };
   (Object.keys(base) as FormKey[]).forEach(k => { out[k] = String((b as Record<string, unknown>)[k] ?? ''); });
+  out.favorite = b.favorite ? '1' : '';
   return out;
 }
 
@@ -111,7 +114,6 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
     ['denomination', 'Dénomination (option)', 'Bière blonde'], ['brew', 'N° de brassin', ''], ['abv', 'Alcool % vol.', '5,5'],
     ['ebc', 'EBC', '11'], ['ibu', 'IBU', '40'], ['bottledOn', 'Embouteillée le', 'JJ/MM/AAAA'],
     ['bestBefore', 'DDM', 'MM/AAAA'], ['lot', 'Lot', lotFor({ bottledOn: form.bottledOn, brew: form.brew })],
-    ['badge', 'Badge site (option)', 'Coup de cœur'],
   ];
   const labelTexts: [FormKey, string, string][] = [
     ['malts', 'Malts (allergènes entre *astérisques*)', '*Orge* : Pale Ale, Munich'],
@@ -174,6 +176,10 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
                     </optgroup>
                   ))}
                 </select>
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 10, alignSelf: 'end', height: 42, cursor: 'pointer' }}>
+                <input type="checkbox" checked={form.favorite === '1'} onChange={e => { const v = e.target.checked ? '1' : ''; setForm(f => ({ ...f, favorite: v })); setSavedMsg(''); }} style={{ accentColor: 'var(--encre)', width: 16, height: 16 }} />
+                <span style={capLbl}>Coup de cœur</span>
               </label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={capLbl}>SVG perso (remplace l’icône)</span>

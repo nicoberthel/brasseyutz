@@ -5,7 +5,7 @@ import { Catalogue } from '@/app/catalogue';
 import { SEED } from '@/lib/seed';
 import type { Beer } from '@/lib/schema';
 
-const beers = SEED.map(b => ({ createdAt: 0, updatedAt: 0, edition: '', denomination: '', labelImage: '', ...b })) as Beer[];
+const beers = SEED.map(b => ({ createdAt: 0, updatedAt: 0, edition: '', denomination: '', labelImage: '', artwork: '', favorite: 0, ...b })) as Beer[];
 
 describe('Catalogue', () => {
   it('affiche titre, compteur et toutes les cartes', () => {
@@ -30,10 +30,10 @@ describe('Catalogue', () => {
     expect(screen.queryByText(/% · 75 cl/)).toBeNull();
     expect(screen.queryByText(/% · 33 cl/)).toBeNull();
   });
-  it('badge coup de cœur affiché sur la carte quand renseigné', () => {
-    const flagged = beers.map(b => b.id === 'paul' ? { ...b, badge: 'Coup de cœur' } : b);
+  it('cœur affiché sur la carte quand coup de cœur', () => {
+    const flagged = beers.map(b => b.id === 'paul' ? { ...b, favorite: 1 } : b);
     render(<Catalogue beers={flagged} />);
-    expect(screen.getByText('Coup de cœur')).toBeTruthy();
+    expect(screen.getByTitle('Coup de cœur')).toBeTruthy();
   });
   it('les cartes pointent vers /biere/<id>', () => {
     render(<Catalogue beers={beers} />);

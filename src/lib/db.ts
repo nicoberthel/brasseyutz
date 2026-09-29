@@ -43,7 +43,7 @@ const COLUMNS: [name: string, ddl: string][] = [
   ['description', "TEXT NOT NULL DEFAULT ''"],
   ['labelImage', "TEXT NOT NULL DEFAULT ''"],
   ['artwork', "TEXT NOT NULL DEFAULT ''"],
-  ['badge', "TEXT NOT NULL DEFAULT ''"],
+  ['favorite', 'INTEGER NOT NULL DEFAULT 0'],
   ['createdAt', 'INTEGER NOT NULL DEFAULT 0'],
   ['updatedAt', 'INTEGER NOT NULL DEFAULT 0'],
 ];

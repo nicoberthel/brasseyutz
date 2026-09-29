@@ -8,8 +8,10 @@
 --filet:#D9D6CF;--filet-fort:#161616;
 /* Couleurs de cuvée — une seule par bière, en petite surface (icône, mot en italique). Toutes ≥ 3:1 sur blanc. */
 --cuvee-orange:#D9480F;--cuvee-houblon:#4F8A2B;--cuvee-ocre:#A87B00;--cuvee-framboise:#C2255C;--cuvee-bleu:#1F63B0;--cuvee-violet:#6A4BC4;--cuvee-bordeaux:#8A1F2E;--cuvee-malt:#5E3A22;
+--cuvee-rouge:#C92A2A;--cuvee-ciel:#1C7ED6;--cuvee-acide:#5C940D;--cuvee-jaune:#B08C00;
 /* Teintes douces — écran uniquement (site, flyers numériques), jamais sur l'étiquette imprimée */
 --cuvee-orange-soft:#FBE7DE;--cuvee-houblon-soft:#E6F0DF;--cuvee-ocre-soft:#F5EDD5;--cuvee-framboise-soft:#F8E0E8;--cuvee-bleu-soft:#DEE8F4;--cuvee-violet-soft:#E9E4F7;--cuvee-bordeaux-soft:#F1DEE1;--cuvee-malt-soft:#EDE3DA;
+--cuvee-rouge-soft:#F9DEDE;--cuvee-ciel-soft:#DCEDFB;--cuvee-acide-soft:#EAF2D8;--cuvee-jaune-soft:#F5ECCF;
 /* Échelle EBC (couleur de la bière) — écran uniquement */
 --ebc-4:#F8E08E;--ebc-8:#F2C14E;--ebc-12:#E39A2B;--ebc-20:#C66A1E;--ebc-30:#9A4516;--ebc-45:#6B2B10;--ebc-70:#3A1608;--ebc-100:#1A0A04;
 /* Sémantique */

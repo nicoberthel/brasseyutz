@@ -71,6 +71,17 @@ describe('API beers', () => {
   });
 });
 
+describe('favorite', () => {
+  it('validateBeer normalise favorite en 0/1', () => {
+    const r1 = validateBeer({ ...valid, favorite: true });
+    if (!r1.ok) throw new Error(r1.error);
+    expect(r1.beer.favorite).toBe(1);
+    const r0 = validateBeer({ ...valid });
+    if (!r0.ok) throw new Error(r0.error);
+    expect(r0.beer.favorite).toBe(0);
+  });
+});
+
 describe('artwork', () => {
   it('validateBeer conserve artwork', () => {
     const r = validateBeer({ ...valid, artwork: '/uploads/abc.svg' });

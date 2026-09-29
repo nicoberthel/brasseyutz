@@ -17,6 +17,7 @@ export const ICON_GROUPS: { group: string; icons: IconEntry[] }[] = [
       ['Citrus', 'Agrume'], ['Cherry', 'Cerise'], ['Grape', 'Raisin'],
       ['Apple', 'Pomme'], ['Leaf', 'Feuille'], ['Sprout', 'Pousse'],
       ['Flower2', 'Fleur'], ['TreePine', 'Sapin'], ['Clover', 'Trèfle'],
+      ['Fraise', 'Fraise'], ['Framboise', 'Framboise'], ['TreePalm', 'Palmier'], ['Abeille', 'Abeille'],
     ],
   },
   {
@@ -41,7 +42,7 @@ export const ICON_GROUPS: { group: string; icons: IconEntry[] }[] = [
     icons: [
       ['Crown', 'Couronne'], ['Heart', 'Cœur'], ['Gift', 'Cadeau'],
       ['Skull', 'Crâne'], ['Ghost', 'Fantôme'], ['Anchor', 'Ancre'],
-      ['Castle', 'Château'], ['Bomb', 'Bombe'],
+      ['Castle', 'Château'], ['Bomb', 'Bombe'], ['Book', 'Livre'], ['Medal', 'Médaille'],
     ],
   },
 ];

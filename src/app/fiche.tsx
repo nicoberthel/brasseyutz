@@ -52,7 +52,7 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginTop: 32, paddingBottom: 10, borderBottom: '1px solid var(--encre)' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <span style={{ font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: ac }}>{beer.styleName}</span>
-          {beer.badge && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '3px 8px', border: `1px solid ${ac}`, color: ac, font: '500 11px/1.3 var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}><CuveeIcon name="Heart" size={11} stroke={2} />{beer.badge}</span>}
+          {beer.favorite ? <span title="Coup de cœur" style={{ display: 'inline-flex', color: ac }}><CuveeIcon name="Heart" size={15} stroke={2} /></span> : null}
         </span>
         <span style={{ font: '500 13px var(--font-mono)', color: 'var(--encre)' }}>N° {beer.brew} · {beer.bottledOn}</span>
       </div>

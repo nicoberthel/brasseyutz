@@ -79,7 +79,7 @@ export function AdminList({ beers }: { beers: Beer[] }) {
                 <span style={{ font: '500 14px var(--font-mono)', color: 'var(--encre)' }}>{b.brew}</span>
                 <span style={{ display: 'flex', alignItems: 'baseline', gap: 10, minWidth: 0 }}>
                   <span style={{ font: '400 20px/1 var(--font-display)', color: 'var(--encre)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{f} {s && <i style={{ color: b.accent }}>{s}</i>}</span>
-                  {b.badge && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: b.accent, font: '500 10px var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}><CuveeIcon name="Heart" size={10} stroke={2} />{b.badge}</span>}
+                  {b.favorite ? <span title="Coup de cœur" style={{ display: 'inline-flex', color: b.accent }}><CuveeIcon name="Heart" size={13} stroke={2} /></span> : null}
                 </span>
                 <span style={{ fontSize: 14, color: 'var(--encre-2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.styleName}</span>
                 <span style={{ font: '400 13px var(--font-mono)', color: 'var(--encre-2)' }}>{b.bottledOn}</span>

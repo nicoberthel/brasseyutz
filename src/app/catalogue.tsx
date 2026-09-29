@@ -44,7 +44,7 @@ export function Catalogue({ beers }: { beers: Beer[] }) {
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '10px 14px', borderBottom: '1px solid var(--filet)' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
                   <span style={{ font: '600 11px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: b.accent }}>{b.styleName}</span>
-                  {b.badge && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 7px', border: `1px solid ${b.accent}`, color: b.accent, font: '500 10px/1.3 var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}><CuveeIcon name="Heart" size={10} stroke={2} />{b.badge}</span>}
+                  {b.favorite ? <span title="Coup de cœur" style={{ display: 'inline-flex', color: b.accent }}><CuveeIcon name="Heart" size={14} stroke={2} /></span> : null}
                 </span>
                 <span style={{ font: '500 12px var(--font-mono)', color: 'var(--encre)' }}>N° {b.brew}</span>
               </div>

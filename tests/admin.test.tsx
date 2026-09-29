@@ -7,7 +7,7 @@ import { SEED } from '@/lib/seed';
 import type { Beer } from '@/lib/schema';
 
 vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh: vi.fn(), push: vi.fn(), replace: vi.fn() }) }));
-const beers = SEED.map(b => ({ createdAt: 0, updatedAt: 0, edition: '', denomination: '', labelImage: '', artwork: '', badge: '', ...b })) as Beer[];
+const beers = SEED.map(b => ({ createdAt: 0, updatedAt: 0, edition: '', denomination: '', labelImage: '', artwork: '', favorite: 0, ...b })) as Beer[];
 
 describe('AdminList', () => {
   const list = () => render(<AdminList beers={beers} />);
@@ -41,7 +41,12 @@ describe('EditForm', () => {
     editPaul();
     expect((screen.getByLabelText(/^Nom$/i) as HTMLInputElement).value).toBe('Paul');
     expect(screen.getByText(/Modifier « Paul »/)).toBeTruthy();
-    expect(screen.getByLabelText(/Badge site/i)).toBeTruthy();
+    expect((screen.getByLabelText(/Coup de cœur/i) as HTMLInputElement).type).toBe('checkbox');
+  });
+  it('nouvelle bière : recette pré-remplie sur le modèle Citra Xtra', () => {
+    createNew();
+    expect((screen.getByLabelText(/Malts & grains/i) as HTMLTextAreaElement).value).toContain('Pale Ale | 3,6 kg');
+    expect((screen.getByLabelText(/Houblonnage/i) as HTMLTextAreaElement).value).toContain('dry hop J4');
   });
   it('l’URL du QR suit le n° de brassin', () => {
     createNew();
