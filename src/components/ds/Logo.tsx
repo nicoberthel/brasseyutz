@@ -45,17 +45,17 @@ export function Signature({ size = 48, unit = 'px', ring = 'var(--accent)', ink 
   </span>;
 }
 
-/* Signature horizontale — logo et texte côte à côte : « Brasse—Yutz » en serif,
-   trait d'union remplacé par le tiret épais couleur (readme du DS), sous-titre
-   « Bières maison » en capitales espacées. */
+/* Signature horizontale — logo et bloc texte côte à côte : BRASSE / filet
+   couleur / YUTZ justifiés à la même largeur (le bloc de la Signature
+   d'origine, posé à droite du cercle). */
 export function SignatureH({ size = 44, ring = 'var(--accent)', ink = 'var(--encre)', knock = 'var(--papier)', style }: LogoMarkProps) {
-  return <span aria-label="Brasse-Yutz — Bières maison" style={{ display: 'inline-flex', alignItems: 'center', gap: size * 0.3, ...style }}>
+  const w = size * 1.4;
+  return <span aria-label="Brasse-Yutz" style={{ display: 'inline-flex', alignItems: 'center', gap: size * 0.3, ...style }}>
     <LogoMark size={size} ring={ring} ink={ink} knock={knock} />
-    <span style={{ display: 'flex', flexDirection: 'column', gap: size * 0.1 }}>
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: size * 0.14, font: `400 ${size * 0.68}px/0.95 var(--font-display)`, letterSpacing: '-0.01em', color: ink, whiteSpace: 'nowrap' }}>
-        Brasse<span aria-hidden style={{ width: size * 0.32, height: Math.max(size * 0.075, 2), background: ring, display: 'inline-block' }}></span>Yutz
-      </span>
-      <span style={{ font: `600 ${Math.max(size * 0.2, 9)}px var(--font-text)`, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--encre-3)', whiteSpace: 'nowrap' }}>Bières maison</span>
+    <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: size * 0.1 }}>
+      <Just txt="Brasse" w={w} fs={size * 0.3} unit="px" color={ink} />
+      <span style={{ width: w, height: Math.max(size * 0.055, 2), background: ring }}></span>
+      <Just txt="Yutz" w={w} fs={size * 0.46} unit="px" color={ink} />
     </span>
   </span>;
 }

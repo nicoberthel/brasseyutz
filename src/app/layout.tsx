@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${brasseSerif.variable} ${brasseSans.variable} ${brasseMono.variable}`}>
       <body>
-        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', padding: '14px clamp(16px,4vw,48px)', background: 'var(--papier)', borderBottom: '1px solid var(--filet)' }}>
+        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', padding: '14px clamp(16px,4vw,48px)', background: 'var(--papier)', borderBottom: '2px solid var(--accent)' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--encre)' }}>
             <SignatureH size={44} />
           </Link>
