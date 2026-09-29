@@ -8,7 +8,8 @@ export const ICON_GROUPS: { group: string; icons: IconEntry[] }[] = [
     group: 'Ingrédients',
     icons: [
       ['Hop', 'Houblon'], ['Wheat', 'Épi'], ['FlaskConical', 'Levure'],
-      ['Droplets', 'Eau'], ['Beer', 'Bière'], ['Coffee', 'Café'],
+      ['Droplets', 'Eau'], ['Beer', 'Bière'], ['Coffee', 'Café'], 
+      ['Cookie', 'Cookie'],
     ],
   },
   {
@@ -32,7 +33,7 @@ export const ICON_GROUPS: { group: string; icons: IconEntry[] }[] = [
   {
     group: 'Informatique',
     icons: [
-      ['Terminal', 'Terminal'], ['Code', 'Code'], ['Cpu', 'CPU'],
+      ['Terminal', 'Terminal'], ['Code', 'Code'], ['Cpu', 'CPU'], ['Shield', 'Bouclier'],
       ['Bug', 'Bug'], ['Wifi', 'Wifi'], ['BatteryCharging', 'Batterie'],
       ['Save', 'Disquette'], ['Binary', 'Binaire'], ['InfinityIcon', 'Boucle'],
     ],
@@ -40,7 +41,7 @@ export const ICON_GROUPS: { group: string; icons: IconEntry[] }[] = [
   {
     group: 'Fête & divers',
     icons: [
-      ['Crown', 'Couronne'], ['Heart', 'Cœur'], ['Gift', 'Cadeau'],
+      ['Crown', 'Couronne'], ['Heart', 'Cœur'], ['Gift', 'Cadeau'],  ['Cake', 'Gateau'],
       ['Skull', 'Crâne'], ['Ghost', 'Fantôme'], ['Anchor', 'Ancre'],
       ['Castle', 'Château'], ['Bomb', 'Bombe'], ['Book', 'Livre'], ['Medal', 'Médaille'],
     ],

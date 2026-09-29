@@ -4,8 +4,8 @@ import {
   Hop, Wheat, FlaskConical, Droplets, Beer, Coffee,
   Citrus, Cherry, Grape, Apple, Leaf, Sprout, Flower2, TreePine, Clover, TreePalm,
   Sun, Moon, SunMoon, Snowflake, Cloud, Zap, Flame, Waves, Mountain, Sparkles, Orbit, Rocket,
-  Terminal, Code, Cpu, Bug, Wifi, BatteryCharging, Save, Binary, InfinityIcon,
-  Crown, Heart, Gift, Skull, Ghost, Anchor, Castle, Bomb, Book, Medal,
+  Terminal, Code, Cpu, Bug, Wifi, BatteryCharging, Save, Binary, InfinityIcon, Cookie, 
+  Crown, Heart, Gift, Skull, Ghost, Anchor, Castle, Bomb, Book, Medal, Shield, Cake, 
   // icônes d'interface
   Thermometer, Search, ArrowLeft, Printer,
   type LucideIcon,
@@ -15,8 +15,8 @@ const ICONS: Record<string, LucideIcon> = {
   Hop, Wheat, FlaskConical, Droplets, Beer, Coffee,
   Citrus, Cherry, Grape, Apple, Leaf, Sprout, Flower2, TreePine, Clover, TreePalm,
   Sun, Moon, SunMoon, Snowflake, Cloud, Zap, Flame, Waves, Mountain, Sparkles, Orbit, Rocket,
-  Terminal, Code, Cpu, Bug, Wifi, BatteryCharging, Save, Binary, InfinityIcon,
-  Crown, Heart, Gift, Skull, Ghost, Anchor, Castle, Bomb, Book, Medal,
+  Terminal, Code, Cpu, Bug, Wifi, BatteryCharging, Save, Binary, InfinityIcon, Cookie, 
+  Crown, Heart, Gift, Skull, Ghost, Anchor, Castle, Bomb, Book, Medal, Shield, Cake, 
   Thermometer, Search, ArrowLeft, Printer,
 };
 

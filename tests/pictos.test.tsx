@@ -7,7 +7,7 @@ import { CuveeIcon } from '@/components/ds/CuveeIcon';
 describe('catalogue de pictos (design system, 44 entrées)', () => {
   it('50 pictos répartis en 5 groupes français', () => {
     const all = ICON_GROUPS.flatMap(g => g.icons);
-    expect(all).toHaveLength(50);
+    expect(all).toHaveLength(53);
     expect(ICON_GROUPS.map(g => g.group)).toEqual(['Ingrédients', 'Fruits & plantes', 'Saisons & ciel', 'Informatique', 'Fête & divers']);
     const names = all.map(([lucide]) => lucide);
     expect(names).toContain('Hop');
@@ -19,7 +19,10 @@ describe('catalogue de pictos (design system, 44 entrées)', () => {
     expect(names).toContain('TreePalm');
     expect(names).toContain('Book');
     expect(names).toContain('Medal');
-    expect(new Set(names).size).toBe(50); // pas de doublon
+    expect(names).toContain('Cookie');
+    expect(names).toContain('Shield');
+    expect(names).toContain('Cake');
+    expect(new Set(names).size).toBe(53); // pas de doublon
   });
   it('chaque picto du catalogue rend un svg colorisable', () => {
     for (const [lucide] of ICON_GROUPS.flatMap(g => g.icons)) {

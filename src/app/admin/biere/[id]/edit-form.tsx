@@ -19,7 +19,7 @@ type Form = Record<FormKey, string>;
 function blank(nextBrew: number): Form {
   return { name: '', edition: '', styleName: '', denomination: '', brew: String(nextBrew), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', favorite: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '',
     grains: 'Pale Ale | 3,6 kg\nPilsen | 0,6 kg\nMalt de blé | 0,4 kg\nFlocons de froment | 0,3 kg',
-    hopSchedule: 'Citra | 10 g | 60 min\nCitra | 30 g | 10 min\nCitra | 40 g | whirlpool\nCitra | 60 g | dry hop J4', mash: '', ferment: '', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
+    hopSchedule: 'Citra | 10 g | 60 min | Ébulition\nCitra | 30 g | 10 min | Hopstand\nCitra | 60 g | J4 |Dry Hop', mash: 'Empâtage | 65 °C | 60 min', ferment: '20 °C | 14 jours', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
 }
 
 function toForm(b: Beer): Form {

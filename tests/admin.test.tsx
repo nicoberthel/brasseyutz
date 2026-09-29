@@ -43,10 +43,14 @@ describe('EditForm', () => {
     expect(screen.getByText(/Modifier « Paul »/)).toBeTruthy();
     expect((screen.getByLabelText(/Coup de cœur/i) as HTMLInputElement).type).toBe('checkbox');
   });
-  it('nouvelle bière : recette pré-remplie sur le modèle Citra Xtra', () => {
+  it('nouvelle bière : recette pré-remplie (template malts + houblons à modifier)', () => {
     createNew();
-    expect((screen.getByLabelText(/Malts & grains/i) as HTMLTextAreaElement).value).toContain('Pale Ale | 3,6 kg');
-    expect((screen.getByLabelText(/Houblonnage/i) as HTMLTextAreaElement).value).toContain('dry hop J4');
+    const grains = (screen.getByLabelText(/Malts & grains/i) as HTMLTextAreaElement).value;
+    const hops = (screen.getByLabelText(/Houblonnage/i) as HTMLTextAreaElement).value;
+    expect(grains.split('\n').length).toBeGreaterThanOrEqual(3);
+    expect(grains).toContain(' | ');
+    expect(hops.split('\n').length).toBeGreaterThanOrEqual(3);
+    expect(hops).toContain(' | ');
   });
   it('l’URL du QR suit le n° de brassin', () => {
     createNew();

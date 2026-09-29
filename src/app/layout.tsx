@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
-import { Signature } from '@/components/ds/Logo';
+import { SignatureH } from '@/components/ds/Logo';
 import { NavLinks } from './nav-links';
 import './globals.css';
 
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', padding: '14px clamp(16px,4vw,48px)', background: 'var(--papier)', borderBottom: '1px solid var(--filet)' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--encre)' }}>
-            <Signature size={40} />
+            <SignatureH size={44} />
           </Link>
           <NavLinks />
         </header>

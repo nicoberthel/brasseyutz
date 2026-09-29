@@ -84,3 +84,14 @@ describe('BeerLabel — cellules stats réorganisées', () => {
     expect(row.parentElement!.querySelector('[data-gauge]')).toBeTruthy();
   });
 });
+
+describe('SignatureH (bannière horizontale)', () => {
+  it('logo + « Brasse—Yutz » serif + sous-titre « Bières maison »', async () => {
+    const { SignatureH } = await import('@/components/ds/Logo');
+    const { container } = render(<SignatureH size={44} />);
+    expect(container.querySelector('svg')).toBeTruthy(); // LogoMark
+    expect(container.textContent).toContain('Brasse');
+    expect(container.textContent).toContain('Yutz');
+    expect(container.textContent).toContain('Bières maison');
+  });
+});
