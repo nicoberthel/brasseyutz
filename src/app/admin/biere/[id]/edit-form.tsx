@@ -19,7 +19,7 @@ type Form = Record<FormKey, string>;
 function blank(nextBrew: number): Form {
   return { name: '', edition: '', styleName: '', denomination: '', brew: String(nextBrew), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', favorite: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '',
     grains: 'Pale Ale | 3,6 kg\nPilsen | 0,6 kg\nMalt de blé | 0,4 kg\nFlocons de froment | 0,3 kg',
-    hopSchedule: 'Citra | 10 g | 60 min | Ébulition\nCitra | 30 g | 10 min | Hopstand\nCitra | 60 g | J4 |Dry Hop', mash: 'Empâtage | 65 °C | 60 min', ferment: '20 °C | 14 jours', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
+    hopSchedule: 'Citra | 10 g | 60 min | Ébullition\nCitra | 30 g | 10 min | Hopstand\nCitra | 60 g | J4 | Dry hop', mash: 'Empâtage | 65 °C | 60 min', ferment: '20 °C | 14 jours', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
 }
 
 function toForm(b: Beer): Form {
@@ -127,7 +127,7 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
     ['volume', 'Volume (L)', '20'], ['og', 'Densité initiale', '1,050'], ['fg', 'Densité finale', '1,012'],
   ];
   const recipeTexts: [FormKey, string, string][] = [
-    ['grains', 'Malts & grains', 'Pale Ale | 4,0 kg'], ['hopSchedule', 'Houblonnage', 'Citra | 50 g | dry hop J3'],
+    ['grains', 'Malts & grains', 'Pale Ale | 4,0 kg'], ['hopSchedule', 'Houblonnage', 'Citra | 50 g | J3 | Dry hop'],
     ['mash', 'Empâtage', 'Empâtage | 67 °C | 60 min'], ['ferment', 'Fermentation', 'Verdant IPA | 19 °C | 10 jours'],
     ['notes', 'Le mot du brasseur', 'Une phrase, sans point d’exclamation.'],
   ];
