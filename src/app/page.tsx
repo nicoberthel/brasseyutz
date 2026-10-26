@@ -1,11 +1,11 @@
 import { desc } from 'drizzle-orm';
 import { getDb } from '@/lib/db';
 import { beers } from '@/lib/schema';
-import { Catalogue } from './catalogue';
+import { Home } from './home';
 
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
+export default function HomePage() {
   const list = getDb().select().from(beers).orderBy(desc(beers.brew)).all();
-  return <Catalogue beers={list} />;
+  return <Home beers={list} />;
 }

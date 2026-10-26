@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const list = getDb().select().from(beers).all();
   return [
     { url: site },
+    { url: site + '/cuvees' },
     { url: site + '/mentions-legales' },
     ...list.flatMap(b => [{ url: `${site}/biere/${b.id}` }, { url: `${site}/brassin/${b.brew}` }]),
   ];
