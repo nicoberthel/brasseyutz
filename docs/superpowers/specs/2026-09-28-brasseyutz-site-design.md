@@ -1,5 +1,7 @@
 # Brasse-Yutz — site brasseyutz.fr : spécification
 
+> Remplacée, pour le site public et le modèle de recette, par `docs/superpowers/specs/2026-10-26-redesign-site-design.md`.
+
 Date : 2026-09-28 · Statut : validé en conversation, en attente de relecture écrite
 
 ## 1. Objet

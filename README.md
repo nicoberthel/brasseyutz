@@ -1,10 +1,17 @@
 # Brasse-Yutz — brasseyutz.fr
 
-Site public et backoffice de la brasserie amateur Brasse-Yutz (Yutz, Moselle) : catalogue des bières, fiche recette de chaque brassin (cible des QR codes imprimés sur les étiquettes), gestion des brassins et impression des planches d'étiquettes A4.
+Site public et backoffice de la brasserie amateur Brasse-Yutz (Yutz, Moselle) : accueil et liste des cuvées, fiche recette de chaque brassin (cible des QR codes imprimés sur les étiquettes), gestion des brassins et impression des planches d'étiquettes A4.
 
 - Dépôt : https://github.com/nicoberthel/brasseyutz
-- Spécification : `docs/superpowers/specs/2026-09-28-brasseyutz-site-design.md`
-- Maquette de référence : `design/Brasse-Yutz Recettes.dc.html` (+ design system `design/_ds/`)
+- Spécification : `docs/superpowers/specs/2026-10-26-redesign-site-design.md` (site public et modèle de recette ; remplace sur ces points `docs/superpowers/specs/2026-09-28-brasseyutz-site-design.md`, toujours valable pour le backoffice, les étiquettes et le déploiement)
+- Design de référence du site public : `Brasserie de Basse-Yutz — Design System/ui_kits/site/` (le ui-kit fait foi en cas de doute CSS) ; maquette historique du backoffice : `design/Brasse-Yutz Recettes.dc.html` (+ `design/_ds/`)
+
+## Routes
+
+- `/` : accueil (hero, dernier brassin, onglets par famille, recherche, tuiles des cuvées).
+- `/cuvees` : liste complète des cuvées, avec onglets et recherche ; `/cuvees?q=citra` préremplit la recherche.
+- `/biere/<id>` et `/brassin/<n>` : fiches recette, URLs inchangées (`/brassin/<n>` est la cible des QR codes imprimés).
+- `/mentions-legales`, `/connexion`, `/admin/...` : inchangés.
 
 ## Développement
 
@@ -24,6 +31,8 @@ Le backoffice est sur `/admin` (mot de passe unique, cookie de session 30 jours)
 
 - SQLite + fichiers uploadés (images d'étiquettes, SVG perso) dans `DATA_DIR` (défaut `./data`), créés et migrés automatiquement au démarrage.
 - Base vide → les 6 bières réelles sont insérées (seed).
+- Recette structurée : les colonnes `grains`, `hopSchedule`, `mash` et `ferment` stockent du JSON (lignes de grains en kg, houblons par étape Ébullition / Hopstand / Dry hop / Épices, paliers d'empâtage et de fermentation). Colonnes ajoutées : `famille` (houblonnée, blonde, belge, blanche, brune ; sert aux onglets) et `radar` (8 notes de 0 à 5 : amertume, douceur, corps, fruité, floral / herbacé, épicé, malté, torréfié ; vide = pas de radar sur la fiche).
+- Migration automatique au démarrage : une base à l'ancien format (recette en texte « a | b | c ») est convertie en JSON une seule fois (`PRAGMA user_version = 2`), la famille étant déduite du style si elle est vide.
 - Sauvegarde : copier le dossier `data/` (ou le volume Docker), plus le bouton **Exporter** du backoffice (JSON des recettes, restaurable via **Importer** — n'emporte pas les images uploadées).
 - `brasseyutz-import.json` (racine) : export converti au nouveau format (recettes structurées), prêt pour **Importer**. Les anciens exports restent importables (convertis à la volée). Pour convertir un export : `node scripts/convert-export.mjs brasseyutz-export.json brasseyutz-import.json`.
 
