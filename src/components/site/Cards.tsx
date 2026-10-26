@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { Beer } from '@/lib/schema';
-import { abvTxt, num, splitName } from '@/lib/domain';
+import { abvTxt, num } from '@/lib/domain';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { Gauge } from '@/components/ds/Gauge';
 import { LabelThumb } from './LabelThumb';
@@ -28,15 +28,14 @@ function Heart({ beer }: { beer: Beer }) {
 }
 
 function Name({ beer }: { beer: Beer }) {
-  const [first, second] = splitName(beer);
-  return <>{first}{second ? <i style={{ color: beer.accent }}> {second}</i> : null}<Heart beer={beer} /></>;
+  return <>{beer.name}{beer.edition ? <i style={{ color: beer.accent }}> {beer.edition}</i> : null}<Heart beer={beer} /></>;
 }
 
 /* Tuile du rail d'accueil. */
 export function CuveeTile({ beer }: { beer: Beer }) {
   return (
     <Link href={`/biere/${beer.id}`} className="tile" style={{ background: soft(beer.accent) }}>
-      <div style={{ padding: '10px 0 20px' }}><LabelThumb beer={beer} tilt={-2} /></div>
+      <div style={{ padding: '10px 0 20px' }}><LabelThumb beer={beer} tilt={-2} ariaHidden /></div>
       <div style={{ font: '400 30px/1 var(--font-display)', color: 'var(--text-strong)', letterSpacing: '-0.01em', textAlign: 'left' }}><Name beer={beer} /></div>
       <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
         <Stat icon="Percent">{abvTxt(beer.abv)}{NB}%</Stat>
@@ -94,10 +93,10 @@ export function PhotoCard({ beer }: { beer: Beer }) {
   return (
     <Link href={`/biere/${beer.id}`} className="photo" style={{ background: soft(beer.accent) }}>
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '18px 14px 0' }}>
-        <LabelThumb beer={beer} tilt={-2} />
+        <LabelThumb beer={beer} tilt={-2} ariaHidden />
       </div>
       <span className="cap">
-        <b>{beer.name}{beer.edition ? <i> {beer.edition}</i> : null}</b>
+        <b>{beer.name}{beer.edition ? <i style={{ color: beer.accent }}> {beer.edition}</i> : null}</b>
         <span><CuveeIcon name="Percent" size={14} stroke={1.75} />{abvTxt(beer.abv)}{NB}% · {beer.styleName}</span>
       </span>
     </Link>

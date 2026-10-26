@@ -32,6 +32,19 @@ describe('Briques du site', () => {
     expect(link).toBeTruthy();
     expect(link!.className).toContain('tile');
     expect(container.querySelectorAll('[data-label-thumb]').length).toBe(2);
+    // sans édition : nom entier d'un seul tenant, sans <i> ; l'étiquette est masquée aux lecteurs d'écran
+    const name = screen.getAllByText('Hop Overflow').find(e => !e.closest('[data-label-thumb]'))!;
+    expect(name.querySelector('i')).toBeNull();
+    expect(Array.from(name.childNodes).filter(n => n.nodeType === 3).map(n => n.textContent)).toEqual(['Hop Overflow']);
+    expect(link!.querySelector('[data-label-thumb]')!.getAttribute('aria-hidden')).toBe('true');
+    expect(screen.getByRole('link', { name: /^Hop Overflow/ })).toBe(link);
+  });
+
+  it('CuveeCard : nom sans édition non découpé', () => {
+    const { container } = render(<CuveeCard beer={get('hop-overflow')} />);
+    const name = screen.getAllByText('Hop Overflow').find(e => !e.closest('[data-label-thumb]'))!;
+    expect(name.querySelector('i')).toBeNull();
+    expect(container.querySelector('[data-label-thumb]')!.getAttribute('aria-hidden')).toBeNull();
   });
 
   it('CuveeCard : stats « 40 IBU », « Brassin 33 », bouton « Fiche de brassin », mini Couleur/Amertume omises si ebc/ibu vides', () => {
@@ -122,6 +135,11 @@ describe('Briques du site', () => {
     expect(screen.getByText('60 min')).toBeTruthy();
   });
 
+  it('Steps : température décimale à virgule', () => {
+    const { container } = render(<Steps rows={[{ temp: 65.5, label: 'Protéines', right: '15 min' }]} accent="var(--cuvee-orange)" />);
+    expect(container.querySelector('.steps li b')!.textContent).toBe('65,5 °C');
+  });
+
   it('CodeLink : aria-label Ouvrir la fiche de …', () => {
     render(<CodeLink beer={get('hop-overflow')} />);
     const a = screen.getByLabelText('Ouvrir la fiche de Hop Overflow');
@@ -131,7 +149,9 @@ describe('Briques du site', () => {
 
   it('PhotoCard : lien, légende nom et « % · style »', () => {
     render(<PhotoCard beer={get('xmas-2025')} />);
-    const a = screen.getByRole('link');
+    const a = screen.getByRole('link', { name: /^Xmas 2025/ });
+    expect(screen.getAllByText('2025', { selector: 'i' }).filter(i => !i.closest('[data-label-thumb]'))).toHaveLength(1);
+    expect(a.querySelector('[data-label-thumb]')!.getAttribute('aria-hidden')).toBe('true');
     expect(a.getAttribute('href')).toBe('/biere/xmas-2025');
     expect(a.className).toBe('photo');
     expect(screen.getByText('5,5 % · Bière de Noël')).toBeTruthy();

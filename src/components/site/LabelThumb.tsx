@@ -8,7 +8,7 @@ import { BeerLabel } from '@/components/ds/BeerLabel';
 const LABEL_W = 529.13;
 
 /* Étiquette réelle ajustée à la largeur du conteneur (§5.4) ; image chargée si présente. */
-export function LabelThumb({ beer, tilt = 0 }: { beer: Beer; tilt?: number }) {
+export function LabelThumb({ beer, tilt = 0, ariaHidden = false }: { beer: Beer; tilt?: number; ariaHidden?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.45);
   const transform = tilt ? `rotate(${tilt}deg)` : 'none';
@@ -22,11 +22,11 @@ export function LabelThumb({ beer, tilt = 0 }: { beer: Beer; tilt?: number }) {
   }, []);
 
   if (beer.labelImage) {
-    return <img src={beer.labelImage} alt={`Étiquette ${beer.name}`}
+    return <img src={beer.labelImage} alt={`Étiquette ${beer.name}`} aria-hidden={ariaHidden || undefined}
       style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 4, boxShadow: 'var(--shadow-web)', transform }} />;
   }
   return (
-    <div ref={ref} data-label-thumb style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <div ref={ref} data-label-thumb aria-hidden={ariaHidden || undefined} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       <div style={{ boxShadow: 'var(--shadow-web)', transform, borderRadius: 4, overflow: 'hidden', lineHeight: 0 }}>
         <BeerLabel {...labelProps(beer, scale)} style={{}} />
       </div>

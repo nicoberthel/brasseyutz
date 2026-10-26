@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
-import type { HopStage } from '@/lib/recipe';
+import { fr, type HopStage } from '@/lib/recipe';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
 
 /* Bloc de recette : pastille d'icône, titre serif, meta mono à droite. */
@@ -25,7 +25,7 @@ export function Steps({ rows, accent }: { rows: { temp: number; label: string; r
   return (
     <ol className="steps">
       {rows.map((r, i) => (
-        <li key={i}><b style={{ color: accent }}>{r.temp}{' '}°C</b><span>{r.label}</span><em>{r.right}</em></li>
+        <li key={i}><b style={{ color: accent }}>{fr(r.temp, 1)}{' '}°C</b><span>{r.label}</span><em>{r.right}</em></li>
       ))}
     </ol>
   );
