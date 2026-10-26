@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { num, norm, slug, splitName, rows, lotFor, matches, abvTxt } from '@/lib/domain';
+import { num, norm, slug, splitName, rows, lotFor, matches, abvTxt, filterBeers } from '@/lib/domain';
 
 describe('num', () => {
   it('parse la virgule décimale', () => expect(num('5,5')).toBe(5.5));
@@ -63,3 +63,16 @@ describe('matches', () => {
 });
 
 describe('abvTxt', () => it('8.2 → 8,2', () => expect(abvTxt('8.2')).toBe('8,2')));
+
+describe('filterBeers', () => {
+  const list = [
+    { id: 'a', name: 'Hop Overflow', hops: 'Citra', famille: 'blonde' },
+    { id: 'b', name: 'Xmas', hops: 'Saaz', famille: 'brune' },
+  ];
+  it('toutes + vide → tout', () => expect(filterBeers(list, 'toutes', '')).toHaveLength(2));
+  it('filtre par famille', () => expect(filterBeers(list, 'brune', '').map(b => b.id)).toEqual(['b']));
+  it('combine famille et recherche', () => {
+    expect(filterBeers(list, 'toutes', 'citra').map(b => b.id)).toEqual(['a']);
+    expect(filterBeers(list, 'brune', 'citra')).toEqual([]);
+  });
+});

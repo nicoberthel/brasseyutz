@@ -10,5 +10,6 @@ export const metadata: Metadata = { title: 'Cuvées' };
 export default async function CuveesPage({ searchParams }: { searchParams: Promise<{ q?: string | string[] }> }) {
   const { q } = await searchParams;
   const list = getDb().select().from(beers).orderBy(desc(beers.brew)).all();
-  return <Cuvees beers={list} initialQuery={(Array.isArray(q) ? q[0] : q) ?? ''} />;
+  const query = (Array.isArray(q) ? q[0] : q) ?? '';
+  return <Cuvees key={query} beers={list} initialQuery={query} />;
 }

@@ -54,6 +54,11 @@ export function matches(b: BeerLike, query: string): boolean {
   return q.split(/\s+/).every(t => hay.includes(t));
 }
 
+/* Filtre commun accueil / cuvées : famille (onglet, 'toutes' = pas de filtre) + recherche. */
+export function filterBeers<T extends BeerLike & { famille?: string | null }>(beers: T[], tab: string, q: string): T[] {
+  return beers.filter(b => (tab === 'toutes' || b.famille === tab) && matches(b, q));
+}
+
 export function abvTxt(abv: unknown): string {
   return String(abv ?? '').replace('.', ',');
 }

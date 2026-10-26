@@ -161,7 +161,7 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
   const hasGauges = ebc !== undefined || ibu !== undefined;
   const paras = (beer.description ?? '').split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
   const notes = (beer.notes ?? '').trim();
-  const sub = `${beer.styleName}${beer.denomination ? ' · ' + beer.denomination : ''} · brassin n°${NB}${beer.brew}`;
+  const sub = [beer.styleName, beer.denomination, `brassin n°${NB}${beer.brew}`].filter(Boolean).join(' · ');
 
   let story: ReactNode = null;
   if (paras.length || notes) {
@@ -207,7 +207,7 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
           {figs.length ? (
             <div className="figs" style={{ '--n': figs.length } as CSSProperties}>
               {figs.map(f => (
-                <div key={f.k} className="fig">
+                <div key={f.k} className="fig" data-fig={f.k === 'Mise en bouteille' ? 'bottling' : undefined}>
                   <span style={{ whiteSpace: 'nowrap' }}>{f.k}</span>
                   <b>{f.v}{f.u ? <small>{NB}{f.u}</small> : null}</b>
                 </div>

@@ -6,7 +6,7 @@ import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { Search } from '@/components/site/Search';
 import { Tabs, type TabValue } from '@/components/site/Tabs';
 import { CuveeCard, Empty } from '@/components/site/Cards';
-import { filterBeers } from '@/app/home';
+import { filterBeers } from '@/lib/domain';
 
 export function Cuvees({ beers, initialQuery }: { beers: Beer[]; initialQuery: string }) {
   const [q, setQ] = useState(initialQuery);

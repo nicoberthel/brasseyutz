@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Beer } from '@/lib/schema';
-import { matches } from '@/lib/domain';
+import { filterBeers } from '@/lib/domain';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { Search } from '@/components/site/Search';
 import { Tabs, type TabValue } from '@/components/site/Tabs';
@@ -11,12 +11,8 @@ import { CuveeTile, Empty, soft } from '@/components/site/Cards';
 
 const NB = '\u00a0';
 
-/* Filtre commun accueil / cuvées : famille (onglet) + recherche. */
-export function filterBeers(beers: Beer[], tab: TabValue, q: string): Beer[] {
-  return beers.filter(b => (tab === 'toutes' || b.famille === tab) && matches(b, q));
-}
-
 function LastBrew({ beer }: { beer: Beer }) {
+  const style = [beer.styleName, beer.denomination].filter(Boolean).join(' · ');
   return (
     <Link href={`/biere/${beer.id}`} className="news" style={{ background: soft(beer.accent), color: 'var(--encre)' }}>
       <span style={{ width: 56, height: 56, borderRadius: 18, background: 'var(--papier)', display: 'grid', placeItems: 'center', color: beer.accent, flex: 'none' }}>
@@ -28,7 +24,7 @@ function LastBrew({ beer }: { beer: Beer }) {
         <div style={{ font: '600 12px var(--font-text)', letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>{`Dernier brassin · n°${NB}${beer.brew}`}</div>
         <div style={{ font: '400 30px/1.05 var(--font-display)', marginTop: 4 }}>
           {beer.name}{beer.edition ? <i style={{ color: beer.accent }}> {beer.edition}</i> : null}{' '}
-          <i style={{ color: beer.accent }}>— {beer.styleName}</i>
+          {style ? <i style={{ color: beer.accent }}>— {style}</i> : null}
         </div>
         {beer.bottledOn
           ? <div style={{ font: '400 14px var(--font-text)', color: 'var(--text-body)', marginTop: 4 }}>Mise en bouteille le {beer.bottledOn}</div>

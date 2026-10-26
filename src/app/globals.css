@@ -107,11 +107,12 @@ input:focus,textarea:focus,select:focus{border-color:var(--encre)!important;outl
 .story blockquote{margin:0;padding:22px 24px;border-radius:var(--radius-web-card);background:var(--papier-ecran);border-top:4px solid var(--c)}
 .story blockquote p{margin:0;font:400 italic 28px/1.15 var(--font-display);color:var(--encre);text-wrap:balance}
 .story cite{display:flex;align-items:center;gap:8px;margin-top:14px;font:500 14px var(--font-text);font-style:normal;color:var(--text-body)}
-@media (max-width:760px){.story{grid-template-columns:1fr}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.fig{border-top:1px solid var(--filet);margin-top:-1px}.fig:last-child{grid-column:1/-1}}
 .spec{border-radius:var(--radius-web-card);background:var(--papier-ecran);overflow:hidden}
 .figs{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr))}
 .fig{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border-left:1px solid var(--filet);margin-left:-1px}
 .fig span{font:500 13px var(--font-text);color:var(--text-body)}.fig b{font:400 clamp(24px,2.6vw,34px)/1 var(--font-display);color:var(--encre);white-space:nowrap}.fig small{font:500 14px var(--font-text);color:var(--text-body)}
+/* après les règles de base : même spécificité, l’ordre décide */
+@media (max-width:760px){.story{grid-template-columns:1fr}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}.fig{border-top:1px solid var(--filet);margin-top:-1px}.fig[data-fig="bottling"]{grid-column:1/-1}}
 .gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px;padding:20px 22px 24px;border-top:1px solid var(--filet)}
 .gz{display:grid;gap:10px}
 .rec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
@@ -138,7 +139,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--encre)!important;outl
 .iconbtn{width:44px;height:44px;display:grid;place-items:center;border-radius:14px}
 .bottom{display:none}
 @media (max-width:760px){
- .top nav{display:none}footer{padding-bottom:96px!important}.shell{padding:0 16px 110px}
+ .top{padding:18px 16px}.top nav{display:none}footer{padding-bottom:96px!important}.shell{padding:0 16px 110px}
  .hero{grid-template-columns:1fr;padding:22px 20px 40px}.hero-img{width:120px;justify-self:end;margin-top:-8px}
  .h2{font-size:32px}
  .bottom{display:flex;justify-content:space-around;position:fixed;left:12px;right:12px;bottom:12px;padding:10px 8px;border-radius:var(--radius-web-card);background:var(--papier);box-shadow:var(--shadow-web-float);z-index:10}
