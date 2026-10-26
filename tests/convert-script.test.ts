@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 const root = resolve(__dirname, '..');
 const script = join(root, 'scripts', 'convert-export.mjs');
-const input = join(root, 'brasseyutz-export.json');
+const input = join(root, 'tests', 'fixtures', 'brasseyutz-export-v1.json');
 
 type B = Record<string, any>;
 let out: { exportedAt: string; convertedAt: string; beers: B[] };
