@@ -33,13 +33,24 @@ export function lotFor(b: { bottledOn?: string; brew?: number | string }): strin
 export interface BeerLike {
   name?: string; edition?: string; styleName?: string; denomination?: string;
   malts?: string; hops?: string; yeast?: string; other?: string;
-  brew?: number | string; lot?: string;
+  brew?: number | string; lot?: string; grains?: string; hopSchedule?: string;
+}
+
+/* Noms des lignes d’une colonne recette JSON (tableau d’objets { nom }) ; rien pour le texte legacy. */
+function jsonNames(v: unknown): string[] {
+  const t = String(v ?? '').trim();
+  if (!t.startsWith('[')) return [];
+  try {
+    const a: unknown = JSON.parse(t);
+    return Array.isArray(a) ? a.map(x => String((x as { nom?: unknown })?.nom ?? '')) : [];
+  } catch { return []; }
 }
 
 export function matches(b: BeerLike, query: string): boolean {
   const q = norm(query).trim();
   if (!q) return true;
-  const hay = norm([b.name, b.edition, b.styleName, b.denomination, b.malts, b.hops, b.yeast, b.other, 'n° ' + b.brew, b.brew, b.lot].join(' '));
+  const hay = norm([b.name, b.edition, b.styleName, b.denomination, b.malts, b.hops, b.yeast, b.other, 'n° ' + b.brew, b.brew, b.lot,
+    ...jsonNames(b.grains), ...jsonNames(b.hopSchedule)].join(' '));
   return q.split(/\s+/).every(t => hay.includes(t));
 }
 

@@ -2,8 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
-import * as schema from './schema';
-import { SEED } from './seed';
+import * as schema from './schema.ts';
+import { SEED } from './seed.ts';
+import { familleOf, isLegacyText } from './recipe.ts';
+import { normalizeServing } from './recipe-legacy.ts';
+import { RECIPE_COLUMNS, recipeColumns } from './validate.ts';
 
 /* Spec unique des colonnes : sert au CREATE TABLE et à la migration
    (toute colonne absente d'une base existante est ajoutée avec son défaut). */
@@ -43,6 +46,8 @@ const COLUMNS: [name: string, ddl: string][] = [
   ['description', "TEXT NOT NULL DEFAULT ''"],
   ['labelImage', "TEXT NOT NULL DEFAULT ''"],
   ['artwork', "TEXT NOT NULL DEFAULT ''"],
+  ['famille', "TEXT NOT NULL DEFAULT ''"],
+  ['radar', "TEXT NOT NULL DEFAULT ''"],
   ['favorite', 'INTEGER NOT NULL DEFAULT 0'],
   ['createdAt', 'INTEGER NOT NULL DEFAULT 0'],
   ['updatedAt', 'INTEGER NOT NULL DEFAULT 0'],
@@ -70,12 +75,40 @@ function migrate(sqlite: Database.Database) {
   }
 }
 
+type RecipeRow = Record<(typeof RECIPE_COLUMNS)[number] | 'id' | 'styleName' | 'famille' | 'serving' | 'yeast' | 'other', string>;
+
+/* v2 : recette texte « a | b | c » → JSON. La famille n’est déduite du style qu’une fois
+   (garde user_version), pour ne pas écraser un choix « — » du brasseur au redémarrage. */
+export function migrateRecipes(sqlite: Database.Database): void {
+  if ((sqlite.pragma('user_version', { simple: true }) as number) >= 2) return;
+  const rowsOf = sqlite.prepare(
+    `SELECT id, styleName, famille, serving, yeast, other, ${RECIPE_COLUMNS.join(', ')} FROM beers`);
+  const update = sqlite.prepare(
+    `UPDATE beers SET ${RECIPE_COLUMNS.map(c => `${c} = @${c}`).join(', ')}, famille = @famille, serving = @serving WHERE id = @id`);
+  sqlite.transaction(() => {
+    for (const row of rowsOf.all() as RecipeRow[]) {
+      const next: Record<string, string> = { id: row.id, famille: row.famille, serving: normalizeServing(row.serving) };
+      const conv = RECIPE_COLUMNS.some(c => isLegacyText(row[c])) ? recipeColumns(row) : null;
+      for (const c of RECIPE_COLUMNS) {
+        // seules les colonnes en texte legacy sont réécrites ; hopSchedule aussi si la fermentation
+        // legacy y reporte des lignes (épices)
+        const rewrite = isLegacyText(row[c]) || (c === 'hopSchedule' && isLegacyText(row.ferment));
+        next[c] = conv && rewrite ? conv[c] : row[c];
+      }
+      if (!next.famille) next.famille = familleOf(row.styleName);
+      update.run(next);
+    }
+    sqlite.pragma('user_version = 2');
+  })();
+}
+
 function create() {
   fs.mkdirSync(uploadsDir(), { recursive: true });
   const sqlite = new Database(path.join(dataDir(), 'brasseyutz.sqlite'));
   sqlite.pragma('journal_mode = WAL');
   sqlite.exec(CREATE_SQL);
   migrate(sqlite);
+  migrateRecipes(sqlite);
   const db = drizzle(sqlite, { schema });
   const count = sqlite.prepare('SELECT COUNT(*) AS n FROM beers').get() as { n: number };
   if (count.n === 0) {

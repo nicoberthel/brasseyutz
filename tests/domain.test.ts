@@ -51,6 +51,15 @@ describe('matches', () => {
   });
   it('par numéro', () => expect(matches(b, 'n° 30')).toBe(true));
   it('vide → tout passe', () => expect(matches(b, '  ')).toBe(true));
+  it('matches trouve « nelson » via hopSchedule JSON', () => {
+    const j = { ...b, hops: '', hopSchedule: JSON.stringify([{ etape: 'Dry hop', nom: 'Nelson Sauvin', qte: '50 g', detail: 'J3' }]) };
+    expect(matches(j, 'nelson')).toBe(true);
+    expect(matches(j, 'dry')).toBe(false); // seuls les noms entrent dans la recherche
+  });
+  it('matches trouve un grain via grains JSON', () => {
+    const j = { ...b, malts: '', grains: JSON.stringify([{ nom: 'Flocons d’avoine', kg: 0.5 }]) };
+    expect(matches(j, 'avoine')).toBe(true);
+  });
 });
 
 describe('abvTxt', () => it('8.2 → 8,2', () => expect(abvTxt('8.2')).toBe('8,2')));
