@@ -95,3 +95,13 @@ describe('SignatureH (bannière horizontale)', () => {
     expect(container.textContent).not.toContain('maison');
   });
 });
+
+describe('CuveeIcon gabarit', () => {
+  it('CuveeIcon rend Eye, Hourglass, ArrowRight', () => {
+    for (const name of ['Eye', 'Hourglass', 'ArrowRight']) {
+      const { container, unmount } = render(<CuveeIcon name={name} />);
+      expect(container.querySelector('svg'), name).not.toBeNull();
+      unmount();
+    }
+  });
+});
