@@ -25,6 +25,7 @@ Le backoffice est sur `/admin` (mot de passe unique, cookie de session 30 jours)
 - SQLite + fichiers uploadés (images d'étiquettes, SVG perso) dans `DATA_DIR` (défaut `./data`), créés et migrés automatiquement au démarrage.
 - Base vide → les 6 bières réelles sont insérées (seed).
 - Sauvegarde : copier le dossier `data/` (ou le volume Docker), plus le bouton **Exporter** du backoffice (JSON des recettes, restaurable via **Importer** — n'emporte pas les images uploadées).
+- `brasseyutz-import.json` (racine) : export converti au nouveau format (recettes structurées), prêt pour **Importer**. Les anciens exports restent importables (convertis à la volée). Pour convertir un export : `node scripts/convert-export.mjs brasseyutz-export.json brasseyutz-import.json`.
 
 ## Production — serveur maison + Nginx Proxy Manager
 
