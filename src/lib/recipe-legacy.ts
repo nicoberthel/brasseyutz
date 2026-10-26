@@ -123,7 +123,9 @@ function dureeOf(raw: string): { duree: string; reste: string } {
   return { duree: `${m[1]} ${unit}`, reste: m[3].trim() };
 }
 
-export function legacyFerment(t: string, yeast: string, other: string): Ferment | null {
+export function legacyFerment(
+  t: string, yeast: string, other: string, onSkip?: (cols: string[]) => void,
+): Ferment | null {
   const f = emptyFerment();
   for (const raw of lines(t)) {
     let c = raw;
@@ -132,10 +134,10 @@ export function legacyFerment(t: string, yeast: string, other: string): Ferment 
       if (c[1] && /°/.test(c[1])) {
         if (isCold(c[0]) || norm(c[0]) === 'garde') label = c[0];
         c = c.slice(1);
-      } else continue;
+      } else { onSkip?.(raw); continue; }
     }
     const temp = firstNum(c[0]);
-    if (temp === null) continue;
+    if (temp === null) { onSkip?.(raw); continue; }
     const { duree, reste } = dureeOf(c[1] || '');
     label = label || c[2] || reste;
     if (isCold(label)) label = 'Cold crash';
@@ -160,12 +162,17 @@ export function legacyToRecipe(b: LegacyBeer): {
   grains: Grain[] | null; hopSchedule: HopLine[] | null; mash: Mash | null;
   ferment: Ferment | null; famille: FamilleKey | ''; serving: string;
 } {
-  const hopSchedule = legacyHops(b.hopSchedule || '');
+  let hopSchedule = legacyHops(b.hopSchedule || '');
+  const skipped: HopLine[] = [];
+  const ferment = legacyFerment(b.ferment || '', b.yeast || '', b.other || '', cols => {
+    skipped.push({ etape: 'Épices', nom: cols[0] || '', qte: '', detail: cols.slice(1).filter(Boolean).join(' · ') });
+  });
+  if (skipped.length) hopSchedule = [...(hopSchedule || []), ...skipped];
   return {
     grains: legacyGrains(b.grains || ''),
     hopSchedule,
     mash: legacyMash(b.mash || '', hopSchedule),
-    ferment: legacyFerment(b.ferment || '', b.yeast || '', b.other || ''),
+    ferment,
     famille: familleOf(b.styleName || ''),
     serving: normalizeServing(b.serving || ''),
   };

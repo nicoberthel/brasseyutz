@@ -136,12 +136,24 @@ describe('recipe-legacy', () => {
     expect(legacyFerment('', '', '')).toBeNull();
   });
 
-  it('ferment seed : levure ignorée, ligne Épices ignorée', () => {
-    const f = legacyFerment('Verdant IPA | 19 °C | 10 jours\nCold crash | 2 °C | 2 jours\nGarde | 4 °C | 3 semaines\nÉpices | zeste, girofle | 5 min', '', '')!;
+  it('ferment seed : levure ignorée', () => {
+    const f = legacyFerment('Verdant IPA | 19 °C | 10 jours\nCold crash | 2 °C | 2 jours\nGarde | 4 °C | 3 semaines', '', '')!;
     expect(f.paliers).toEqual([
       { temp: 19, duree: '10 j', label: 'Fermentation principale' },
       { temp: 2, duree: '2 j', label: 'Cold crash' },
       { temp: 4, duree: '3 sem.', label: 'Garde' },
+    ]);
+  });
+
+  it('ferment seed : ligne Épices non perdue, reversée au houblonnage', () => {
+    const skipped: string[][] = [];
+    legacyFerment('S-33 | 19 °C | 14 jours\nÉpices | zeste | 5 min', '', '', c => skipped.push(c));
+    expect(skipped).toEqual([['Épices', 'zeste', '5 min']]);
+    const r = legacyToRecipe({ ferment: 'S-33 | 19 °C | 14 jours\nÉpices | zeste, girofle, gingembre, cannelle | 5 min' });
+    expect(r.ferment!.paliers).toHaveLength(1);
+    expect(r.ferment!.paliers[0].temp).toBe(19);
+    expect(r.hopSchedule).toEqual([
+      { etape: 'Épices', nom: 'Épices', qte: '', detail: 'zeste, girofle, gingembre, cannelle · 5 min' },
     ]);
   });
 
