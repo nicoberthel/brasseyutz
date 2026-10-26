@@ -50,9 +50,14 @@ describe('export/import', () => {
       mash: 'Empâtage | 65 °C | 60 min | 25,5 L\nMash-out | 78 °C | 10 min\nRinçage | 80 °C | 11 L',
       ferment: '20 °C | 14 jours\nÉpices | zeste | 5 min\n4 °C | 3 jours | Cold Crush',
     };
-    const res = await importBeers(req({ beers: [old] }));
+    // la-blanche de l’export réel : recette vide, pas de clé famille
+    const vide = { id: 'la-blanche', name: 'La Blanche', styleName: 'Blanche', brew: 7, abv: '5',
+      grains: '', hopSchedule: '', mash: '', ferment: '' };
+    const res = await importBeers(req({ beers: [old, vide] }));
     expect(res.status).toBe(200);
-    const [b] = await (await listBeers()).json();
+    const [b, blanche] = await (await listBeers()).json();
+    expect(blanche.famille).toBe('blanche');
+    expect(blanche.grains).toBe('');
     const e = legacyToRecipe(old);
     expect(JSON.parse(b.grains)).toEqual(e.grains);
     expect(JSON.parse(b.hopSchedule)).toEqual(e.hopSchedule);

@@ -140,6 +140,23 @@ describe('recette JSON : colonnes famille/radar et migration', () => {
     expect(raw()).toEqual(first);
   });
 
+  it('migration : hopSchedule JSON illisible conservé tel quel même si ferment est legacy', async () => {
+    const path = await import('node:path');
+    const Database = (await import('better-sqlite3')).default;
+    const { dataDir, getDb, resetDbForTests } = await import('@/lib/db');
+    const { parseFerment } = await import('@/lib/recipe');
+    const old = new Database(path.join(dataDir(), 'brasseyutz.sqlite'));
+    old.exec(`CREATE TABLE beers (${V1_COLUMNS})`);
+    old.prepare("INSERT INTO beers (id, name, styleName, brew, abv, hopSchedule, ferment) VALUES ('m', 'M', 'Pils', 3, '5', ?, ?)")
+      .run('[{"nom": "Saaz", cassé', '20 °C | 14 jours\nÉpices | zeste | 5 min');
+    old.close();
+    resetDbForTests();
+    const { beers } = await import('@/lib/schema');
+    const m = getDb().select().from(beers).all().find(b => b.id === 'm')!;
+    expect(m.hopSchedule).toBe('[{"nom": "Saaz", cassé');
+    expect(parseFerment(m.ferment)!.paliers[0]).toEqual({ temp: 20, duree: '14 j', label: 'Fermentation principale' });
+  });
+
   it('la déduction de famille ne tourne qu’une fois (choix « — » conservé)', async () => {
     const { getDb, resetDbForTests } = await import('@/lib/db');
     const { beers } = await import('@/lib/schema');

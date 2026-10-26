@@ -4,7 +4,7 @@ import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import * as schema from './schema.ts';
 import { SEED } from './seed.ts';
-import { familleOf, isLegacyText } from './recipe.ts';
+import { familleOf, isLegacyText, parseHops } from './recipe.ts';
 import { normalizeServing } from './recipe-legacy.ts';
 import { RECIPE_COLUMNS, recipeColumns } from './validate.ts';
 
@@ -91,8 +91,10 @@ export function migrateRecipes(sqlite: Database.Database): void {
       const conv = RECIPE_COLUMNS.some(c => isLegacyText(row[c])) ? recipeColumns(row) : null;
       for (const c of RECIPE_COLUMNS) {
         // seules les colonnes en texte legacy sont réécrites ; hopSchedule aussi si la fermentation
-        // legacy y reporte des lignes (épices)
-        const rewrite = isLegacyText(row[c]) || (c === 'hopSchedule' && isLegacyText(row.ferment));
+        // legacy y reporte des lignes (épices), sauf si son contenu actuel est illisible (jamais de perte)
+        const hopsKeepable = !row.hopSchedule?.trim() || parseHops(row.hopSchedule) !== null;
+        const rewrite = isLegacyText(row[c])
+          || (c === 'hopSchedule' && isLegacyText(row.ferment) && hopsKeepable);
         next[c] = conv && rewrite ? conv[c] : row[c];
       }
       if (!next.famille) next.famille = familleOf(row.styleName);

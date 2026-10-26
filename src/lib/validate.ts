@@ -63,9 +63,8 @@ export function validateBeer(input: unknown, opts: { id?: string } = {}):
   beer.radar = toCol(parseRadar(o.radar));
   const famille = s('famille');
   if (FAMILLES.some(f => f.key === famille)) beer.famille = famille;
-  // ancien format (export v1, sans champ famille) : déduite du style, comme la migration
-  else if (o.famille === undefined && RECIPE_COLUMNS.some(k => isLegacyText(o[k])))
-    beer.famille = familleOf(styleName);
+  // ancien format (export v1 : pas de clé famille) : déduite du style, comme la migration
+  else if (!('famille' in o)) beer.famille = familleOf(styleName);
   else beer.famille = '';
   beer.favorite = o.favorite === true || o.favorite === 1 || o.favorite === '1' ? 1 : 0;
   if (!beer.lot) beer.lot = lotFor({ bottledOn: beer.bottledOn, brew });
