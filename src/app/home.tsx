@@ -12,7 +12,7 @@ import { CuveeTile, Empty, soft } from '@/components/site/Cards';
 const NB = '\u00a0';
 
 function LastBrew({ beer }: { beer: Beer }) {
-  const style = [beer.styleName, beer.denomination].filter(Boolean).join(' · ');
+  const style = beer.styleName?.trim();
   return (
     <Link href={`/biere/${beer.id}`} className="news" style={{ background: soft(beer.accent), color: 'var(--encre)' }}>
       <span style={{ width: 56, height: 56, borderRadius: 18, background: 'var(--papier)', display: 'grid', placeItems: 'center', color: beer.accent, flex: 'none' }}>
