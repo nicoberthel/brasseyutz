@@ -24,6 +24,48 @@ describe('export/import', () => {
     expect(res.status).toBe(200);
     expect((await res.json()).count).toBe(6);
     expect(await (await listBeers()).json()).toHaveLength(6);
+    const strip = (l: Record<string, unknown>[]) => l.map(({ createdAt, updatedAt, ...b }) => b);
+    const again = await (await exportBeers(req())).json();
+    expect(strip(again.beers)).toEqual(strip(dump.beers));
+  });
+  it('export : grains est un tableau, radar vide → null', async () => {
+    const dump = await (await exportBeers(req())).json();
+    const hop = dump.beers.find((b: { id: string }) => b.id === 'hop-overflow');
+    expect(Array.isArray(hop.grains)).toBe(true);
+    expect(hop.grains[0]).toEqual({ nom: 'Pale Ale', kg: 4 });
+    expect(Array.isArray(hop.hopSchedule)).toBe(true);
+    expect(hop.mash.paliers).toHaveLength(2);
+    expect(hop.ferment.ensemencement).toBe('1 sachet · Verdant IPA');
+    expect(hop.radar).toBeNull();
+    expect(hop.famille).toBe('houblonnee');
+    expect(typeof hop.look).toBe('string');
+  });
+  it('import de l’ancien format (chaînes |) → même JSON que legacyToRecipe', async () => {
+    const { legacyToRecipe } = await import('@/lib/recipe-legacy');
+    const old = {
+      id: 'xmas-2025', name: 'Xmas', edition: '2025', styleName: 'Bière de Noël', brew: 32, abv: '5,5',
+      yeast: 'S-33', other: 'Eau, sucre, orange', serving: '8°C.',
+      grains: 'Pale Ale | 3,5 kg\nMunich | 2 kg',
+      hopSchedule: 'Centennial | 15 g | 60 min | Ébullition\nCannelle | 1 bâton | 5 min | Hopstand',
+      mash: 'Empâtage | 65 °C | 60 min | 25,5 L\nMash-out | 78 °C | 10 min\nRinçage | 80 °C | 11 L',
+      ferment: '20 °C | 14 jours\nÉpices | zeste | 5 min\n4 °C | 3 jours | Cold Crush',
+    };
+    // la-blanche de l’export réel : recette vide, pas de clé famille
+    const vide = { id: 'la-blanche', name: 'La Blanche', styleName: 'Blanche', brew: 7, abv: '5',
+      grains: '', hopSchedule: '', mash: '', ferment: '' };
+    const res = await importBeers(req({ beers: [old, vide] }));
+    expect(res.status).toBe(200);
+    const [b, blanche] = await (await listBeers()).json();
+    expect(blanche.famille).toBe('blanche');
+    expect(blanche.grains).toBe('');
+    const e = legacyToRecipe(old);
+    expect(JSON.parse(b.grains)).toEqual(e.grains);
+    expect(JSON.parse(b.hopSchedule)).toEqual(e.hopSchedule);
+    expect(JSON.parse(b.mash)).toEqual(e.mash);
+    expect(JSON.parse(b.ferment)).toEqual(e.ferment);
+    expect(b.famille).toBe('brune'); // ancien format sans famille → déduite du style, comme la migration
+    expect(b.serving).toBe('8 °C');
+    expect(b.radar).toBe('');
   });
   it('import remplace tout', async () => {
     const one = { name: 'Seule Bière', styleName: 'Pils', brew: 1, abv: '5' };

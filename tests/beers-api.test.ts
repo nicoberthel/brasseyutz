@@ -82,6 +82,51 @@ describe('favorite', () => {
   });
 });
 
+describe('recette JSON, radar, famille', () => {
+  it('POST avec radar de 7 valeurs → stocké \'\'', async () => {
+    const res = await createBeer(jreq('POST', { ...valid, radar: [1, 2, 3, 4, 5, 0, 1] }));
+    expect(res.status).toBe(201);
+    expect((await res.json()).radar).toBe('');
+  });
+  it('radar de 8 valeurs 0–5 → JSON', () => {
+    const r = validateBeer({ ...valid, radar: [1, 2.5, 3, 4, 5, 0, 1, 2] });
+    if (!r.ok) throw new Error(r.error);
+    expect(r.beer.radar).toBe('[1,2.5,3,4,5,0,1,2]');
+    const bad = validateBeer({ ...valid, radar: [1, 2, 3, 4, 5, 6, 1, 2] });
+    if (!bad.ok) throw new Error(bad.error);
+    expect(bad.beer.radar).toBe('');
+  });
+  it('POST avec famille inconnue → \'\'', async () => {
+    const res = await createBeer(jreq('POST', { ...valid, famille: 'xyz' }));
+    expect((await res.json()).famille).toBe('');
+    const ok = validateBeer({ ...valid, famille: 'blanche' });
+    if (!ok.ok) throw new Error(ok.error);
+    expect(ok.beer.famille).toBe('blanche');
+  });
+  it('PUT conserve le JSON envoyé comme objet', async () => {
+    const grains = [{ nom: 'Pilsner', kg: 4.4 }, { nom: 'Vienna', kg: null }];
+    const mash = { eau: '25 L', rincage: '', ebullitionMin: 60, note: '', paliers: [{ temp: 65, min: 60, label: 'Saccharification' }] };
+    const res = await updateBeer(jreq('PUT', { ...valid, name: 'Hop Overflow', brew: 33, grains, mash }), ctx('hop-overflow'));
+    expect(res.status).toBe(200);
+    const b = await res.json();
+    expect(JSON.parse(b.grains)).toEqual(grains);
+    expect(JSON.parse(b.mash)).toEqual(mash);
+    expect(b.hopSchedule).toBe('');
+  });
+  it('chaîne JSON acceptée, texte legacy converti, vide → \'\'', () => {
+    const r = validateBeer({ ...valid, grains: '[{"nom":"Pale Ale","kg":"3,5"}]', hopSchedule: 'Citra | 50 g | J3 | Dry hop', ferment: '' });
+    if (!r.ok) throw new Error(r.error);
+    expect(JSON.parse(r.beer.grains!)).toEqual([{ nom: 'Pale Ale', kg: 3.5 }]);
+    expect(JSON.parse(r.beer.hopSchedule!)).toEqual([{ etape: 'Dry hop', nom: 'Citra', qte: '50 g', detail: 'J3' }]);
+    expect(r.beer.ferment).toBe('');
+  });
+  it('serving normalisé', () => {
+    const r = validateBeer({ ...valid, serving: '8°C.' });
+    if (!r.ok) throw new Error(r.error);
+    expect(r.beer.serving).toBe('8 °C');
+  });
+});
+
 describe('artwork', () => {
   it('validateBeer conserve artwork', () => {
     const r = validateBeer({ ...valid, artwork: '/uploads/abc.svg' });

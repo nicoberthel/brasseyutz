@@ -6,7 +6,7 @@ export type FicheData = { beer: Beer; others: Beer[] };
 
 function withOthers(beer: Beer | undefined): FicheData | null {
   if (!beer) return null;
-  const others = getDb().select().from(beers).where(ne(beers.id, beer.id)).orderBy(desc(beers.brew)).limit(3).all();
+  const others = getDb().select().from(beers).where(ne(beers.id, beer.id)).orderBy(desc(beers.brew)).limit(4).all();
   return { beer, others };
 }
 

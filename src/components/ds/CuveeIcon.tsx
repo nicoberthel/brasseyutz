@@ -8,6 +8,7 @@ import {
   Crown, Heart, Gift, Skull, Ghost, Anchor, Castle, Bomb, Book, Medal, Shield, Cake, 
   // icônes d'interface
   Thermometer, Search, ArrowLeft, Printer,
+  Eye, Hourglass, Hash, Percent, Tag, House, ArrowRight, ChevronLeft, X, SlidersHorizontal,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -18,6 +19,7 @@ const ICONS: Record<string, LucideIcon> = {
   Terminal, Code, Cpu, Bug, Wifi, BatteryCharging, Save, Binary, InfinityIcon, Cookie, 
   Crown, Heart, Gift, Skull, Ghost, Anchor, Castle, Bomb, Book, Medal, Shield, Cake, 
   Thermometer, Search, ArrowLeft, Printer,
+  Eye, Hourglass, Hash, Percent, Tag, House, ArrowRight, ChevronLeft, X, SlidersHorizontal,
 };
 
 /* Pictos dessinés maison (absents de Lucide) — même grille 24 × 24, trait seul. */

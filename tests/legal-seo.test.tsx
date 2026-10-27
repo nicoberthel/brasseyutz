@@ -14,7 +14,7 @@ describe('mentions légales + seo', () => {
     expect(screen.getByText(/aucun traceur/i)).toBeTruthy();
     expect(screen.getByText(/à venir/)).toBeTruthy(); // hébergeur non renseigné
   });
-  it('sitemap : accueil + fiches + brassins', async () => {
+  it('sitemap : accueil, cuvées, fiches, brassins', async () => {
     const sitemap = (await import('@/app/sitemap')).default;
     const entries = await sitemap();
     const urls = entries.map(e => e.url);
@@ -22,6 +22,7 @@ describe('mentions légales + seo', () => {
     expect(urls).toContain('https://www.brasseyutz.fr/biere/hop-overflow');
     expect(urls).toContain('https://www.brasseyutz.fr/brassin/33');
     expect(urls).toContain('https://www.brasseyutz.fr/mentions-legales');
+    expect(urls).toContain('https://www.brasseyutz.fr/cuvees');
   });
   it('robots : /admin interdit', async () => {
     const robots = (await import('@/app/robots')).default;

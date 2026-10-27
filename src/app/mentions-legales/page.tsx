@@ -12,7 +12,7 @@ export default function MentionsLegales() {
   const contact = process.env.CONTACT_EMAIL;
   const host = process.env.HOST_NAME;
   return (
-    <main style={{ maxWidth: 860, margin: '0 auto', padding: 'clamp(28px,5vw,56px) clamp(16px,4vw,48px) 96px' }}>
+    <main style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(28px,5vw,56px) 0 0' }}>
       <h1 style={{ margin: 0, font: '400 clamp(44px,6vw,72px)/0.95 var(--font-display)', letterSpacing: '-0.02em', color: 'var(--encre)' }}>
         Mentions <i style={{ color: 'var(--accent)' }}>légales</i>
       </h1>

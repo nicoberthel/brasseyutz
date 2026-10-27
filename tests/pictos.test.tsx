@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { ICON_GROUPS } from '@/components/ds/icon-catalog';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
 
-describe('catalogue de pictos (design system, 44 entrées)', () => {
+describe('jeu de pictos (design system, 44 entrées)', () => {
   it('50 pictos répartis en 5 groupes français', () => {
     const all = ICON_GROUPS.flatMap(g => g.icons);
     expect(all).toHaveLength(53);
@@ -24,7 +24,7 @@ describe('catalogue de pictos (design system, 44 entrées)', () => {
     expect(names).toContain('Cake');
     expect(new Set(names).size).toBe(53); // pas de doublon
   });
-  it('chaque picto du catalogue rend un svg colorisable', () => {
+  it('chaque picto du jeu rend un svg colorisable', () => {
     for (const [lucide] of ICON_GROUPS.flatMap(g => g.icons)) {
       const { container, unmount } = render(<CuveeIcon name={lucide} color="var(--cuvee-orange)" />);
       expect(container.querySelector('svg'), `icône ${lucide} absente`).toBeTruthy();

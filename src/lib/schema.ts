@@ -36,6 +36,8 @@ export const beers = sqliteTable('beers', {
   description: text('description').notNull().default(''),
   labelImage: text('labelImage').notNull().default(''),
   artwork: text('artwork').notNull().default(''),
+  famille: text('famille').notNull().default(''),
+  radar: text('radar').notNull().default(''),
   favorite: integer('favorite').notNull().default(0),
   createdAt: integer('createdAt').notNull().default(0),
   updatedAt: integer('updatedAt').notNull().default(0),

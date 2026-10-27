@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Beer } from '@/lib/schema';
-import { lotFor, slug } from '@/lib/domain';
+import { lotFor, num, slug } from '@/lib/domain';
+import {
+  emptyFerment, emptyMash, FAMILLES, parseFerment, parseGrains, parseHops, parseMash, parseRadar, type Radar,
+} from '@/lib/recipe';
+import {
+  FermentFields, GrainsFields, HopsFields, MashFields, RadarFields,
+  type FermentForm, type GrainRow, type HopRow, type MashForm,
+} from './recipe-fields';
 import { labelProps } from '@/lib/label';
 import { BeerLabel } from '@/components/ds/BeerLabel';
 import { Button } from '@/components/ds/Button';
@@ -13,41 +20,93 @@ import { ICON_GROUPS } from '@/components/ds/icon-catalog';
 
 const ACCENTS: [string, string][] = [['Orange', 'var(--cuvee-orange)'], ['Houblon', 'var(--cuvee-houblon)'], ['Ocre', 'var(--cuvee-ocre)'], ['Framboise', 'var(--cuvee-framboise)'], ['Bleu', 'var(--cuvee-bleu)'], ['Violet', 'var(--cuvee-violet)'], ['Bordeaux', 'var(--cuvee-bordeaux)'], ['Malt', 'var(--cuvee-malt)'], ['Rouge', 'var(--cuvee-rouge)'], ['Bleu ciel', 'var(--cuvee-ciel)'], ['Vert acidulé', 'var(--cuvee-acide)'], ['Jaune', 'var(--cuvee-jaune)']];
 
-type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'favorite' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'grains' | 'hopSchedule' | 'mash' | 'ferment' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
-type Form = Record<FormKey, string>;
+type FormKey = 'name' | 'edition' | 'styleName' | 'denomination' | 'brew' | 'abv' | 'ebc' | 'ibu' | 'bottle' | 'accent' | 'icon' | 'artwork' | 'favorite' | 'malts' | 'hops' | 'yeast' | 'other' | 'bottledOn' | 'bestBefore' | 'lot' | 'volume' | 'og' | 'fg' | 'notes' | 'look' | 'nose' | 'mouth' | 'finish' | 'serving' | 'description' | 'labelImage';
+type FormState = Record<FormKey, string> & {
+  famille: string; grains: GrainRow[]; hopSchedule: HopRow[]; mash: MashForm; ferment: FermentForm; radar: Radar | null;
+};
 
-function blank(nextBrew: number): Form {
+const TEXT_KEYS: FormKey[] = ['name', 'edition', 'styleName', 'denomination', 'brew', 'abv', 'ebc', 'ibu', 'bottle', 'accent', 'icon', 'artwork', 'favorite', 'malts', 'hops', 'yeast', 'other', 'bottledOn', 'bestBefore', 'lot', 'volume', 'og', 'fg', 'notes', 'look', 'nose', 'mouth', 'finish', 'serving', 'description', 'labelImage'];
+
+function blank(nextBrew: number): FormState {
   return { name: '', edition: '', styleName: '', denomination: '', brew: String(nextBrew), abv: '', ebc: '', ibu: '', bottle: '75cl', accent: 'var(--cuvee-orange)', icon: 'Hop', artwork: '', favorite: '', malts: '', hops: '', yeast: '', other: 'Eau, sucre', bottledOn: '', bestBefore: '', lot: '', volume: '20', og: '', fg: '',
-    grains: 'Pale Ale | 3,6 kg\nPilsen | 0,6 kg\nMalt de blé | 0,4 kg\nFlocons de froment | 0,3 kg',
-    hopSchedule: 'Citra | 10 g | 60 min | Ébullition\nCitra | 30 g | 10 min | Hopstand\nCitra | 60 g | J4 | Dry hop', mash: 'Empâtage | 65 °C | 60 min', ferment: '20 °C | 14 jours', notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '' };
+    notes: '', look: '', nose: '', mouth: '', finish: '', serving: '', description: '', labelImage: '',
+    famille: '',
+    grains: [{ nom: 'Pale Ale', kg: '3,6' }, { nom: 'Pilsen', kg: '0,6' }, { nom: 'Malt de blé', kg: '0,4' }, { nom: 'Flocons de froment', kg: '0,3' }],
+    hopSchedule: [
+      { etape: 'Ébullition', nom: 'Citra', qte: '10 g', detail: '60 min' },
+      { etape: 'Hopstand', nom: 'Citra', qte: '30 g', detail: '10 min' },
+      { etape: 'Dry hop', nom: 'Citra', qte: '60 g', detail: 'J4' },
+    ],
+    mash: { eau: '', rincage: '', ebullitionMin: '60', note: '', paliers: [{ temp: '65', min: '60', label: 'Saccharification' }] },
+    ferment: { ensemencement: '', refermentation: '', paliers: [{ temp: '20', duree: '14 j', label: 'Fermentation principale' }] },
+    radar: null,
+  };
 }
 
-function toForm(b: Beer): Form {
-  const base = blank(b.brew);
-  const out = { ...base };
-  (Object.keys(base) as FormKey[]).forEach(k => { out[k] = String((b as Record<string, unknown>)[k] ?? ''); });
+/** Nombre → texte de saisie à virgule ('' si absent). */
+const numTxt = (n: number | null) => (n === null ? '' : String(n).replace('.', ','));
+
+function toForm(b: Beer): FormState {
+  const out = blank(b.brew);
+  TEXT_KEYS.forEach(k => { out[k] = String((b as Record<string, unknown>)[k] ?? ''); });
   out.favorite = b.favorite ? '1' : '';
+  out.famille = b.famille ?? '';
+  out.grains = (parseGrains(b.grains) ?? []).map(g => ({ nom: g.nom, kg: numTxt(g.kg) }));
+  out.hopSchedule = (parseHops(b.hopSchedule) ?? []).map(h => ({ ...h }));
+  const m = parseMash(b.mash) ?? emptyMash();
+  out.mash = { eau: m.eau, rincage: m.rincage, ebullitionMin: numTxt(m.ebullitionMin), note: m.note,
+    paliers: m.paliers.map(p => ({ temp: numTxt(p.temp), min: numTxt(p.min), label: p.label })) };
+  const f = parseFerment(b.ferment) ?? emptyFerment();
+  out.ferment = { ensemencement: f.ensemencement, refermentation: f.refermentation,
+    paliers: f.paliers.map(p => ({ temp: numTxt(p.temp), duree: p.duree, label: p.label })) };
+  out.radar = parseRadar(b.radar);
   return out;
+}
+
+/* Corps envoyé à l'API : colonnes recette en objets, nombres convertis (virgule acceptée),
+   lignes sans nom et paliers sans température écartés, famille toujours présente
+   (absente, le serveur la déduirait du style), radar '' quand « Pas de radar ». */
+function toBody(form: FormState) {
+  const { grains, hopSchedule, mash, ferment, radar, ...texts } = form;
+  const hasTemp = (p: { temp: string }) => num(p.temp) !== undefined;
+  return {
+    ...texts,
+    famille: form.famille,
+    grains: grains.filter(g => g.nom.trim()).map(g => ({ nom: g.nom, kg: num(g.kg) ?? null })),
+    hopSchedule: hopSchedule.filter(h => h.nom.trim()),
+    mash: {
+      eau: mash.eau, rincage: mash.rincage, ebullitionMin: num(mash.ebullitionMin) ?? null, note: mash.note,
+      paliers: mash.paliers.filter(hasTemp).map(p => ({ temp: num(p.temp)!, min: num(p.min) ?? null, label: p.label })),
+    },
+    ferment: {
+      ensemencement: ferment.ensemencement, refermentation: ferment.refermentation,
+      paliers: ferment.paliers.filter(hasTemp).map(p => ({ temp: num(p.temp)!, duree: p.duree, label: p.label })),
+    },
+    radar: radar ?? '',
+  };
 }
 
 const capLbl: React.CSSProperties = { font: '600 11px var(--font-text)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--encre-2)' };
 const inp: React.CSSProperties = { height: 42, padding: '0 12px', border: '1px solid var(--filet)', background: 'var(--papier)', font: '400 15px var(--font-text)', color: 'var(--encre)', outline: 0, borderRadius: 0 };
 const sel: React.CSSProperties = { height: 42, padding: '0 10px', border: '1px solid var(--filet)', background: 'var(--papier)', font: '400 15px var(--font-text)', color: 'var(--encre)', borderRadius: 0 };
 const ta: React.CSSProperties = { padding: '10px 12px', border: '1px solid var(--filet)', background: 'var(--papier)', font: '400 15px/1.4 var(--font-text)', color: 'var(--encre)', outline: 0, resize: 'vertical', borderRadius: 0 };
-const taMono: React.CSSProperties = { ...ta, font: '400 14px/1.5 var(--font-mono)' };
 const legend: React.CSSProperties = { padding: '0 0 10px', font: '500 12px var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--encre)' };
 const fieldset: React.CSSProperties = { margin: 0, padding: 0, border: 0, display: 'flex', flexDirection: 'column', gap: 14 };
 const fieldsetNext: React.CSSProperties = { ...fieldset, padding: '24px 0 0', borderTop: '1px solid var(--encre)' };
 
 export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextBrew: number; siteUrl: string }) {
   const router = useRouter();
-  const [form, setForm] = useState<Form>(() => (beer ? toForm(beer) : blank(nextBrew)));
+  const [form, setForm] = useState<FormState>(() => (beer ? toForm(beer) : blank(nextBrew)));
   const [editingId, setEditingId] = useState<string | null>(beer?.id ?? null);
   const [savedMsg, setSavedMsg] = useState('');
   const [formError, setFormError] = useState('');
   const set = (k: FormKey) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const val = e.target.value;
     setForm(f => ({ ...f, [k]: val }));
+    setSavedMsg('');
+  };
+  const setPart = <K extends keyof FormState>(k: K) => (v: FormState[K]) => {
+    setForm(f => ({ ...f, [k]: v }));
     setSavedMsg('');
   };
   const previewId = editingId || slug(form.name + (form.edition ? ' ' + form.edition : ''));
@@ -58,10 +117,15 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
       setFormError('Nom, style, n° de brassin et alcool sont obligatoires.');
       return;
     }
+    const touched = (...v: string[]) => v.some(x => x.trim());
+    const mi = form.mash.paliers.findIndex(p => num(p.temp) === undefined && touched(p.temp, p.min, p.label));
+    if (mi >= 0) { setFormError(`Empâtage, palier ${mi + 1} : température manquante.`); return; }
+    const fi = form.ferment.paliers.findIndex(p => num(p.temp) === undefined && touched(p.temp, p.duree, p.label));
+    if (fi >= 0) { setFormError(`Fermentation, palier ${fi + 1} : température manquante.`); return; }
     const res = await fetch(editingId ? `/api/beers/${editingId}` : '/api/beers', {
       method: editingId ? 'PUT' : 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify(toBody(form)),
     });
     if (res.status === 401) { location.href = '/connexion'; return; }
     const data = await res.json().catch(() => ({ error: 'Erreur inattendue.' }));
@@ -121,17 +185,11 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
   ];
   const tasteTexts: [FormKey, string, string][] = [
     ['look', 'Aspect', 'Robe, limpidité, mousse'], ['nose', 'Nez', 'Arômes'], ['mouth', 'Bouche', 'Saveurs, texture, corps'],
-    ['finish', 'Finale', 'Amertume, longueur'], ['serving', 'Service', 'Température, verre'],
+    ['finish', 'Finale', 'Amertume, longueur'],
   ];
   const recipeInputs: [FormKey, string, string][] = [
     ['volume', 'Volume (L)', '20'], ['og', 'Densité initiale', '1,050'], ['fg', 'Densité finale', '1,012'],
   ];
-  const recipeTexts: [FormKey, string, string][] = [
-    ['grains', 'Malts & grains', 'Pale Ale | 4,0 kg'], ['hopSchedule', 'Houblonnage', 'Citra | 50 g | J3 | Dry hop'],
-    ['mash', 'Empâtage', 'Empâtage | 67 °C | 60 min'], ['ferment', 'Fermentation', 'Verdant IPA | 19 °C | 10 jours'],
-    ['notes', 'Le mot du brasseur', 'Une phrase, sans point d’exclamation.'],
-  ];
-
   return (
     <main style={{ maxWidth: 1320, margin: '0 auto', padding: 'clamp(28px,5vw,56px) clamp(16px,4vw,48px) 96px' }}>
       <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, font: '600 12px var(--font-text)', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--encre-2)' }}>
@@ -175,6 +233,13 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
                       {g.icons.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                     </optgroup>
                   ))}
+                </select>
+              </label>
+              <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <span style={capLbl}>Famille</span>
+                <select value={form.famille} onChange={e => setPart('famille')(e.target.value)} style={sel}>
+                  <option value="">—</option>
+                  {FAMILLES.map(f => <option key={f.key} value={f.key}>{f.label}</option>)}
                 </select>
               </label>
               <label style={{ display: 'flex', alignItems: 'center', gap: 10, alignSelf: 'end', height: 42, cursor: 'pointer' }}>
@@ -223,18 +288,14 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
           </fieldset>
 
           <fieldset style={fieldsetNext}>
-            <legend style={legend}>Dégustation &amp; histoire</legend>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 14 }}>
-              {tasteTexts.map(([k, label, placeholder]) => (
-                <label key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <span style={capLbl}>{label}</span>
-                  <textarea value={form[k]} onChange={set(k)} placeholder={placeholder} rows={2} style={ta} />
-                </label>
-              ))}
-            </div>
+            <legend style={legend}>Histoire &amp; mot du brasseur</legend>
             <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span style={capLbl}>Histoire du brassin (option, avant la recette)</span>
               <textarea value={form.description} onChange={set('description')} placeholder="D’où vient l’idée, la démarche, l’événement pour lequel elle a été brassée…" rows={5} style={{ ...ta, font: '400 15px/1.5 var(--font-text)' }} />
+            </label>
+            <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <span style={capLbl}>Le mot du brasseur</span>
+              <textarea value={form.notes} onChange={set('notes')} placeholder="Une phrase, sans point d’exclamation." rows={2} style={ta} />
             </label>
           </fieldset>
 
@@ -248,15 +309,27 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
                 </label>
               ))}
             </div>
-            <p style={{ margin: 0, font: '400 13px/1.5 var(--font-text)', color: 'var(--encre-3)' }}>
-              Une ligne par élément, colonnes séparées par « | ». Exemple : <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--encre-2)' }}>Citra | 50 g | dry hop J3</span>
-            </p>
-            {recipeTexts.map(([k, label, placeholder]) => (
-              <label key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={capLbl}>{label}</span>
-                <textarea value={form[k]} onChange={set(k)} placeholder={placeholder} rows={4} style={taMono} />
-              </label>
-            ))}
+            <GrainsFields value={form.grains} onChange={setPart('grains')} />
+            <HopsFields value={form.hopSchedule} onChange={setPart('hopSchedule')} />
+            <MashFields value={form.mash} onChange={setPart('mash')} />
+            <FermentFields value={form.ferment} onChange={setPart('ferment')} />
+          </fieldset>
+
+          <fieldset style={fieldsetNext}>
+            <legend style={legend}>Dégustation</legend>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(240px,1fr))', gap: 14 }}>
+              {tasteTexts.map(([k, label, placeholder]) => (
+                <label key={k} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <span style={capLbl}>{label}</span>
+                  <textarea value={form[k]} onChange={set(k)} placeholder={placeholder} rows={2} style={ta} />
+                </label>
+              ))}
+            </div>
+            <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <span style={capLbl}>Service</span>
+              <input value={form.serving} onChange={set('serving')} placeholder="Température, verre" style={inp} />
+            </label>
+            <RadarFields value={form.radar} onChange={setPart('radar')} />
           </fieldset>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', paddingTop: 20, borderTop: '1px solid var(--encre)' }}>

@@ -1,0 +1,2959 @@
+{
+  "exportedAt": "2026-10-26T19:49:23.077Z",
+  "convertedAt": "2026-10-26T21:24:02.853Z",
+  "beers": [
+    {
+      "id": "louise-la-confirmation",
+      "name": "Louise",
+      "edition": "La Confirmation",
+      "styleName": "IPA",
+      "denomination": "Bière blonde",
+      "brew": 35,
+      "abv": "5,5",
+      "ebc": "11",
+      "ibu": "30",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-jaune)",
+      "icon": "Flame",
+      "malts": "*Orge* : Pale Ale, Pilsen, Munich, CaraHell, Carapils",
+      "hops": "Amarillo, Cascade, Centennial, Chinook",
+      "yeast": "US-05",
+      "other": "Eau, sucre",
+      "bottledOn": "27/10/2026",
+      "bestBefore": "10/2027",
+      "lot": "L2610-35",
+      "volume": "20",
+      "og": "1,053",
+      "fg": "1,010",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3
+        },
+        {
+          "nom": "Pilsen",
+          "kg": 0.8
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.5
+        },
+        {
+          "nom": "CaraHell",
+          "kg": 0.3
+        },
+        {
+          "nom": "Carapils",
+          "kg": 0.2
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Chinook",
+          "qte": "8 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Cascade",
+          "qte": "40 g",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Centennial",
+          "qte": "53 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Amarillo",
+          "qte": "50 g",
+          "detail": "3 jours"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          },
+          {
+            "temp": 76,
+            "min": 10,
+            "label": "Mash-out"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · US-05",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 18,
+            "duree": "4 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 20,
+            "duree": "6 j",
+            "label": "Fin de fermentation"
+          },
+          {
+            "temp": 4,
+            "duree": "2 j",
+            "label": "Garde à froid"
+          }
+        ]
+      },
+      "notes": "Brassée pour la confirmation de Louise le 15 novembre. Une blonde pour toute la tablée, même ceux qui « n'aiment pas la bière ».",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "6 °C",
+      "description": "Une golden ale d'automne : base pale ale et pils, une touche de Munich et de CaraHell pour le doré et un peu de rondeur.\nL'amertume reste sage, le houblon est là pour le parfum : Centennial au whirlpool et dry hop Amarillo pour une note d'orange. Une bière de fête, faite pour trinquer.",
+      "labelImage": "",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1792061585790,
+      "updatedAt": 1793042416779,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "dark-mode",
+      "name": "Dark Mode",
+      "edition": "",
+      "styleName": "Munich Dunkel",
+      "denomination": "Bière brune",
+      "brew": 34,
+      "abv": "4",
+      "ebc": "35",
+      "ibu": "25",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-malt)",
+      "icon": "SunMoon",
+      "malts": "*Orge* : Munich Light, Pale Ale, CaraMunich II, Chocolat",
+      "hops": "Brewer's Gold, Fuggle, Magnum",
+      "yeast": "S-33",
+      "other": "Eau, sucre",
+      "bottledOn": "27/09/2026",
+      "bestBefore": "09/2027",
+      "lot": "L2609-34",
+      "volume": "20",
+      "og": "1,041",
+      "fg": "1,010",
+      "grains": [
+        {
+          "nom": "Munich Light",
+          "kg": 3.2
+        },
+        {
+          "nom": "Pale Ale",
+          "kg": 0.8
+        },
+        {
+          "nom": "CaraMunich II",
+          "kg": 0.3
+        },
+        {
+          "nom": "Chocolat",
+          "kg": 0.1
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Magnum",
+          "qte": "12 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Brewer's Gold",
+          "qte": "15 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Fuggle",
+          "qte": "20 g",
+          "detail": "5 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          },
+          {
+            "temp": 78,
+            "min": 10,
+            "label": "Mash-out"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-33",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 19,
+            "duree": "12 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "3 j",
+            "label": "Garde à froid"
+          }
+        ]
+      },
+      "notes": "On repasse en mode Dark pour l'Oktober Fest, le mode originel.",
+      "look": "Brune acajou, reflets rubis, mousse beige fine.",
+      "nose": "Pain grillé, cacao léger, une pointe de noisette.",
+      "mouth": "Ronde et souple, malt toasté, corps léger pour une brune.",
+      "finish": "Sèche, amertume douce qui revient sur le café.",
+      "serving": "8 °C",
+      "description": "Le style Munich Dunkel est tombé dans l'oubli, il n'y a plus que des Pils Blondes à l'Oktober Fest. Mais c'est bien le style historique de la bavière quand les fermentation étaient encore hautes et les malts foncés.\nC'est aussi la première bière dont Claude m'a fait la recette de A à Z en optimisant mon stock.",
+      "labelImage": "",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "brune",
+      "radar": null
+    },
+    {
+      "id": "hop-overflow",
+      "name": "Hop Overflow",
+      "edition": "",
+      "styleName": "NEIPA",
+      "denomination": "",
+      "brew": 33,
+      "abv": "5",
+      "ebc": "11",
+      "ibu": "47",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-orange)",
+      "icon": "Hop",
+      "malts": "*Orge* : Pale Ale, CaraPils, Munich, Vienna · flocons de *blé*",
+      "hops": "Chinook, Citra, Nelson Sauvin, Mosaic, Centennial",
+      "yeast": "Verdant IPA",
+      "other": "Eau, sucre",
+      "bottledOn": "07/05/2026",
+      "bestBefore": "05/2027",
+      "lot": "L2605-33",
+      "volume": "20",
+      "og": "1,050",
+      "fg": "1,012",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3
+        },
+        {
+          "nom": "Flocons de blé",
+          "kg": 1
+        },
+        {
+          "nom": "Vienna",
+          "kg": 0.6
+        },
+        {
+          "nom": "CaraPils",
+          "kg": 0.5
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.3
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Chinook",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Citra",
+          "qte": "15 g",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Nelson Sauvin",
+          "qte": "40 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Centennial",
+          "qte": "20 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Chinook",
+          "qte": "60 g",
+          "detail": "J5"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Mosaic",
+          "qte": "55 g",
+          "detail": "J5"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Nelson Sauvin",
+          "qte": "40 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Verdant IPA",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "2 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "Trouble assumée. À boire jeune, avant que les arômes ne débordent de la pile.",
+      "look": "Jaune paille trouble, mousse blanche dense.",
+      "nose": "Mangue, fruit de la passion, agrumes.",
+      "mouth": "Texture soyeuse (avoine et blé), fruits exotiques, agrume et amertume",
+      "finish": "Amertume bien (trop) présente.",
+      "serving": "6 °C",
+      "description": "Le brassin 33 est né d’une envie simple : voir jusqu’où on peut pousser le houblonnage à froid sans que la bière devienne amère. Cinq houblons au total mais le stock faisant défaut j'ai du adapter les variété du dry hop. Le résultat final est très houblonné mais moins fruité qu'attendu avec tout de même une amertume très présente.",
+      "labelImage": "",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "xmas-2025",
+      "name": "Xmas",
+      "edition": "2025",
+      "styleName": "Bière de Noël",
+      "denomination": "Bière épicée",
+      "brew": 32,
+      "abv": "5,5",
+      "ebc": "53",
+      "ibu": "27",
+      "bottle": "33cl",
+      "accent": "var(--cuvee-bordeaux)",
+      "icon": "Snowflake",
+      "malts": "*Orge* : Pale Ale, Munich, CaraMunich, Chocolat, CaraBelge",
+      "hops": "Mosaic, Centennial",
+      "yeast": "S-33",
+      "other": "Eau, sucre, orange, clou de girofle, gingembre, cannelle",
+      "bottledOn": "15/11/2025",
+      "bestBefore": "11/2026",
+      "lot": "L2511-32",
+      "volume": "23",
+      "og": "1,061",
+      "fg": "1,017",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3.5
+        },
+        {
+          "nom": "Munich",
+          "kg": 2
+        },
+        {
+          "nom": "CaraMunich II",
+          "kg": 0.5
+        },
+        {
+          "nom": "Chocolat",
+          "kg": 0.3
+        },
+        {
+          "nom": "CaraBelge",
+          "kg": 0.2
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Centennial",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Mosaic",
+          "qte": "5 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Centennial",
+          "qte": "20 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Mosaic",
+          "qte": "10 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Gingembre",
+          "qte": "15 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Clous de girofle",
+          "qte": "5",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Cannelle",
+          "qte": "1 bâton",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Écorce d'orange",
+          "qte": "15 g",
+          "detail": "5 min"
+        }
+      ],
+      "mash": {
+        "eau": "25,5 L",
+        "rincage": "11 L à 80 °C",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          },
+          {
+            "temp": 78,
+            "min": 10,
+            "label": "Mash-out"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-33",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "3 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "Les épices restent discrètes. Servez-la à 8–10 °C, pas plus froide.",
+      "look": "Ambrée foncée, reflets cuivrés.",
+      "nose": "Café, notes torréfiées",
+      "mouth": "Café, Chocolat, Caramel, épices en retrait, corps moyen.",
+      "finish": "très peu d'amertume, rondeur, céréales",
+      "serving": "8 °C",
+      "description": "Recette annuelle de bière de Noël pour les cadeaux de fin d'année",
+      "labelImage": "/uploads/d86721bc-b3e0-475d-a3fd-7399382664c0.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "brune",
+      "radar": null
+    },
+    {
+      "id": "paul",
+      "name": "Paul",
+      "edition": "Eph 5:18",
+      "styleName": "Triple",
+      "denomination": "",
+      "brew": 31,
+      "abv": "8,2",
+      "ebc": "12",
+      "ibu": "24",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Leaf",
+      "malts": "*Orge* : Pilsner, Munich, Cara Belge",
+      "hops": "Chinook, Fuggle",
+      "yeast": "Abbaye Belgian",
+      "other": "Eau, sucre",
+      "bottledOn": "15/05/2025",
+      "bestBefore": "05/2026",
+      "lot": "L2505-31",
+      "volume": "16",
+      "og": "1,070",
+      "fg": "1,010",
+      "grains": [
+        {
+          "nom": "Pilsner",
+          "kg": 3.5
+        },
+        {
+          "nom": "Munich Light",
+          "kg": 0.8
+        },
+        {
+          "nom": "Cara Belge",
+          "kg": 0.3
+        },
+        {
+          "nom": "Sucre candi",
+          "kg": 0.3
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Chinook",
+          "qte": "12 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Fuggle",
+          "qte": "15 g",
+          "detail": "15 min"
+        }
+      ],
+      "mash": {
+        "eau": "20 L",
+        "rincage": "5 L à 80 °C",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 64,
+            "min": 75,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Abbaye Belgian",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "3 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "Forte, à partager. Le verset sur l’étiquette n’est pas là par hasard.",
+      "look": "Dorée, limpide, mousse blanche généreuse.",
+      "nose": "Fruits blancs, poivre, levure.",
+      "mouth": "Ample et sèche malgré les 8,2 %, notes de céréales et d’épices.",
+      "finish": "Longue, alcool bien intégré.",
+      "serving": "6 °C",
+      "description": "Il nous fallait une bière pour la communion de Paul, et forcément ça ne pouvait être qu'une triple",
+      "labelImage": "/uploads/010d13c9-5d68-4969-8769-2b045487728c.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "belge",
+      "radar": null
+    },
+    {
+      "id": "pils-electrique",
+      "name": "Pils",
+      "edition": "Électrique #2",
+      "styleName": "Pils",
+      "denomination": "Bière lager",
+      "brew": 30,
+      "abv": "5,5",
+      "ebc": "8",
+      "ibu": "20",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-ocre)",
+      "icon": "Zap",
+      "malts": "*Orge* : Pilsner, Munich, CaraPils, Vienna",
+      "hops": "Styrian Goldings, Mosaic",
+      "yeast": "Diamond Lager",
+      "other": "Eau, sucre",
+      "bottledOn": "24/04/2025",
+      "bestBefore": "04/2026",
+      "lot": "L2504-30",
+      "volume": "20",
+      "og": "1,050",
+      "fg": "1,010",
+      "grains": [
+        {
+          "nom": "Pilsner",
+          "kg": 3.8
+        },
+        {
+          "nom": "CaraPils",
+          "kg": 0.4
+        },
+        {
+          "nom": "Vienna",
+          "kg": 0.4
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.4
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Styrian Goldings",
+          "qte": "30 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Mosaic",
+          "qte": "10 g",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "13 L à 80 °C",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 50,
+            "min": 10,
+            "label": "Palier protéique"
+          },
+          {
+            "temp": 62,
+            "min": 45,
+            "label": "Saccharification"
+          },
+          {
+            "temp": 73,
+            "min": 10,
+            "label": "Mash-out"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Diamond Lager",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 11,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 2,
+            "duree": "5 sem.",
+            "label": "Garde à froid"
+          }
+        ]
+      },
+      "notes": "Une lager nette, qui demande surtout de la patience au froid.",
+      "look": "Or pâle, très limpide.",
+      "nose": "Céréales, levure.",
+      "mouth": "Nette et vive, malt pils, houblon floral.",
+      "finish": "rafraichissante, amertume courte.",
+      "serving": "4 °C",
+      "description": "Une petite lager sans prétention pour apprendre le processus de ce style particulier",
+      "labelImage": "/uploads/2371cfae-cb85-42b6-bdf6-a15734e24f1a.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blonde",
+      "radar": null
+    },
+    {
+      "id": "citra-xtra",
+      "name": "Citra",
+      "edition": "Xtra #4",
+      "styleName": "American Pale Ale",
+      "denomination": "Bière APA",
+      "brew": 29,
+      "abv": "5",
+      "ebc": "11",
+      "ibu": "38",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Citrus",
+      "malts": "*Orge* : Pale Ale, Pilsen, Munich · flocons de *froment*",
+      "hops": "Citra, Magnum",
+      "yeast": "Nottingham",
+      "other": "Eau, sucre",
+      "bottledOn": "18/07/2024",
+      "bestBefore": "07/2025",
+      "lot": "L2407-26",
+      "volume": "20",
+      "og": "1,055",
+      "fg": "1,011",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3.8
+        },
+        {
+          "nom": "Pilsen",
+          "kg": 0.8
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.35
+        },
+        {
+          "nom": "Flocons de froment",
+          "kg": 0.3
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Magnum",
+          "qte": "20 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Citra",
+          "qte": "40 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Citra",
+          "qte": "80 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "8 L à 80 °C",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Nottingham",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 19,
+            "duree": "10 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "Non ce n'est pas du citron, c'est du houblon",
+      "look": "Blonde dorée, légèrement voilée.",
+      "nose": "Pamplemousse, citron vert.",
+      "mouth": "Agrumes, base maltée légère.",
+      "finish": "Amertume nette, agrumes persistants.",
+      "serving": "6 °C",
+      "description": "4ème édition avec toujours des adaptation de la recettes pour la Citra Xtra, Plus assez de Citra en stock donc un peu de magnum pour l'amérisant.",
+      "labelImage": "/uploads/80c6cc88-3ac9-4afb-8fae-d9bf101f697a.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "xmas-2024",
+      "name": "Xmas",
+      "edition": "2024",
+      "styleName": "Bière de Noël",
+      "denomination": "Bière Brune",
+      "brew": 28,
+      "abv": "5",
+      "ebc": "48",
+      "ibu": "27",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bordeaux)",
+      "icon": "Snowflake",
+      "malts": "*Orge*: Pale Ale, Cara Ruby, Cara Munich, Chocolat, Caramel 30",
+      "hops": "Cascade, Fuggle, Target",
+      "yeast": "BE-256",
+      "other": "Eau, sucre, Orange, Cloud de girofle, Coriandre, Canelle",
+      "bottledOn": "10/11/2023",
+      "bestBefore": "11/2024",
+      "lot": "L2311-28",
+      "volume": "20",
+      "og": "1,048",
+      "fg": "1,011",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3.5
+        },
+        {
+          "nom": "Cara Ruby",
+          "kg": 0.5
+        },
+        {
+          "nom": "Cara Munich",
+          "kg": 0.3
+        },
+        {
+          "nom": "Chocolat",
+          "kg": 0.2
+        },
+        {
+          "nom": "Caramel 30",
+          "kg": 0.2
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Target",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Cascade",
+          "qte": "4 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Fuggle",
+          "qte": "15 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Cascade",
+          "qte": "10 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Gingembre",
+          "qte": "12 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Cannelle",
+          "qte": "2 bâtons",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Clous de girofle",
+          "qte": "4",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Écorce d'orange",
+          "qte": "12 g",
+          "detail": "5 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "80 °C",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": null,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · BE-256",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "3 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "Au coin du feu en ouvrant les cadeaux",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "Bière de Noël traditionnelle pour les fêtes de fin d'année",
+      "labelImage": "/uploads/de315a0f-764c-41cc-b63a-f33c63fb7425.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "brune",
+      "radar": null
+    },
+    {
+      "id": "garden-ale",
+      "name": "Garden",
+      "edition": "Ale",
+      "styleName": "Blonde",
+      "denomination": "",
+      "brew": 27,
+      "abv": "5",
+      "ebc": "11",
+      "ibu": "26",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-ocre)",
+      "icon": "Beer",
+      "malts": "*Orge*: Pilsen, Cara Ruby, Flocons de *Froment*",
+      "hops": "Brewer's Gold, Target, Centennial",
+      "yeast": "S-33",
+      "other": "Eau, sucre",
+      "bottledOn": "16/09/2024",
+      "bestBefore": "09/2025",
+      "lot": "L2409-27",
+      "volume": "16",
+      "og": "1,055",
+      "fg": "1,015",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 3.5
+        },
+        {
+          "nom": "Cara Ruby",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons de Froment",
+          "kg": 0.05
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Brewer's Gold",
+          "qte": "10 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Target",
+          "qte": "7 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Centennial",
+          "qte": "12 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-33",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "2 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "Récolte de Brewer's Gold du Jardin => Brassage d'une bière",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "Bière blonde toute simple avec un houblon en circuit très court",
+      "labelImage": "/uploads/2ccf4b2b-ad98-4930-8168-2f83f1bee01d.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blonde",
+      "radar": null
+    },
+    {
+      "id": "citra-xtra-3",
+      "name": "Citra",
+      "edition": "Xtra  #3",
+      "styleName": "American Pale Ale",
+      "denomination": "Bière APA",
+      "brew": 26,
+      "abv": "5,8",
+      "ebc": "11",
+      "ibu": "38",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Citrus",
+      "malts": "*Orge*: Pale Ale, Pilsen, *Blé*, Flocons de *Froment*",
+      "hops": "Citra",
+      "yeast": "S-04",
+      "other": "Eau, sucre",
+      "bottledOn": "18/07/2024",
+      "bestBefore": "07/2025",
+      "lot": "L2407-26",
+      "volume": "16",
+      "og": "1,061",
+      "fg": "1,017",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3
+        },
+        {
+          "nom": "Pilsen",
+          "kg": 0.7
+        },
+        {
+          "nom": "Blé",
+          "kg": 0.5
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.2
+        },
+        {
+          "nom": "Flocons de froment",
+          "kg": 0.25
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Citra",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Citra",
+          "qte": "35 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Citra",
+          "qte": "50 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-04",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/b7bf5adf-940d-42b2-b88d-daa0bfb4356b.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "micro-ipa",
+      "name": "Micro",
+      "edition": "IPA",
+      "styleName": "Micro IPA",
+      "denomination": "",
+      "brew": 25,
+      "abv": "2,6",
+      "ebc": "5",
+      "ibu": "36",
+      "bottle": "33cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Hop",
+      "malts": "*Orge*: Pilsen, Pale Ale, Munich (Second Filtrage de bière Triple)",
+      "hops": "Citra",
+      "yeast": "Abbaye Belgian",
+      "other": "Eau, sucre",
+      "bottledOn": "25/03/2024",
+      "bestBefore": "03/2025",
+      "lot": "L2403-35",
+      "volume": "20",
+      "og": "1,023",
+      "fg": "1,004",
+      "grains": [
+        {
+          "nom": "Seconde Filtration de la Triple Olympique",
+          "kg": null
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Citra",
+          "qte": "5 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Citra",
+          "qte": "5 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Citra",
+          "qte": "15 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "Seconde Filtration de la Triple Olympique",
+        "paliers": []
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Abbaye Belgian",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 18,
+            "duree": "7 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 20,
+            "duree": "7 j",
+            "label": "Fin de fermentation"
+          }
+        ]
+      },
+      "notes": "Petite en alcool mais costaude en Houblon",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "J'ai voulu testé la pratique de la seconde filtration pour faire une bière de \"table\", typique des bières d'abbaye, mais avec une touche plus houblonnée.",
+      "labelImage": "/uploads/daebe103-5f75-46f0-abcf-4c58f585d59a.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "triple-olympique",
+      "name": "Triple",
+      "edition": "Olympique",
+      "styleName": "Triple Belge",
+      "denomination": "Bière Triple",
+      "brew": 24,
+      "abv": "9,3",
+      "ebc": "12",
+      "ibu": "34",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-orange)",
+      "icon": "Crown",
+      "malts": "*Orge*: Pilsen, Pale Ale, Munich",
+      "hops": "Brewer's Gold, Target, Fuggle",
+      "yeast": "Mangrove Jack's M41 Belgian Ale",
+      "other": "Eau, Sucre Candy, Sucre",
+      "bottledOn": "02/04/2024",
+      "bestBefore": "04/2025",
+      "lot": "L—",
+      "volume": "16",
+      "og": "1,070",
+      "fg": "1,007",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 3.5
+        },
+        {
+          "nom": "Pale Ale",
+          "kg": 1.5
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.3
+        },
+        {
+          "nom": "Sucre Candy",
+          "kg": 0.5
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Brewer's Gold",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Target",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Fuggle",
+          "qte": "7 g",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 67,
+            "min": 60,
+            "label": "Saccharification"
+          },
+          {
+            "temp": 75,
+            "min": 10,
+            "label": "Mash-out"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Mangrove Jack's M41 Belgian Ale",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 18,
+            "duree": "7 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 20,
+            "duree": "7 j",
+            "label": "Fin de fermentation"
+          }
+        ]
+      },
+      "notes": "Peut-être pas une médaille d'or mais au moins sur le podium",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/4d938fd3-1453-4511-960c-a725cccb6254.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "belge",
+      "radar": null
+    },
+    {
+      "id": "xmas-2023",
+      "name": "Xmas",
+      "edition": "2023",
+      "styleName": "Bière de Noël",
+      "denomination": "Bière Brune",
+      "brew": 23,
+      "abv": "5,3",
+      "ebc": "37",
+      "ibu": "40",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bordeaux)",
+      "icon": "Snowflake",
+      "malts": "*Orge*: Pale Ale, Cara Ruby , Cara Clair, Caramel 30, Chocolat",
+      "hops": "Chinook, Cascade, Saaz",
+      "yeast": "S-33",
+      "other": "Eau, Sucre Candy, Sucre",
+      "bottledOn": "09/11/2023",
+      "bestBefore": "11/2024",
+      "lot": "L2311-23",
+      "volume": "20",
+      "og": "1,051",
+      "fg": "1,012",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3.5
+        },
+        {
+          "nom": "Cara Ruby",
+          "kg": 0.5
+        },
+        {
+          "nom": "Cara Clair",
+          "kg": 0.3
+        },
+        {
+          "nom": "Caramel 30",
+          "kg": 0.2
+        },
+        {
+          "nom": "Chocolat",
+          "kg": 0.15
+        },
+        {
+          "nom": "Sucre Candy",
+          "kg": 0.3
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Chinook",
+          "qte": "20 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Cascade",
+          "qte": "5 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Saaz",
+          "qte": "20 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Cascade",
+          "qte": "10 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Gingembre",
+          "qte": "12 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Cannelle",
+          "qte": "2 bâtons",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Clous de girofle",
+          "qte": "4",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Écorce d'orange",
+          "qte": "12 g",
+          "detail": "5 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-33",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/6fa7adaa-7c19-46e4-9e75-6715eedbf32b.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "brune",
+      "radar": null
+    },
+    {
+      "id": "comet-ale",
+      "name": "Comet",
+      "edition": "Ale",
+      "styleName": "Blond Ale",
+      "denomination": "Bière Blonde",
+      "brew": 22,
+      "abv": "5,6",
+      "ebc": "13",
+      "ibu": "22",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-ocre)",
+      "icon": "Orbit",
+      "malts": "*Orge*: Pilsner, Munich, Pale Ale, Cara Cair",
+      "hops": "Comet, Brewer's Gold",
+      "yeast": "S-04",
+      "other": "Eau, sucre",
+      "bottledOn": "15/09/2023",
+      "bestBefore": "09/2024",
+      "lot": "L2309-22",
+      "volume": "16",
+      "og": "1,055",
+      "fg": "1,012",
+      "grains": [
+        {
+          "nom": "Pilsner",
+          "kg": 3
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.8
+        },
+        {
+          "nom": "Pale Ale",
+          "kg": 0.5
+        },
+        {
+          "nom": "Cara Cair",
+          "kg": 0.4
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Brewer's Gold",
+          "qte": "20 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Comet",
+          "qte": "30 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Comet",
+          "qte": "30 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-04",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "J'espère la brasser à nouveau avant le retour de la comète",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "Brassage avec les houblons frais du jardin en cône.",
+      "labelImage": "/uploads/3a18da21-6528-43d1-b214-959693ab7a83.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blonde",
+      "radar": null
+    },
+    {
+      "id": "summer-wheat-mango",
+      "name": "Summer",
+      "edition": "Wheat Mango",
+      "styleName": "Blanche aux fruits",
+      "denomination": "Bière de Blé",
+      "brew": 21,
+      "abv": "5,3",
+      "ebc": "10",
+      "ibu": "12",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bleu)",
+      "icon": "Sprout",
+      "malts": "*Orge*: Pilsen, *Blé*, Flocons d'*Orge*, Flocons de *Blé*",
+      "hops": "East Kent Goldings",
+      "yeast": "M21",
+      "other": "Eau, Sucre, Mangue, Jus d'Ananas, Orange Amère, Coriandre",
+      "bottledOn": "20/07/2023",
+      "bestBefore": "07/2024",
+      "lot": "L2307-21",
+      "volume": "15",
+      "og": "1,050",
+      "fg": "1,014",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 1.75
+        },
+        {
+          "nom": "Malt de Blé",
+          "kg": 1.75
+        },
+        {
+          "nom": "Flocons d'Orge",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons de Blé",
+          "kg": 0.25
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "East Kent Goldings",
+          "qte": "12 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "East Kent Goldings",
+          "qte": "20 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Graines de coriandre",
+          "qte": "5 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Orange amère",
+          "qte": "20 g",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": null,
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "Sous-tirage de 5L de la *Summer Wheat* et ensuite ajout de jus d'ananas et de mangue surgelées dans le fermenteur",
+      "labelImage": "/uploads/d8e5612c-37a3-411e-b97b-763b7257c7a4.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blanche",
+      "radar": null
+    },
+    {
+      "id": "summer-wheat",
+      "name": "Summer",
+      "edition": "Wheat",
+      "styleName": "Bière de Blé",
+      "denomination": "Bière de Blé",
+      "brew": 20,
+      "abv": "5",
+      "ebc": "10",
+      "ibu": "12",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bleu)",
+      "icon": "Sun",
+      "malts": "*Orge*: Pilsen, *Blé*, Flocons d'*Orge*, Flocons de *Blé*",
+      "hops": "East Kent Goldings",
+      "yeast": "M21",
+      "other": "Eau, Sucre, Orange Amère, Coriandre",
+      "bottledOn": "20/07/2023",
+      "bestBefore": "07/2024",
+      "lot": "L2307-20",
+      "volume": "15",
+      "og": "1,050",
+      "fg": "1,014",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 1.75
+        },
+        {
+          "nom": "Malt de Blé",
+          "kg": 1.75
+        },
+        {
+          "nom": "Flocons d'Orge",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons de Blé",
+          "kg": 0.25
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "East Kent Goldings",
+          "qte": "12 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "East Kent Goldings",
+          "qte": "20 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Graines de coriandre",
+          "qte": "5 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Orange amère",
+          "qte": "20 g",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · M21",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "Décapsulez en cas de forte chaleur",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/3975eaba-b424-451b-96e9-713f828d86fa.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blanche",
+      "radar": null
+    },
+    {
+      "id": "citra-xtra-2",
+      "name": "Citra",
+      "edition": "Xtra #2",
+      "styleName": "American Pale Ale",
+      "denomination": "Bière APA",
+      "brew": 19,
+      "abv": "5,6",
+      "ebc": "11",
+      "ibu": "35",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Citrus",
+      "malts": "*Orge*: Pale Ale, Pilsen, Flocons, *Blé*, Flocons de *Froment*",
+      "hops": "Citra, Magnum",
+      "yeast": "Nottingham",
+      "other": "Eau, sucre",
+      "bottledOn": "05/07/2023",
+      "bestBefore": "07/2024",
+      "lot": "L2307-19",
+      "volume": "16",
+      "og": "1,050",
+      "fg": "1,012",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3
+        },
+        {
+          "nom": "Pilsen",
+          "kg": 0.5
+        },
+        {
+          "nom": "Malt de Blé",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons de froment",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons d'avoine",
+          "kg": 0.2
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Magnum",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Citra",
+          "qte": "45 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Citra",
+          "qte": "45 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Nottingham",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "7 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 22,
+            "duree": "5 j",
+            "label": "Fin de fermentation"
+          },
+          {
+            "temp": 4,
+            "duree": "2 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "Il faut toujours une V2 pour valider un succès",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/4d6eca78-ea3c-4c97-8c82-26ae7c9ba83a.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "dual-core",
+      "name": "Dual",
+      "edition": "Core",
+      "styleName": "Double Belge",
+      "denomination": "Bière Double",
+      "brew": 18,
+      "abv": "7,4",
+      "ebc": "7",
+      "ibu": "30",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bordeaux)",
+      "icon": "Cpu",
+      "malts": "*Orge*: Pilsen",
+      "hops": "Saaz, Styrian Goldings",
+      "yeast": "Mangrove Jack's M42 New World Strong Ale",
+      "other": "Eau, Sucre Candy, Sucre",
+      "bottledOn": "02/07/2023",
+      "bestBefore": "07/2024",
+      "lot": "L2307-18",
+      "volume": "16",
+      "og": "1,062",
+      "fg": "1,009",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 4
+        },
+        {
+          "nom": "Sucre Candy",
+          "kg": 0.7
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Saaz",
+          "qte": "25 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Styrian Goldings",
+          "qte": "40 g",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          },
+          {
+            "temp": 78,
+            "min": 10,
+            "label": "Mash-out"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Mangrove Jack's M42 New World Strong Ale",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 19.5,
+            "duree": "5 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 24,
+            "duree": "5 j",
+            "label": "Fin de fermentation"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/b67659e3-3ee8-43c9-8943-1f2cdc231130.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "belge",
+      "radar": null
+    },
+    {
+      "id": "ip-address",
+      "name": "IP",
+      "edition": "Address",
+      "styleName": "IPA",
+      "denomination": "Bière IPA",
+      "brew": 17,
+      "abv": "6,3",
+      "ebc": "16",
+      "ibu": "49",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Binary",
+      "malts": "*Orge*: Pale Ale, Munich, Cara Clair - *Blé* - Flocons d'*Avoine*",
+      "hops": "Magnum, Cascade, Chinook, Citra",
+      "yeast": "S-04",
+      "other": "Eau, sucre",
+      "bottledOn": "02/04/2023",
+      "bestBefore": "04/2024",
+      "lot": "L—",
+      "volume": "16",
+      "og": "1,060",
+      "fg": "1,012",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 4
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.5
+        },
+        {
+          "nom": "Cara Clair",
+          "kg": 0.3
+        },
+        {
+          "nom": "Blé",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons d'Avoine",
+          "kg": 0.25
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Magnum",
+          "qte": "20 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Cascade",
+          "qte": "10 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Chinook",
+          "qte": "25 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Citra",
+          "qte": "15 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Chinook",
+          "qte": "25 g",
+          "detail": "J5"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Citra",
+          "qte": "15 g",
+          "detail": "J5"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Cascade",
+          "qte": "10 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · S-04",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "2 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "La première tentative d'IPA, plus de houblon, plus de dry hop",
+      "labelImage": "/uploads/54afe023-dde2-4b80-afc5-64a9eeff3c6d.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "pils-electrique-1",
+      "name": "Pils",
+      "edition": "Electrique #1",
+      "styleName": "Lager",
+      "denomination": "Bière Blonde",
+      "brew": 16,
+      "abv": "5",
+      "ebc": "11",
+      "ibu": "22",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-ocre)",
+      "icon": "Zap",
+      "malts": "*Orge*: Pilsen, Carapils, Munich",
+      "hops": "Magnum, Saaz",
+      "yeast": "Diamond Lager",
+      "other": "Eau, Sucre",
+      "bottledOn": "01/04/2023",
+      "bestBefore": "04/2024",
+      "lot": "L2304-16",
+      "volume": "16",
+      "og": "1,056",
+      "fg": "1,011",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 3
+        },
+        {
+          "nom": "Carapils",
+          "kg": 0.8
+        },
+        {
+          "nom": "Munich",
+          "kg": 0.5
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Magnum",
+          "qte": "12 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Saaz",
+          "qte": "10 g",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": null,
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/f184f3ac-2480-4243-ab3b-2da79cc829e0.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790925127499,
+      "famille": "blonde",
+      "radar": null
+    },
+    {
+      "id": "raspbery-pils",
+      "name": "Raspberry",
+      "edition": "PIls",
+      "styleName": "Bière aux fruits",
+      "denomination": "Bière aux fruits",
+      "brew": 15,
+      "abv": "5,8",
+      "ebc": "7",
+      "ibu": "14",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-framboise)",
+      "icon": "Framboise",
+      "malts": "*Orge*: Pilsen, *Blé*, Flocons d'*avoine*",
+      "hops": "Brewer's Gold, East Kent Goldings",
+      "yeast": "Mangrove Jack's M21 Belgian Wit",
+      "other": "Eau, Sucre, Framboises",
+      "bottledOn": "04/03/2023",
+      "bestBefore": "03/2024",
+      "lot": "L2303-15",
+      "volume": "16",
+      "og": "1,040",
+      "fg": "1,015",
+      "grains": [
+        {
+          "nom": "Pilsen",
+          "kg": 2
+        },
+        {
+          "nom": "Malt de Blé",
+          "kg": 2
+        },
+        {
+          "nom": "Flocons d'avoine",
+          "kg": 0.2
+        },
+        {
+          "nom": "Framboises",
+          "kg": 1.5
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Brewer's Gold",
+          "qte": "8 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "East Kent Goldings",
+          "qte": "8 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Framboises surgelées",
+          "qte": "1,5 kg",
+          "detail": "en fermentation · J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · Mangrove Jack's M21 Belgian Wit",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "Rose, troublée",
+      "nose": "Framboise, fruits rouges",
+      "mouth": "",
+      "finish": "Acidité",
+      "serving": "6 °C",
+      "description": "",
+      "labelImage": "/uploads/9cf70120-8bf4-41d1-994f-6d1c4678f558.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blanche",
+      "radar": null
+    },
+    {
+      "id": "west-coast-chcolat",
+      "name": "West Coast",
+      "edition": "Chcolat",
+      "styleName": "American Brown",
+      "denomination": "Bière Brune",
+      "brew": 14,
+      "abv": "6.2",
+      "ebc": "48",
+      "ibu": "24",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-malt)",
+      "icon": "Coffee",
+      "malts": "*Orge*:  Maris Otter, Pale Ale, Caramel 30, Caramunich II, Carared, Chocolat, Flocons",
+      "hops": "Chinook, Cascade",
+      "yeast": "",
+      "other": "Eau, sucre",
+      "bottledOn": "29/01/2023",
+      "bestBefore": "01/2024",
+      "lot": "L2301-14",
+      "volume": "20",
+      "og": "",
+      "fg": "",
+      "grains": [
+        {
+          "nom": "Finest Maris Otter",
+          "kg": 2
+        },
+        {
+          "nom": "Pale Ale",
+          "kg": 1
+        },
+        {
+          "nom": "Caramel 30",
+          "kg": 0.5
+        },
+        {
+          "nom": "Caramunich II",
+          "kg": 0.5
+        },
+        {
+          "nom": "Carared",
+          "kg": 0.5
+        },
+        {
+          "nom": "Chocolat",
+          "kg": 0.1
+        },
+        {
+          "nom": "Flocons d'orge",
+          "kg": 0.15
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Chinook",
+          "qte": "10 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Cascade",
+          "qte": "20 g",
+          "detail": "20 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/88b804c3-cfb8-4119-b804-14e8e2aa693f.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "brune",
+      "radar": null
+    },
+    {
+      "id": "hoppy-birthday",
+      "name": "Hoppy",
+      "edition": "Birthday",
+      "styleName": "Triple",
+      "denomination": "",
+      "brew": 13,
+      "abv": "8,5",
+      "ebc": "13",
+      "ibu": "34",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bleu)",
+      "icon": "Hop",
+      "malts": "*Orge*: Maris Otter, Pale Ale",
+      "hops": "Styrian Goldings, Saaz, Citra",
+      "yeast": "BE-256 Abbey",
+      "other": "Eau, sucre",
+      "bottledOn": "23/01/2023",
+      "bestBefore": "01/2024",
+      "lot": "L2301-13",
+      "volume": "16",
+      "og": "",
+      "fg": "",
+      "grains": null,
+      "hopSchedule": null,
+      "mash": null,
+      "ferment": null,
+      "notes": "Échec prévisible ou malédiction du brassin #13 ?",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "La bière que je voulais brasser pour mes 40 ans mais aussi la bière avec trop de malt, trop de houblon, trop peu de contrôle des température et donc imbuvable.",
+      "labelImage": "/uploads/f3e73b3b-7513-4b79-8fe2-f0d34feaae56.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "belge",
+      "radar": null
+    },
+    {
+      "id": "cascade-22",
+      "name": "Cascade",
+      "edition": "22",
+      "styleName": "Blonde",
+      "denomination": "",
+      "brew": 12,
+      "abv": "5,2",
+      "ebc": "8",
+      "ibu": "24",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-ocre)",
+      "icon": "Hop",
+      "malts": "*Orge*: Pale Ale, Pilsner",
+      "hops": "Cascade",
+      "yeast": "US-05",
+      "other": "Eau, sucre",
+      "bottledOn": "14/01/2023",
+      "bestBefore": "01/2024",
+      "lot": "L2301-12",
+      "volume": "16",
+      "og": "",
+      "fg": "",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": null
+        },
+        {
+          "nom": "Pilsner",
+          "kg": null
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Cascade",
+          "qte": "",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Cascade",
+          "qte": "",
+          "detail": "10 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · US-05",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "Il faudra vraiment attendre l'année prochaine pour la boire",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "Dernière bière brassée en 2022: le 31 décembre",
+      "labelImage": "/uploads/847dc805-006e-4586-8c0c-c5f1cd3ab297.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790925149285,
+      "famille": "blonde",
+      "radar": null
+    },
+    {
+      "id": "citra-xtra-1",
+      "name": "Citra",
+      "edition": "Xtra #1",
+      "styleName": "American Pale Ale",
+      "denomination": "Bière APA",
+      "brew": 11,
+      "abv": "5,1",
+      "ebc": "11",
+      "ibu": "40",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-houblon)",
+      "icon": "Citrus",
+      "malts": "*Orge*: Pale Ale, Pilsen, Malt de *Blé* , Flocons de *froment*, Flocons d'*orge*",
+      "hops": "Citra, Magnum",
+      "yeast": "US-05",
+      "other": "Eau, sucre",
+      "bottledOn": "20/11/2022",
+      "bestBefore": "11/2023",
+      "lot": "L2211-11",
+      "volume": "20",
+      "og": "",
+      "fg": "",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 3
+        },
+        {
+          "nom": "Pilsen",
+          "kg": 0.5
+        },
+        {
+          "nom": "Malt de Blé",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons de froment",
+          "kg": 0.3
+        },
+        {
+          "nom": "Flocons d'orge",
+          "kg": 0.2
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Magnum",
+          "qte": "15 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Citra",
+          "qte": "45 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Dry hop",
+          "nom": "Citra",
+          "qte": "45 g",
+          "detail": "J5"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 66,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · US-05",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          },
+          {
+            "temp": 4,
+            "duree": "2 j",
+            "label": "Cold crash"
+          }
+        ]
+      },
+      "notes": "La première d'une longue série",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/b184fef9-4701-4d5a-b2e6-ddf66cc14acf.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "houblonnee",
+      "radar": null
+    },
+    {
+      "id": "xmas-2022",
+      "name": "Xmas",
+      "edition": "2022",
+      "styleName": "Bière de Noël",
+      "denomination": "Bière Brune",
+      "brew": 10,
+      "abv": "5,5",
+      "ebc": "43",
+      "ibu": "40",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-bordeaux)",
+      "icon": "Snowflake",
+      "malts": "*Orge*: Pale Ale, Carared, Carapils/Carafoam, Chocolat",
+      "hops": "Chinook, Cascade, Saaz",
+      "yeast": "US-05",
+      "other": "Eau, sucre, Gingembre, Bâton de Cannelle, Clou de Girofle , Écorce d'orange",
+      "bottledOn": "24/10/2022",
+      "bestBefore": "10/2023",
+      "lot": "L2210-10",
+      "volume": "10",
+      "og": "1,053",
+      "fg": "1,008",
+      "grains": [
+        {
+          "nom": "Pale Ale",
+          "kg": 2
+        },
+        {
+          "nom": "Carared",
+          "kg": 0.25
+        },
+        {
+          "nom": "Carapils/Carafoam",
+          "kg": 0.2
+        },
+        {
+          "nom": "Chocolat",
+          "kg": 0.1
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "Chinook",
+          "qte": "10 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Cascade",
+          "qte": "2 g",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Saaz",
+          "qte": "10 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Hopstand",
+          "nom": "Cascade",
+          "qte": "5 g",
+          "detail": "20 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Gingembre",
+          "qte": "6 g",
+          "detail": "10 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Cannelle",
+          "qte": "1 bâton",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Clous de girofle",
+          "qte": "2",
+          "detail": "5 min"
+        },
+        {
+          "etape": "Épices",
+          "nom": "Écorce d'orange",
+          "qte": "6 g",
+          "detail": "5 min"
+        }
+      ],
+      "mash": {
+        "eau": "",
+        "rincage": "",
+        "ebullitionMin": 60,
+        "note": "",
+        "paliers": [
+          {
+            "temp": 65,
+            "min": 60,
+            "label": "Saccharification"
+          }
+        ]
+      },
+      "ferment": {
+        "ensemencement": "1 sachet · US-05",
+        "refermentation": "Sucre · 2 sem. à 20 °C",
+        "paliers": [
+          {
+            "temp": 20,
+            "duree": "14 j",
+            "label": "Fermentation principale"
+          }
+        ]
+      },
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/6da0efe1-ecae-433c-91b9-c8ef34e2308c.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "brune",
+      "radar": null
+    },
+    {
+      "id": "la-blonde-du-jardin",
+      "name": "La Blonde",
+      "edition": "Du Jardin",
+      "styleName": "Blonde",
+      "denomination": "",
+      "brew": 9,
+      "abv": "4,8",
+      "ebc": "15",
+      "ibu": "20",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-ocre)",
+      "icon": "Hop",
+      "malts": "*Orge*: Pilsner, Carared",
+      "hops": "Brewer's Gold, Target",
+      "yeast": "S-04",
+      "other": "Eau, Sucre",
+      "bottledOn": "01/10/2022",
+      "bestBefore": "10/2023",
+      "lot": "L2210-9",
+      "volume": "20",
+      "og": "",
+      "fg": "",
+      "grains": null,
+      "hopSchedule": null,
+      "mash": null,
+      "ferment": null,
+      "notes": "Récolte de houblon du potager -> Brassage d'une bière",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/9d57b975-e044-4c58-8539-5a455f342459.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790924968398,
+      "famille": "blonde",
+      "radar": null
+    },
+    {
+      "id": "la-triple",
+      "name": "La Triple",
+      "edition": "",
+      "styleName": "Triple",
+      "denomination": "Bière Triple",
+      "brew": 8,
+      "abv": "10,5",
+      "ebc": "11",
+      "ibu": "25",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-malt)",
+      "icon": "Beer",
+      "malts": "*Orge*: Pilsner, Pale Ale, *Blé*, Flocon de *Froment*",
+      "hops": "East Kent Goldings, Brewer's Gold",
+      "yeast": "",
+      "other": "Eau, sucre",
+      "bottledOn": "26/09/2022",
+      "bestBefore": "09/2023",
+      "lot": "L2209-8",
+      "volume": "12",
+      "og": "",
+      "fg": "",
+      "grains": [
+        {
+          "nom": "Pilsner",
+          "kg": null
+        },
+        {
+          "nom": "Pale Ale",
+          "kg": null
+        },
+        {
+          "nom": "Malt de Blé",
+          "kg": null
+        },
+        {
+          "nom": "Flocon de Froment",
+          "kg": null
+        }
+      ],
+      "hopSchedule": [
+        {
+          "etape": "Ébullition",
+          "nom": "East Kent Goldings",
+          "qte": "",
+          "detail": "60 min"
+        },
+        {
+          "etape": "Ébullition",
+          "nom": "Brewer's Gold",
+          "qte": "",
+          "detail": "60 min"
+        }
+      ],
+      "mash": null,
+      "ferment": null,
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "La première triple, ou comment découvrir que la maitrise de la température de fermentation est un sujet critique pour ce niveau de degré d'alcool",
+      "labelImage": "/uploads/c3d5c7d0-c58c-4b61-baff-9a5ec604f308.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "belge",
+      "radar": null
+    },
+    {
+      "id": "la-blanche",
+      "name": "La",
+      "edition": "Blanche",
+      "styleName": "Blanche",
+      "denomination": "",
+      "brew": 7,
+      "abv": "6,2",
+      "ebc": "",
+      "ibu": "",
+      "bottle": "75cl",
+      "accent": "var(--cuvee-violet)",
+      "icon": "Flower2",
+      "malts": "*Orge*: Pilsner, Malt de *Blé*, Flocons de *froment*, Flocons d'*Avoine*",
+      "hops": "East Kent Goldings",
+      "yeast": "M21 Belgian Wit",
+      "other": "Eau, Sucre, Écorce d'Orange Amère",
+      "bottledOn": "11/07/2022",
+      "bestBefore": "07/2023",
+      "lot": "L2207-7",
+      "volume": "20",
+      "og": "",
+      "fg": "",
+      "grains": null,
+      "hopSchedule": null,
+      "mash": null,
+      "ferment": null,
+      "notes": "",
+      "look": "",
+      "nose": "",
+      "mouth": "",
+      "finish": "",
+      "serving": "",
+      "description": "",
+      "labelImage": "/uploads/9f9f152b-07da-423a-9ff5-01126ca00515.jpg",
+      "artwork": "",
+      "favorite": 0,
+      "createdAt": 1790922820490,
+      "updatedAt": 1790941455338,
+      "famille": "blanche",
+      "radar": null
+    }
+  ]
+}
