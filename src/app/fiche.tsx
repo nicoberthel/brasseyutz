@@ -177,7 +177,7 @@ export function Fiche({ beer, others }: { beer: Beer; others: Beer[] }) {
           <blockquote style={{ '--c': ac } as CSSProperties}>
             <div className="eyebrow">Le mot du brasseur</div>
             <p>{`«${NB}${nbsp(notes)}${NB}»`}</p>
-            <cite><img src="/assets/logo-brasse-yutz-noir.svg" alt="" style={{ height: 22, width: 'auto' }} />Nicolas</cite>
+            <cite><img src="/assets/logo-brasse-yutz-petit-noir.svg" alt="" style={{ height: 22, width: 'auto' }} />Nicolas</cite>
           </blockquote>
         ) : null}
       </section>

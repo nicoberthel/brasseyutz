@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
+import { SignatureH } from '@/components/ds/Logo';
+import { useNarrow } from './useNarrow';
 
 const NAV = [
   { href: '/', label: 'Accueil', icon: 'House' },
@@ -15,6 +17,12 @@ function isActive(href: string, p: string) {
   if (isPrivate(p)) return false;
   if (href === '/') return p === '/';
   return p === '/cuvees' || p.startsWith('/cuvees/') || p.startsWith('/biere/') || p.startsWith('/brassin/');
+}
+
+/** Signature horizontale de l'en-tête : 52 px, 44 px sous 760 px (version simple du logo dans les deux cas). */
+export function HeaderSignature() {
+  const narrow = useNarrow();
+  return <SignatureH size={narrow ? 44 : 52} />;
 }
 
 export function TopNav() {

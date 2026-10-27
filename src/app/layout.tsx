@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
-import { SignatureH } from '@/components/ds/Logo';
-import { BottomNav, Shell, TopNav } from '@/components/site/Nav';
+import { BottomNav, Shell, TopNav, HeaderSignature } from '@/components/site/Nav';
 import './globals.css';
 
 /* Polices embarquées dans le repo (src/fonts) : aucun téléchargement au build,
@@ -38,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header className="top">
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--encre)' }}>
-            <SignatureH size={44} />
+            <HeaderSignature />
           </Link>
           <TopNav />
         </header>

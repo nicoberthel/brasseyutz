@@ -85,14 +85,48 @@ describe('BeerLabel — cellules stats réorganisées', () => {
   });
 });
 
-describe('SignatureH (bannière horizontale)', () => {
-  it('logo et bloc BRASSE / filet / YUTZ côte à côte, sans sous-titre', async () => {
+describe('Logo B5 (anneau-crosse)', () => {
+  it('SignatureH : BRASSE / filet / YUTZ à gauche du logo, 52 px par défaut, version simple', async () => {
     const { SignatureH } = await import('@/components/ds/Logo');
-    const { container } = render(<SignatureH size={44} />);
-    expect(container.querySelector('svg')).toBeTruthy(); // LogoMark
+    const { container } = render(<SignatureH />);
+    const root = container.firstElementChild as HTMLElement;
+    expect(root.getAttribute('data-layout')).toBe('horizontal');
+    const svg = root.querySelector('svg')!;
+    expect(svg.getAttribute('data-detail')).toBe('0');
+    expect(svg.style.height).toBe('52px');
+    expect(root.firstElementChild!.tagName).toBe('SPAN'); // texte avant le logo
+    expect(root.lastElementChild!.tagName).toBe('svg');
     expect(container.textContent).toContain('Brasse');
     expect(container.textContent).toContain('Yutz');
     expect(container.textContent).not.toContain('maison');
+  });
+  it('détail automatique : 64 px et 17 mm détaillés, 48 px et 9 mm simples, forçable', async () => {
+    const { LogoMark, autoDetail } = await import('@/components/ds/Logo');
+    expect(autoDetail(64, 'px')).toBe(true);
+    expect(autoDetail(63, 'px')).toBe(false);
+    expect(autoDetail(17, 'mm')).toBe(true);
+    expect(autoDetail(9, 'mm')).toBe(false);
+    const big = render(<LogoMark size={64} />).container.querySelector('svg')!;
+    expect(big.getAttribute('data-detail')).toBe('1');
+    expect(big.querySelectorAll('path[stroke-width="0.5"], path[stroke-width=".5"]').length).toBe(1); // second filet
+    const forced = render(<LogoMark size={120} detail={false} />).container.querySelector('svg')!;
+    expect(forced.getAttribute('data-detail')).toBe('0');
+  });
+  it('knock papier : découpes peintes, pas de masque ; inverse : masques et encre papier', async () => {
+    const { Logo, LogoMark } = await import('@/components/ds/Logo');
+    const painted = render(<LogoMark size={48} />).container.querySelector('svg')!;
+    expect(painted.querySelector('mask')).toBeNull();
+    expect(painted.querySelectorAll('rect[fill="var(--papier)"]').length).toBe(3); // croix de Lorraine
+    const inv = render(<Logo size={48} inverse />).container.querySelector('svg')!;
+    expect(inv.querySelectorAll('mask').length).toBe(8); // anneau, mitre, 6 écailles
+    expect(inv.querySelector('path[fill="var(--papier)"]')).toBeTruthy();
+    expect(inv.querySelector('[stroke="var(--encre)"]')).toBeNull();
+  });
+  it('ancien dessin disparu : plus de cercle fermé ni de mitre B4', async () => {
+    const { LogoMark } = await import('@/components/ds/Logo');
+    const html = render(<LogoMark size={48} />).container.innerHTML;
+    expect(html).not.toContain('<circle');
+    expect(html).not.toContain('M30 52V36Q30 16 50 3');
   });
 });
 
