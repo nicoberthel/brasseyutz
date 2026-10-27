@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { num, norm, slug, splitName, rows, lotFor, matches, abvTxt, filterBeers } from '@/lib/domain';
+import { num, norm, slug, splitName, lotFor, matches, abvTxt, filterBeers } from '@/lib/domain';
 
 describe('num', () => {
   it('parse la virgule décimale', () => expect(num('5,5')).toBe(5.5));
@@ -25,15 +25,6 @@ describe('splitName', () => {
     expect(splitName({ name: 'Hop Overflow' })).toEqual(['Hop', 'Overflow']));
   it('un seul mot → seconde partie vide', () =>
     expect(splitName({ name: 'Paul' })).toEqual(['Paul', '']));
-});
-
-describe('rows', () => {
-  it('découpe a | b | c', () =>
-    expect(rows('Citra | 50 g | dry hop J3')).toEqual([{ a: 'Citra', b: '50 g', c: 'dry hop J3' }]));
-  it('colonnes surnuméraires jointes par ·', () =>
-    expect(rows('X | 1 | a | b')[0].c).toBe('a · b'));
-  it('ignore lignes vides', () => expect(rows('\n\nA | 1\n')).toHaveLength(1));
-  it('colonnes manquantes vides', () => expect(rows('Seul')).toEqual([{ a: 'Seul', b: '', c: '' }]));
 });
 
 describe('lotFor', () => {

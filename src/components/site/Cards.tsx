@@ -105,6 +105,13 @@ export function PhotoCard({ beer }: { beer: Beer }) {
 
 /* Recherche sans résultat. */
 export function Empty({ q }: { q: string }) {
+  if (!q.trim()) {
+    return (
+      <div className="panel" style={{ textAlign: 'center', display: 'grid', gap: 6, justifyItems: 'center' }}>
+        <span style={{ font: '500 15px var(--font-mono)' }}>Aucune cuvée dans cette famille pour l'instant</span>
+      </div>
+    );
+  }
   return (
     <div className="panel" style={{ textAlign: 'center', display: 'grid', gap: 6, justifyItems: 'center' }}>
       <span style={{ font: '500 15px var(--font-mono)' }}>404 — bière introuvable</span>

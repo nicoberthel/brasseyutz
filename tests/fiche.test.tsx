@@ -22,6 +22,11 @@ const radarSvg = (c: HTMLElement) => c.querySelector('svg[role="img"][aria-label
 const KEEP_NBSP = { normalizer: getDefaultNormalizer({ collapseWhitespace: false }) };
 
 describe('fiche', () => {
+  it('minutes d’empâtage avec virgule française', async () => {
+    await update('hop-overflow', { mash: JSON.stringify({ eau: '', rincage: '', ebullitionMin: null, note: '', paliers: [{ temp: 65, min: 7.5, label: 'Sacch.' }] }) });
+    await renderId('hop-overflow');
+    expect(screen.getAllByText(`7,5${N}min`, KEEP_NBSP).length).toBeGreaterThan(0);
+  });
   it('/biere/hop-overflow : en-tête, chiffres, recette, dégustation, autres cuvées', async () => {
     const { container } = await renderId('hop-overflow');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Hop Overflow');

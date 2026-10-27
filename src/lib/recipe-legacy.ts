@@ -85,7 +85,8 @@ export function legacyMash(t: string, hops: HopLine[] | null): Mash | null {
   for (const c of lines(t)) {
     const label = c[0] || '';
     const rest = c.slice(1);
-    const tempCol = rest.find(x => /°/.test(x)) ?? (rest[0] && hasTemp(rest[0]) ? rest[0] : undefined);
+    const rawTempCol = rest.find(x => /°/.test(x)) ?? (rest[0] && hasTemp(rest[0]) ? rest[0] : undefined);
+    const tempCol = rawTempCol && firstNum(rawTempCol) !== null ? rawTempCol : undefined;
     const isRinse = norm(label).startsWith('rincage');
     if (isRinse) {
       const vol = rest.find(x => /^\d+(?:[.,]\d+)?\s*L\b/i.test(x));

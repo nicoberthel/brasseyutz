@@ -164,9 +164,19 @@ describe('EditForm', () => {
     const mash = screen.getByRole('group', { name: 'Empâtage' });
     const before = parseMash(byId('paul').mash)!.paliers.length;
     fireEvent.click(within(mash).getByRole('button', { name: 'Ajouter un palier d’empâtage' }));
-    fireEvent.change(within(mash).getByLabelText(`Libellé ${before + 1}`), { target: { value: 'Protéines' } });
     save();
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(sentBody(fetchMock).mash.paliers).toHaveLength(before);
+  });
+  it('palier avec libellé mais sans température : erreur, rien envoyé', async () => {
+    const fetchMock = mockFetch(byId('paul'));
+    edit(byId('paul'));
+    const mash = screen.getByRole('group', { name: 'Empâtage' });
+    const before = parseMash(byId('paul').mash)!.paliers.length;
+    fireEvent.click(within(mash).getByRole('button', { name: 'Ajouter un palier d’empâtage' }));
+    fireEvent.change(within(mash).getByLabelText(`Libellé ${before + 1}`), { target: { value: 'Protéines' } });
+    save();
+    expect(await screen.findByText(`Empâtage, palier ${before + 1} : température manquante.`)).toBeTruthy();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

@@ -290,7 +290,7 @@ radius 4, inclinaison optionnelle. SSR à 0,45. Si `labelImage` est renseignée,
 
 ### 5.5 Mentions légales, connexion
 
-Contenu inchangé, posés dans le `.shell` (largeur max 760 pour la lecture).
+Contenu inchangé. Mentions légales : dans le `.shell`, largeur max 760. Connexion : hors `.shell` (page privée), conteneur propre de 760 px.
 
 ## 6. Conversion de l'ancien format (`src/lib/recipe-legacy.ts`)
 

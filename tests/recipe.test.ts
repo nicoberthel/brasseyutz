@@ -33,6 +33,10 @@ describe('recipe', () => {
     expect(parseFerment({ paliers: [{ temp: '18', duree: '10 j' }] })!.paliers).toEqual([{ temp: 18, duree: '10 j', label: '' }]);
     expect(parseFerment({ ensemencement: 'x' })!.ensemencement).toBe('x');
   });
+  it('parseRadar : pas de 0,5', () => {
+    expect(parseRadar([4.3, 0, 5, 1, 2, 3, 0.5, 1])).toBeNull();
+    expect(parseRadar([4.5, 0, 5, 1, 2, 3, 0.5, 1])).toEqual([4.5, 0, 5, 1, 2, 3, 0.5, 1]);
+  });
   it('parseRadar : 8 nombres 0–5 sinon null', () => {
     expect(parseRadar([1, 2, 3, 4, 5, 0, 2.5, 3])).toEqual([1, 2, 3, 4, 5, 0, 2.5, 3]);
     expect(parseRadar('[1,2,3,4,5,0,2.5,3]')).not.toBeNull();

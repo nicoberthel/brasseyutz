@@ -109,7 +109,7 @@ export function parseRadar(v: unknown): Radar | null {
   const a = load(v);
   if (!Array.isArray(a) || a.length !== 8) return null;
   const n = a.map(x => (typeof x === 'number' || typeof x === 'string' ? num(x) : undefined));
-  if (n.some(x => x === undefined || x < 0 || x > 5)) return null;
+  if (n.some(x => x === undefined || x < 0 || x > 5 || !Number.isInteger(x * 2))) return null;
   return n as Radar;
 }
 

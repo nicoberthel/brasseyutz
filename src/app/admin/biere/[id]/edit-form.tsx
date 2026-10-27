@@ -117,6 +117,11 @@ export function EditForm({ beer, nextBrew, siteUrl }: { beer: Beer | null; nextB
       setFormError('Nom, style, n° de brassin et alcool sont obligatoires.');
       return;
     }
+    const touched = (...v: string[]) => v.some(x => x.trim());
+    const mi = form.mash.paliers.findIndex(p => num(p.temp) === undefined && touched(p.temp, p.min, p.label));
+    if (mi >= 0) { setFormError(`Empâtage, palier ${mi + 1} : température manquante.`); return; }
+    const fi = form.ferment.paliers.findIndex(p => num(p.temp) === undefined && touched(p.temp, p.duree, p.label));
+    if (fi >= 0) { setFormError(`Fermentation, palier ${fi + 1} : température manquante.`); return; }
     const res = await fetch(editingId ? `/api/beers/${editingId}` : '/api/beers', {
       method: editingId ? 'PUT' : 'POST',
       headers: { 'content-type': 'application/json' },

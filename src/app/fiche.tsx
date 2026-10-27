@@ -88,14 +88,14 @@ function Recette({ beer }: { beer: Beer }) {
           </Blk>
         ) : null}
         {mash ? (
-          <Blk icon="Thermometer" title="Empâtage" meta={mashMin > 0 ? `${mashMin}${NB}min` : undefined} accent={ac}>
+          <Blk icon="Thermometer" title="Empâtage" meta={mashMin > 0 ? `${fr(mashMin)}${NB}min` : undefined} accent={ac}>
             <div className="rows">
               <Kv k="Eau d’empâtage" v={mash.eau} />
               {mash.paliers.length
-                ? <Steps accent={ac} rows={mash.paliers.map(p => ({ temp: p.temp, label: p.label, right: p.min !== null ? `${p.min}${NB}min` : '' }))} />
+                ? <Steps accent={ac} rows={mash.paliers.map(p => ({ temp: p.temp, label: p.label, right: p.min !== null ? `${fr(p.min)}${NB}min` : '' }))} />
                 : null}
               <Kv k="Rinçage" v={mash.rincage} />
-              <Kv k="Ébullition" v={mash.ebullitionMin !== null ? `${mash.ebullitionMin}${NB}min` : ''} nw />
+              <Kv k="Ébullition" v={mash.ebullitionMin !== null ? `${fr(mash.ebullitionMin)}${NB}min` : ''} nw />
               <Kv k="Note" v={mash.note} />
             </div>
           </Blk>

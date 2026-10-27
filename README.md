@@ -4,7 +4,7 @@ Site public et backoffice de la brasserie amateur Brasse-Yutz (Yutz, Moselle) : 
 
 - Dépôt : https://github.com/nicoberthel/brasseyutz
 - Spécification : `docs/superpowers/specs/2026-10-26-redesign-site-design.md` (site public et modèle de recette ; remplace sur ces points `docs/superpowers/specs/2026-09-28-brasseyutz-site-design.md`, toujours valable pour le backoffice, les étiquettes et le déploiement)
-- Design de référence du site public : `Brasserie de Basse-Yutz — Design System/ui_kits/site/` (le ui-kit fait foi en cas de doute CSS) ; maquette historique du backoffice : `design/Brasse-Yutz Recettes.dc.html` (+ `design/_ds/`)
+- Design de référence du site public : `Brasserie de Basse-Yutz — Design System/ui_kits/site/` (copie locale, non suivie par git ; le design system vit dans le projet claude.ai design ; le ui-kit fait foi en cas de doute CSS) ; maquette historique du backoffice : `design/Brasse-Yutz Recettes.dc.html` (+ `design/_ds/`)
 
 ## Routes
 

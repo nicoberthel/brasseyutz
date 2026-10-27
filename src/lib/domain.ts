@@ -18,13 +18,6 @@ export function splitName(b: { name?: string; edition?: string }): [string, stri
   return [w.slice(0, k).join(' '), w.slice(k).join(' ')];
 }
 
-export function rows(t: unknown): { a: string; b: string; c: string }[] {
-  return String(t || '').split('\n').map(l => l.trim()).filter(Boolean).map(l => {
-    const p = l.split('|').map(s => s.trim());
-    return { a: p[0] || '', b: p[1] || '', c: p.slice(2).join(' · ') };
-  });
-}
-
 export function lotFor(b: { bottledOn?: string; brew?: number | string }): string {
   const m = String(b.bottledOn || '').match(/(\d{2})\/(\d{2})\/\d{2}(\d{2})/);
   return m ? 'L' + m[3] + m[2] + '-' + b.brew : 'L—';

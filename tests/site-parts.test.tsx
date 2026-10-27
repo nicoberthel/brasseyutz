@@ -112,6 +112,11 @@ describe('Briques du site', () => {
     expect(seen).toEqual(['citra', '']);
   });
 
+  it('Empty sans requête : message famille vide', () => {
+    render(<Empty q="  " />);
+    expect(screen.getByText("Aucune cuvée dans cette famille pour l'instant")).toBeTruthy();
+    expect(screen.queryByText(/404/)).toBeNull();
+  });
   it('Empty affiche « 404 — bière introuvable » et la requête', () => {
     render(<Empty q="xyz" />);
     expect(screen.getByText('404 — bière introuvable')).toBeTruthy();

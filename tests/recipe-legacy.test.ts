@@ -4,6 +4,12 @@ import {
 } from '../src/lib/recipe-legacy.ts';
 
 describe('recipe-legacy', () => {
+  it('empâtage : « ° » sans chiffre → note, pas de palier', () => {
+    const m = legacyMash('Empâtage | ° | 60 min', null);
+    expect(m?.paliers ?? []).toEqual([]);
+    expect(m?.note).toContain('60 min');
+    expect(legacyMash('Rinçage | ° | 10 L', null)?.rincage ?? '').not.toContain('null');
+  });
   it('grains : quantités kg, K, virgule, absente', () => {
     expect(legacyGrains("Pale Ale | 3,5 Kg \nMunich | 0,150 Kg\nFlocons d'Orge | 0,3 K \nPale Ale |"))
       .toEqual([
