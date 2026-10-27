@@ -20,7 +20,7 @@ describe('Accueil', () => {
     expect(h1.textContent).toBe('Des bières houblonnées, brassées à la maison.');
     expect(h1.querySelector('i')!.textContent).toBe('à la maison.');
     expect(screen.getByText('Brasserie maison · Yutz')).toBeTruthy();
-    expect(screen.getByText('Petits brassins, essais, ratés et belles réussites : chaque cuvée a sa fiche technique complète.')).toBeTruthy();
+    expect(screen.getByText('Petits brassins, essais, ratés et belles réussites. Chaque cuvée a sa fiche technique complète.')).toBeTruthy();
     expect(screen.getByText('Voir les cuvées').closest('a')!.getAttribute('href')).toBe('/cuvees');
     expect(screen.getByAltText('Brasse-Yutz — Saint Nicolas').getAttribute('src')).toBe('/assets/logo-brasse-yutz.svg');
   });
