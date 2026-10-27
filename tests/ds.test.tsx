@@ -86,7 +86,7 @@ describe('BeerLabel — cellules stats réorganisées', () => {
 });
 
 describe('Logo B5 (anneau-crosse)', () => {
-  it('SignatureH : BRASSE / filet / YUTZ à gauche du logo, 52 px par défaut, version simple', async () => {
+  it('SignatureH : logo puis BRASSE / filet / YUTZ à sa droite, 52 px par défaut, version simple', async () => {
     const { SignatureH } = await import('@/components/ds/Logo');
     const { container } = render(<SignatureH />);
     const root = container.firstElementChild as HTMLElement;
@@ -94,11 +94,18 @@ describe('Logo B5 (anneau-crosse)', () => {
     const svg = root.querySelector('svg')!;
     expect(svg.getAttribute('data-detail')).toBe('0');
     expect(svg.style.height).toBe('52px');
-    expect(root.firstElementChild!.tagName).toBe('SPAN'); // texte avant le logo
-    expect(root.lastElementChild!.tagName).toBe('svg');
+    expect(root.firstElementChild!.tagName).toBe('svg'); // logo d'abord
+    expect(root.lastElementChild!.tagName).toBe('SPAN'); // texte à droite
     expect(container.textContent).toContain('Brasse');
     expect(container.textContent).toContain('Yutz');
     expect(container.textContent).not.toContain('maison');
+  });
+  it('Signature horizontale : texte à gauche par défaut (design system), à droite sur demande', async () => {
+    const { Signature } = await import('@/components/ds/Logo');
+    const left = render(<Signature layout="horizontal" />).container.firstElementChild as HTMLElement;
+    expect(left.firstElementChild!.tagName).toBe('SPAN');
+    const right = render(<Signature layout="horizontal" textSide="right" />).container.firstElementChild as HTMLElement;
+    expect(right.firstElementChild!.tagName).toBe('svg');
   });
   it('détail automatique : 64 px et 17 mm détaillés, 48 px et 9 mm simples, forçable', async () => {
     const { LogoMark, autoDetail } = await import('@/components/ds/Logo');
