@@ -37,7 +37,7 @@ describe('fiche', () => {
     const quote = screen.getByText('Le mot du brasseur').closest('blockquote')!;
     expect(quote.querySelector('p')!.textContent).toBe(`«${N}Trouble assumée. À boire jeune, avant que les arômes ne débordent de la pile.${N}»`);
     expect(quote.querySelector('cite')!.textContent).toBe('Nicolas');
-    expect(quote.querySelector('cite img')!.getAttribute('src')).toBe('/assets/logo-brasse-yutz-noir.svg');
+    expect(quote.querySelector('cite img')!.getAttribute('src')).toBe('/assets/logo-brasse-yutz-petit-noir.svg');
     // chiffres
     expect(fig('Alcool').textContent).toBe(`Alcool5${N}%${N}vol`);
     expect(fig('Densité initiale').textContent).toBe('Densité initiale1,050');
