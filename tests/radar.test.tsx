@@ -14,6 +14,15 @@ describe('Radar', () => {
     expect(container.querySelectorAll('circle[data-radar-point]').length).toBe(8);
     expect(container.querySelectorAll('line').length).toBe(8);
   });
+  it('Amertume en haut (midi), puis sens horaire : Épicé / floral, Fruité, Acidité, Corps, Douceur / sucré, Malté, Torréfié', () => {
+    const { container } = render(<Radar values={values} accent="var(--cuvee-orange)" />);
+    const texts = Array.from(container.querySelectorAll('text'));
+    const labels = texts.map(t => t.firstChild!.textContent);
+    expect(labels).toEqual(['Amertume', 'Épicé / floral', 'Fruité', 'Acidité', 'Corps', 'Douceur / sucré', 'Malté', 'Torréfié']);
+    const xy = texts.map(t => [Number(t.getAttribute('x')), Number(t.getAttribute('y'))]);
+    expect(xy[0][1]).toBeLessThan(xy[4][1]); // Amertume au-dessus de Corps (axe opposé)
+    expect(xy[2][0]).toBeGreaterThan(xy[6][0]); // Fruité à droite (est), Malté à gauche (ouest)
+  });
   it('aria-label contient « Amertume 2,5/5 »', () => {
     render(<Radar values={values} accent="var(--cuvee-orange)" />);
     const svg = screen.getByRole('img');
@@ -25,7 +34,8 @@ describe('Radar', () => {
     const texts = Array.from(container.querySelectorAll('text')).map(t => t.textContent);
     expect(texts).toHaveLength(8);
     expect(texts).toContain('Malté4,5/5');
-    expect(texts).toContain('Floral / herbacé1,5/5');
+    expect(texts).toContain('Corps1,5/5');
+    expect(texts).toContain('Acidité1/5');
     expect(Array.from(container.querySelectorAll('tspan')).map(t => t.textContent)).toContain('4,5/5');
   });
 });

@@ -109,7 +109,7 @@ describe('EditForm', () => {
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     const body = sentBody(fetchMock);
     expect(body.famille).toBe('blonde');
-    expect(body.radar).toEqual([0, 0, 3.5, 0, 0, 0, 0, 0]);
+    expect(body.radar).toEqual([0, 0, 0, 0, 3.5, 0, 0, 0]);
   });
   it('l’URL du QR suit le n° de brassin', () => {
     createNew();
