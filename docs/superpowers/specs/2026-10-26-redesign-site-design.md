@@ -101,7 +101,10 @@ n'apparaît que sous « Toutes ».
 
 ### 4.2 Axes du radar (constante partagée)
 
-`Amertume, Douceur, Corps, Fruité, Floral / herbacé, Épicé, Malté, Torréfié`.
+`Amertume, Épicé / floral, Fruité, Acidité, Corps, Douceur / sucré, Malté, Torréfié`,
+dans l'ordre d'affichage : Amertume en haut, puis sens horaire. Les notes
+stockées sont positionnelles (révision du 27/10/2026 : Épicé et Floral
+fusionnés, Acidité ajoutée, Douceur renommée).
 
 ### 4.3 Validation (`validateBeer`)
 
