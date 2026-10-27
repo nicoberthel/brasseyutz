@@ -49,7 +49,7 @@ export function Home({ beers }: { beers: Beer[] }) {
           <h1 style={{ margin: 0, font: '400 clamp(32px,4.2vw,48px)/.98 var(--font-display)', letterSpacing: '-0.02em', textWrap: 'balance' }}>
             Des bières houblonnées, brassées <i>à la maison.</i>
           </h1>
-          <p style={{ margin: 0, font: '400 16px/1.45 var(--font-text)', maxWidth: 520 }}>Petits brassins, essais, ratés et belles réussites : chaque cuvée a sa fiche technique complète.</p>
+          <p style={{ margin: 0, font: '400 16px/1.45 var(--font-text)', maxWidth: 520 }}>Petits brassins, essais, ratés et belles réussites. Chaque cuvée a sa fiche technique complète.</p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <Link href="/cuvees" className="pill light">Voir les cuvées <CuveeIcon name="ArrowRight" size={18} stroke={1.75} /></Link>
           </div>
