@@ -84,12 +84,15 @@ const Just = ({ txt, w, fs, unit, color }: { txt: string; w: number; fs: number;
 export type LogoLayout = 'stack' | 'horizontal';
 
 export interface SignatureProps extends LogoMarkProps {
-  /** `'stack'` : logo au-dessus de BRASSE / filet / YUTZ. `'horizontal'` : texte à gauche du logo, qui garde toute la hauteur (en-tête). */
+  /** `'stack'` : logo au-dessus de BRASSE / filet / YUTZ. `'horizontal'` : texte à côté du logo, qui garde toute la hauteur (en-tête). */
   layout?: LogoLayout;
+  /** Layout horizontal seulement : côté du texte par rapport au logo. Défaut `'left'`. */
+  textSide?: 'left' | 'right';
 }
 
-export function Signature({ size = 48, unit = 'px', ring = 'var(--accent)', ink = 'var(--encre)', knock = 'var(--papier)', detail, layout = 'stack', style }: SignatureProps) {
+export function Signature({ size = 48, unit = 'px', ring = 'var(--accent)', ink = 'var(--encre)', knock = 'var(--papier)', detail, layout = 'stack', textSide = 'left', style }: SignatureProps) {
   const H = layout === 'horizontal';
+  const txtFirst = H && textSide === 'left';
   const w = H ? size * 1.08 : size * 1.62;
   const k = H ? 0.66 : 1;
   const txt = <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: size * 0.09 * k + unit }}>
@@ -98,15 +101,15 @@ export function Signature({ size = 48, unit = 'px', ring = 'var(--accent)', ink 
     <Just txt="Yutz" w={w} fs={size * 0.42 * k} unit={unit} color={ink} />
   </span>;
   return <span aria-label="Brasse-Yutz" data-layout={layout} style={{ display: 'inline-flex', flexDirection: H ? 'row' : 'column', alignItems: 'center', gap: size * (H ? 0.2 : 0.14) + unit, ...style }}>
-    {H && txt}
+    {txtFirst && txt}
     <LogoMark size={size} unit={unit} ring={ring} ink={ink} knock={knock} detail={detail} />
-    {!H && txt}
+    {!txtFirst && txt}
   </span>;
 }
 
-/** Signature horizontale de l'en-tête : BRASSE / filet / YUTZ à gauche du logo. */
-export function SignatureH({ size = 52, ...rest }: Omit<SignatureProps, 'layout'>) {
-  return <Signature size={size} layout="horizontal" {...rest} />;
+/** Signature horizontale de l'en-tête : logo, puis BRASSE / filet / YUTZ à sa droite. */
+export function SignatureH({ size = 52, textSide = 'right', ...rest }: Omit<SignatureProps, 'layout'>) {
+  return <Signature size={size} layout="horizontal" textSide={textSide} {...rest} />;
 }
 
 export interface LogoProps {
