@@ -10,8 +10,9 @@ export type FermentStep = { temp: number; duree: string; label: string };
 export type Ferment = { ensemencement: string; refermentation: string; paliers: FermentStep[] };
 export type Radar = [number, number, number, number, number, number, number, number];
 
+/** Axes du radar, dans l'ordre d'affichage : Amertume en haut, puis sens horaire. Les notes stockées sont positionnelles. */
 export const RADAR_AXES: readonly string[] = [
-  'Amertume', 'Douceur', 'Corps', 'Fruité', 'Floral / herbacé', 'Épicé', 'Malté', 'Torréfié',
+  'Amertume', 'Épicé / floral', 'Fruité', 'Acidité', 'Corps', 'Douceur / sucré', 'Malté', 'Torréfié',
 ];
 
 export type FamilleKey = 'houblonnee' | 'blonde' | 'belge' | 'blanche' | 'brune';

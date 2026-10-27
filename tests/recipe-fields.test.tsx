@@ -66,6 +66,6 @@ describe('RadarFields', () => {
     const onChange = vi.fn();
     render(<RadarFields value={[0, 0, 0, 0, 0, 0, 0, 0]} onChange={onChange} />);
     fireEvent.change(screen.getByLabelText('Corps'), { target: { value: '3.5' } });
-    expect(onChange).toHaveBeenLastCalledWith([0, 0, 3.5, 0, 0, 0, 0, 0]);
+    expect(onChange).toHaveBeenLastCalledWith([0, 0, 0, 0, 3.5, 0, 0, 0]);
   });
 });
