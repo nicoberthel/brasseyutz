@@ -18,9 +18,7 @@ function Stats({ beers }: { beers: Beer[] }) {
   const figs: [string, string][] = [[String(s.count), s.since ? `brassins depuis ${s.since}` : 'brassins']];
   if (s.liters) figs.push([`${fr(s.liters)}${NB}L`, 'brassés à la maison']);
   if (s.topHop && s.topHop.count > 1) figs.push([s.topHop.name, `houblon fétiche · ${s.topHop.count}${NB}recettes`]);
-  if (s.abvMin !== undefined && s.abvMax !== undefined && s.abvMin !== s.abvMax) {
-    figs.push([`${fr(s.abvMin)}–${fr(s.abvMax)}${NB}%`, 'd’alcool, de la plus légère à la plus forte']);
-  }
+  if (s.grainsKg) figs.push([`${fr(s.grainsKg)}${NB}kg`, 'de céréales concassées']);
   return (
     <section style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       <h2 className="h2">Le brassoir en chiffres</h2>
@@ -31,7 +29,6 @@ function Stats({ beers }: { beers: Beer[] }) {
   );
 }
 
-/* Coup de cœur le plus récent : choix stable, identique côté serveur et client. */
 function Favorite({ beer }: { beer: Beer }) {
   const style = beer.styleName?.trim();
   const desc = beer.description?.trim();
@@ -58,12 +55,22 @@ function Favorite({ beer }: { beer: Beer }) {
   );
 }
 
+/* Toutes les cuvées cochées, la plus récente d’abord : tri stable, identique côté serveur et client. */
+function Favorites({ beers }: { beers: Beer[] }) {
+  return (
+    <section style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <h2 className="h2">Coups de cœur</h2>
+      {beers.map(b => <Favorite key={b.id} beer={b} />)}
+    </section>
+  );
+}
+
 export function Home({ beers }: { beers: Beer[] }) {
   const router = useRouter();
   const [q, setQ] = useState('');
   const [tab, setTab] = useState<TabValue>('toutes');
   const list = filterBeers(beers, tab, q);
-  const fav = beers.filter(b => b.favorite).reduce<Beer | null>((m, b) => (!m || b.brew > m.brew ? b : m), null);
+  const favs = beers.filter(b => b.favorite).sort((a, b) => b.brew - a.brew);
   return (
     <main className="page">
       <section className="hero">
@@ -90,8 +97,8 @@ export function Home({ beers }: { beers: Beer[] }) {
           ? <div className="rail">{list.map(b => <CuveeTile key={b.id} beer={b} />)}</div>
           : <Empty q={q} />}
       </section>
-      {fav ? <Favorite beer={fav} /> : null}
       {beers.length ? <Stats beers={beers} /> : null}
+      {favs.length ? <Favorites beers={favs} /> : null}
     </main>
   );
 }

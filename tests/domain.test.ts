@@ -70,18 +70,17 @@ describe('filterBeers', () => {
 
 describe('brewStats', () => {
   const list = [
-    { volume: '20', abv: '5,5', hops: 'Citra, Mosaïc', bottledOn: '15/11/2025' },
-    { volume: '19,5', abv: '8.2', hops: 'citra; Fuggle', bottledOn: '11/07/2022' },
-    { volume: '', abv: '4', hops: 'Mosaic', bottledOn: '' },
-    { volume: '20', abv: '', hops: 'MOSAIC', bottledOn: '01/02/2024' },
+    { volume: '20', grains: JSON.stringify([{ nom: 'Pale Ale', kg: 4.2 }, { nom: 'Crystal', kg: '0,3' }]), hops: 'Citra, Mosaïc', bottledOn: '15/11/2025' },
+    { volume: '19,5', grains: 'Pilsner 5 kg', hops: 'citra; Fuggle', bottledOn: '11/07/2022' },
+    { volume: '', grains: JSON.stringify([{ nom: 'Munich', kg: 3 }, { nom: 'Avoine', kg: '' }]), hops: 'Mosaic', bottledOn: '' },
+    { volume: '20', grains: '', hops: 'MOSAIC', bottledOn: '01/02/2024' },
   ];
-  it('compte, volume, première mise en bouteille, fourchette d’alcool', () => {
+  it('compte, volume, première mise en bouteille, kg de céréales (JSON seulement)', () => {
     const s = brewStats(list);
     expect(s.count).toBe(4);
     expect(s.liters).toBe(59.5);
     expect(s.since).toBe('juillet 2022');
-    expect(s.abvMin).toBe(4);
-    expect(s.abvMax).toBe(8.2);
+    expect(s.grainsKg).toBe(7.5);
   });
   it('houblon fétiche : compté une fois par recette, sans accents ni casse, libellé de la 1re occurrence', () => {
     expect(brewStats(list).topHop).toEqual({ name: 'Mosaïc', count: 3 });
@@ -90,6 +89,6 @@ describe('brewStats', () => {
     expect(brewStats([{ hops: 'Fuggle' }, { hops: 'Citra' }]).topHop).toEqual({ name: 'Citra', count: 1 });
   });
   it('liste vide : rien d’inventé', () => {
-    expect(brewStats([])).toEqual({ count: 0, liters: 0, since: undefined, topHop: undefined, abvMin: undefined, abvMax: undefined });
+    expect(brewStats([])).toEqual({ count: 0, liters: 0, since: undefined, topHop: undefined, grainsKg: 0 });
   });
 });

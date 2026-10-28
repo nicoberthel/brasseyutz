@@ -53,13 +53,14 @@ describe('Accueil', () => {
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(push).toHaveBeenCalledWith('/cuvees?q=' + encodeURIComponent('Citra é'));
   });
-  it('bandeau « Le brassoir en chiffres » : brassins, litres, houblon fétiche, fourchette d’alcool', () => {
+  it('bandeau « Le brassoir en chiffres » : brassins, litres, houblon fétiche, kg de céréales', () => {
     render(<Home beers={beers} />);
     const sec = screen.getByRole('heading', { level: 2, name: 'Le brassoir en chiffres' }).closest('section')!;
     const figs = [...sec.querySelectorAll('.stat')].map(f => f.textContent);
     expect(figs[0]).toBe(`${beers.length}brassins depuis ${brewStats(beers).since}`);
     expect(figs.some(t => t!.includes('brassés à la maison'))).toBe(true);
-    expect(sec.textContent).toContain('d’alcool, de la plus légère à la plus forte');
+    expect(figs).toContain(`${String(brewStats(beers).grainsKg).replace('.', ',')}\u00a0kgde céréales concassées`);
+    expect(sec.textContent).not.toContain('d’alcool');
   });
   it('houblon fétiche omis s’il n’apparaît qu’une fois ; aucune bière : bandeau omis', () => {
     const one = beers.slice(0, 1).map(b => ({ ...b, hops: 'Citra' }));
@@ -69,15 +70,18 @@ describe('Accueil', () => {
     render(<Home beers={[]} />);
     expect(screen.queryByText('Le brassoir en chiffres')).toBeNull();
   });
-  it('carte « Coup de cœur » : la plus récente cochée, avec sa description ; aucune cochée : carte omise', () => {
+  it('section « Coups de cœur » sous les chiffres : toutes les cochées, la plus récente d’abord ; aucune cochée : section omise', () => {
     const flagged = beers.map(b => b.id === 'paul' || b.id === 'xmas-2025' ? { ...b, favorite: 1, description: 'Ma préférée.' } : b);
     const { unmount } = render(<Home beers={flagged} />);
-    const card = screen.getByText('Coup de cœur', { selector: '.fav-kicker' }).closest('a')!;
-    expect(card.getAttribute('href')).toBe('/biere/xmas-2025');
-    expect(card.textContent).toContain('Ma préférée.');
+    const h = screen.getByRole('heading', { level: 2, name: 'Coups de cœur' });
+    const stats = screen.getByRole('heading', { level: 2, name: 'Le brassoir en chiffres' });
+    expect(stats.compareDocumentPosition(h) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const cards = [...h.closest('section')!.querySelectorAll('a.news')];
+    expect(cards.map(a => a.getAttribute('href'))).toEqual(['/biere/xmas-2025', '/biere/paul']);
+    expect(cards[0].textContent).toContain('Ma préférée.');
     unmount();
     render(<Home beers={beers} />);
-    expect(screen.queryByText('Coup de cœur', { selector: '.fav-kicker' })).toBeNull();
+    expect(screen.queryByRole('heading', { level: 2, name: 'Coups de cœur' })).toBeNull();
   });
   it('cœur conservé sur la tuile coup de cœur', () => {
     const flagged = beers.map(b => b.id === 'paul' ? { ...b, favorite: 1 } : b);

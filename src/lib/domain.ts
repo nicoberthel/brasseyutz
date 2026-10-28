@@ -60,18 +60,26 @@ const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 
 
 export interface BrewStats {
   count: number; liters: number; since?: string;
-  topHop?: { name: string; count: number }; abvMin?: number; abvMax?: number;
+  topHop?: { name: string; count: number }; grainsKg: number;
+}
+
+/* Somme des kg d’une colonne grains JSON ; 0 pour le texte legacy ou les lignes sans poids. */
+function jsonKg(v: unknown): number {
+  const t = String(v ?? '').trim();
+  if (!t.startsWith('[')) return 0;
+  try {
+    const a: unknown = JSON.parse(t);
+    return Array.isArray(a) ? a.reduce<number>((s, x) => s + (num((x as { kg?: unknown })?.kg) ?? 0), 0) : 0;
+  } catch { return 0; }
 }
 
 /* Chiffres du bandeau d'accueil, calculés sur les champs saisis ; un champ vide ne compte pas. */
-export function brewStats(beers: { volume?: string; abv?: string; hops?: string; bottledOn?: string }[]): BrewStats {
-  let liters = 0, first: [number, number] | undefined;
-  const abvs: number[] = [];
+export function brewStats(beers: { volume?: string; grains?: string; hops?: string; bottledOn?: string }[]): BrewStats {
+  let liters = 0, kg = 0, first: [number, number] | undefined;
   const hops = new Map<string, { name: string; count: number }>();
   for (const b of beers) {
     liters += num(b.volume) ?? 0;
-    const a = num(b.abv);
-    if (a !== undefined) abvs.push(a);
+    kg += jsonKg(b.grains);
     const m = String(b.bottledOn || '').match(/^\d{2}\/(\d{2})\/(\d{4})$/);
     if (m) {
       const d: [number, number] = [+m[2], +m[1]];
@@ -90,6 +98,6 @@ export function brewStats(beers: { volume?: string; abv?: string; hops?: string;
   return {
     count: beers.length, liters: Math.round(liters * 10) / 10,
     since: first ? `${MOIS[first[1] - 1]} ${first[0]}` : undefined,
-    topHop, abvMin: abvs.length ? Math.min(...abvs) : undefined, abvMax: abvs.length ? Math.max(...abvs) : undefined,
+    topHop, grainsKg: Math.round(kg * 10) / 10,
   };
 }

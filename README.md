@@ -8,7 +8,7 @@ Site public et backoffice de la brasserie amateur Brasse-Yutz (Yutz, Moselle) : 
 
 ## Routes
 
-- `/` : accueil (hero, onglets par famille, recherche, tuiles des cuvées, coup de cœur, « Le brassoir en chiffres »).
+- `/` : accueil (hero, onglets par famille, recherche, tuiles des cuvées, « Le brassoir en chiffres », « Coups de cœur »).
 - `/cuvees` : liste complète des cuvées, avec onglets et recherche ; `/cuvees?q=citra` préremplit la recherche.
 - `/biere/<id>` et `/brassin/<n>` : fiches recette, URLs inchangées (`/brassin/<n>` est la cible des QR codes imprimés).
 - `/mentions-legales`, `/connexion`, `/admin/...` : inchangés.
