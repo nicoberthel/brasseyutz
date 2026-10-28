@@ -4,6 +4,7 @@ import { fireEvent, getDefaultNormalizer, render, screen } from '@testing-librar
 import { Home } from '@/app/home';
 import { SEED } from '@/lib/seed';
 import type { Beer } from '@/lib/schema';
+import { brewStats } from '@/lib/domain';
 
 const push = vi.fn();
 vi.mock('next/navigation', () => ({ useRouter: () => ({ refresh: vi.fn(), push, replace: vi.fn() }), useSearchParams: () => new URLSearchParams() }));
@@ -52,22 +53,31 @@ describe('Accueil', () => {
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(push).toHaveBeenCalledWith('/cuvees?q=' + encodeURIComponent('Citra é'));
   });
-  it('carte « Dernier brassin · n° 34 » → /biere/dark-mode avec la mise en bouteille', () => {
+  it('bandeau « Le brassoir en chiffres » : brassins, litres, houblon fétiche, fourchette d’alcool', () => {
     render(<Home beers={beers} />);
-    const card = screen.getByText('Dernier brassin · n°\u00a034', KEEP_NBSP).closest('a')!;
-    expect(card.getAttribute('href')).toBe('/biere/dark-mode');
-    expect(card.classList.contains('news')).toBe(true);
-    expect(card.textContent).toContain('Mise en bouteille le 27/09/2026');
-    expect(card.textContent).toContain('— Munich Dunkel');
+    const sec = screen.getByRole('heading', { level: 2, name: 'Le brassoir en chiffres' }).closest('section')!;
+    const figs = [...sec.querySelectorAll('.stat')].map(f => f.textContent);
+    expect(figs[0]).toBe(`${beers.length}brassins depuis ${brewStats(beers).since}`);
+    expect(figs.some(t => t!.includes('brassés à la maison'))).toBe(true);
+    expect(sec.textContent).toContain('d’alcool, de la plus légère à la plus forte');
   });
-  it('dernier brassin sans date de mise en bouteille : ligne omise ; aucune bière : carte omise', () => {
-    const nodate = beers.map(b => b.id === 'dark-mode' ? { ...b, bottledOn: '' } : b);
-    const { unmount } = render(<Home beers={nodate} />);
-    expect(screen.getByText('Dernier brassin · n°\u00a034', KEEP_NBSP)).toBeTruthy();
-    expect(screen.queryByText(/Mise en bouteille le/)).toBeNull();
+  it('houblon fétiche omis s’il n’apparaît qu’une fois ; aucune bière : bandeau omis', () => {
+    const one = beers.slice(0, 1).map(b => ({ ...b, hops: 'Citra' }));
+    const { unmount } = render(<Home beers={one} />);
+    expect(screen.queryByText(/houblon fétiche/)).toBeNull();
     unmount();
     render(<Home beers={[]} />);
-    expect(screen.queryByText(/Dernier brassin/)).toBeNull();
+    expect(screen.queryByText('Le brassoir en chiffres')).toBeNull();
+  });
+  it('carte « Coup de cœur » : la plus récente cochée, avec sa description ; aucune cochée : carte omise', () => {
+    const flagged = beers.map(b => b.id === 'paul' || b.id === 'xmas-2025' ? { ...b, favorite: 1, description: 'Ma préférée.' } : b);
+    const { unmount } = render(<Home beers={flagged} />);
+    const card = screen.getByText('Coup de cœur', { selector: '.fav-kicker' }).closest('a')!;
+    expect(card.getAttribute('href')).toBe('/biere/xmas-2025');
+    expect(card.textContent).toContain('Ma préférée.');
+    unmount();
+    render(<Home beers={beers} />);
+    expect(screen.queryByText('Coup de cœur', { selector: '.fav-kicker' })).toBeNull();
   });
   it('cœur conservé sur la tuile coup de cœur', () => {
     const flagged = beers.map(b => b.id === 'paul' ? { ...b, favorite: 1 } : b);

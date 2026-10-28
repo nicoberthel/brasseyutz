@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Beer } from '@/lib/schema';
-import { filterBeers } from '@/lib/domain';
+import { brewStats, filterBeers } from '@/lib/domain';
 import { CuveeIcon } from '@/components/ds/CuveeIcon';
 import { Search } from '@/components/site/Search';
 import { Tabs, type TabValue } from '@/components/site/Tabs';
@@ -11,8 +11,30 @@ import { CuveeTile, Empty, soft } from '@/components/site/Cards';
 
 const NB = '\u00a0';
 
-function LastBrew({ beer }: { beer: Beer }) {
+const fr = (n: number) => String(n).replace('.', ',');
+
+function Stats({ beers }: { beers: Beer[] }) {
+  const s = brewStats(beers);
+  const figs: [string, string][] = [[String(s.count), s.since ? `brassins depuis ${s.since}` : 'brassins']];
+  if (s.liters) figs.push([`${fr(s.liters)}${NB}L`, 'brassés à la maison']);
+  if (s.topHop && s.topHop.count > 1) figs.push([s.topHop.name, `houblon fétiche · ${s.topHop.count}${NB}recettes`]);
+  if (s.abvMin !== undefined && s.abvMax !== undefined && s.abvMin !== s.abvMax) {
+    figs.push([`${fr(s.abvMin)}–${fr(s.abvMax)}${NB}%`, 'd’alcool, de la plus légère à la plus forte']);
+  }
+  return (
+    <section style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <h2 className="h2">Le brassoir en chiffres</h2>
+      <div className="stats">
+        {figs.map(([v, l]) => <div key={l} className="stat"><b>{v}</b><span>{l}</span></div>)}
+      </div>
+    </section>
+  );
+}
+
+/* Coup de cœur le plus récent : choix stable, identique côté serveur et client. */
+function Favorite({ beer }: { beer: Beer }) {
   const style = beer.styleName?.trim();
+  const desc = beer.description?.trim();
   return (
     <Link href={`/biere/${beer.id}`} className="news" style={{ background: soft(beer.accent), color: 'var(--encre)' }}>
       <span style={{ width: 56, height: 56, borderRadius: 18, background: 'var(--papier)', display: 'grid', placeItems: 'center', color: beer.accent, flex: 'none' }}>
@@ -21,14 +43,15 @@ function LastBrew({ beer }: { beer: Beer }) {
           : <CuveeIcon name={beer.icon} size={30} stroke={1.5} />}
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ font: '600 12px var(--font-text)', letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>{`Dernier brassin · n°${NB}${beer.brew}`}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: beer.accent }}>
+          <CuveeIcon name="Heart" size={14} stroke={2} />
+          <span className="fav-kicker" style={{ font: '600 12px var(--font-text)', letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Coup de cœur</span>
+        </div>
         <div style={{ font: '400 30px/1.05 var(--font-display)', marginTop: 4 }}>
           {beer.name}{beer.edition ? <i style={{ color: beer.accent }}> {beer.edition}</i> : null}{' '}
           {style ? <i style={{ color: beer.accent }}>— {style}</i> : null}
         </div>
-        {beer.bottledOn
-          ? <div style={{ font: '400 14px var(--font-text)', color: 'var(--text-body)', marginTop: 4 }}>Mise en bouteille le {beer.bottledOn}</div>
-          : null}
+        {desc ? <p className="clamp2" style={{ margin: '6px 0 0', font: '400 15px/1.45 var(--font-text)', color: 'var(--text-body)' }}>{desc}</p> : null}
       </div>
       <span className="iconbtn" aria-hidden="true" style={{ background: 'var(--papier)', borderRadius: '50%', flex: 'none' }}><CuveeIcon name="ArrowRight" size={20} stroke={1.75} /></span>
     </Link>
@@ -40,7 +63,7 @@ export function Home({ beers }: { beers: Beer[] }) {
   const [q, setQ] = useState('');
   const [tab, setTab] = useState<TabValue>('toutes');
   const list = filterBeers(beers, tab, q);
-  const last = beers.reduce<Beer | null>((m, b) => (!m || b.brew > m.brew ? b : m), null);
+  const fav = beers.filter(b => b.favorite).reduce<Beer | null>((m, b) => (!m || b.brew > m.brew ? b : m), null);
   return (
     <main className="page">
       <section className="hero">
@@ -67,7 +90,8 @@ export function Home({ beers }: { beers: Beer[] }) {
           ? <div className="rail">{list.map(b => <CuveeTile key={b.id} beer={b} />)}</div>
           : <Empty q={q} />}
       </section>
-      {last ? <LastBrew beer={last} /> : null}
+      {fav ? <Favorite beer={fav} /> : null}
+      {beers.length ? <Stats beers={beers} /> : null}
     </main>
   );
 }

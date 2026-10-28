@@ -55,3 +55,41 @@ export function filterBeers<T extends BeerLike & { famille?: string | null }>(be
 export function abvTxt(abv: unknown): string {
   return String(abv ?? '').replace('.', ',');
 }
+
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+export interface BrewStats {
+  count: number; liters: number; since?: string;
+  topHop?: { name: string; count: number }; abvMin?: number; abvMax?: number;
+}
+
+/* Chiffres du bandeau d'accueil, calculés sur les champs saisis ; un champ vide ne compte pas. */
+export function brewStats(beers: { volume?: string; abv?: string; hops?: string; bottledOn?: string }[]): BrewStats {
+  let liters = 0, first: [number, number] | undefined;
+  const abvs: number[] = [];
+  const hops = new Map<string, { name: string; count: number }>();
+  for (const b of beers) {
+    liters += num(b.volume) ?? 0;
+    const a = num(b.abv);
+    if (a !== undefined) abvs.push(a);
+    const m = String(b.bottledOn || '').match(/^\d{2}\/(\d{2})\/(\d{4})$/);
+    if (m) {
+      const d: [number, number] = [+m[2], +m[1]];
+      if (!first || d[0] < first[0] || (d[0] === first[0] && d[1] < first[1])) first = d;
+    }
+    const seen = new Set<string>();
+    for (const h of String(b.hops || '').split(/[,;+/]/).map(s => s.trim()).filter(Boolean)) {
+      const k = norm(h);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      const e = hops.get(k);
+      if (e) e.count++; else hops.set(k, { name: h, count: 1 });
+    }
+  }
+  const topHop = [...hops.values()].sort((x, y) => y.count - x.count || x.name.localeCompare(y.name, 'fr'))[0];
+  return {
+    count: beers.length, liters: Math.round(liters * 10) / 10,
+    since: first ? `${MOIS[first[1] - 1]} ${first[0]}` : undefined,
+    topHop, abvMin: abvs.length ? Math.min(...abvs) : undefined, abvMax: abvs.length ? Math.max(...abvs) : undefined,
+  };
+}
